@@ -1,7 +1,5 @@
-import 'package:fitnessapp/front_page.dart';
+import 'package:fitnessapp/screens/login_page.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -26,7 +24,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: const MyHomePage(),
+        home: const LoginPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
