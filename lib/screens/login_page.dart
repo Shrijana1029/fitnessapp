@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 237, 234, 215),
+        backgroundColor: const Color.fromARGB(255, 237, 234, 215),
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Image.asset(
             'assets/img/logo1.png',
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     .login(email: _email.text, password: _password.text);
                 if (message!.contains('Success')) {
                   navigatorKey.currentState?.pushReplacement(
-                      MaterialPageRoute(builder: (_) => const MyHomePage()));
+                      MaterialPageRoute(builder: (_) => MyHomePage()));
                 } else if (message ==
                     'Wrong password provided for that user.') {
                   print('wrong password');

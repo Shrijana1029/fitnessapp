@@ -25,6 +25,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 237, 234, 215),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -33,18 +34,18 @@ class _SignupPageState extends State<SignupPage> {
             const SizedBox(
               height: 150,
             ),
+
             Image.asset(
-              'assets/img/insta.png',
-              width: 200,
+              'assets/img/logo1.png',
+              width: 1000,
+              height: 100,
+              fit: BoxFit.cover,
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             //for circle avatar
-            const CircleAvatar(
-              backgroundImage: AssetImage('assets/img/avatar.png'),
-              radius: 30,
-            ),
+
             const SizedBox(
               height: 40,
             ),
