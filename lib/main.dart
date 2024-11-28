@@ -47,7 +47,13 @@ class MyApp extends StatelessWidget {
               color: Color.fromARGB(255, 32, 30, 30),
             ),
           ),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.deepPurple,
+              primary: const Color.fromARGB(255, 233, 218, 115)),
+          primaryColorDark:
+              const Color.fromARGB(255, 184, 216, 201), //soft green color,
+          primaryColorLight: const Color.fromARGB(255, 237, 234, 215),
+
           useMaterial3: true,
         ));
   }

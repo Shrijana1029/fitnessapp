@@ -1,5 +1,6 @@
 import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_page.dart';
+import 'package:fitnessapp/screens/profile.dart';
 import 'package:fitnessapp/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const Home(),
     const LoginPage(),
     const SignupPage(),
-    MyHomePage(),
+    const Profile()
     // const Home()
   ];
 
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month_rounded), label: 'Plans'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.more_horiz), label: 'More'),
+                icon: Icon(Icons.more_horiz), label: 'Profile'),
           ],
         ),
       ),
