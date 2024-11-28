@@ -19,13 +19,29 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 237, 234, 215),
-      body: const Center(
-        child: Text(
-          "HELLO  !!!",
-          style: TextStyle(fontWeight: FontWeight.bold),
+      backgroundColor: const Color.fromARGB(255, 184, 216, 201),
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipOval(
+            child: Image.asset(
+              'assets/img/user.jpg',
+              height: 20,
+              width: 20,
+              // fit: BoxFit.cover,
+            ),
+          ),
         ),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.messenger)),
+        ],
+        backgroundColor: const Color.fromARGB(255, 184, 216, 201),
       ),
+      body: const Center(
+          child: Text(
+        "HELLO  !!!",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      )),
       bottomNavigationBar: Container(
         height: 90,
         decoration: const BoxDecoration(
