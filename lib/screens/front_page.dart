@@ -1,3 +1,6 @@
+import 'package:fitnessapp/screens/home.dart';
+import 'package:fitnessapp/screens/login_page.dart';
+import 'package:fitnessapp/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -16,6 +19,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // make list for display text
+  final List<Widget> _pages = [
+    const Home(),
+    const LoginPage(),
+    const SignupPage(),
+    MyHomePage(),
+    // const Home()
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ClipOval(
             child: Image.asset(
               'assets/img/user.jpg',
-              height: 20,
-              width: 20,
-              // fit: BoxFit.cover,
+              height: 40,
+              width: 40,
+              fit: BoxFit.cover,
             ),
           ),
         ),
@@ -37,11 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         backgroundColor: const Color.fromARGB(255, 184, 216, 201),
       ),
-      body: const Center(
-          child: Text(
-        "HELLO  !!!",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      )),
+      body: _pages[_selectedindex],
       bottomNavigationBar: Container(
         height: 90,
         decoration: const BoxDecoration(
