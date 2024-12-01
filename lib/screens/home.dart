@@ -25,7 +25,8 @@ class _HomeState extends State<Home> {
                 'Macros',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 35),
+              //////////MACROS
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -56,8 +57,9 @@ class _HomeState extends State<Home> {
                 ],
               ),
               const SizedBox(
-                height: 30,
+                height: 40,
               ),
+              ///////////STEPS AND EXERCISES
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -77,6 +79,67 @@ class _HomeState extends State<Home> {
                   // _cards(name: 'Rajina'),
                 ],
               ),
+              const SizedBox(
+                height: 40,
+              ),
+              ////////////// STEPS WALKED////////////////
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        child: CircularPercentIndicator(
+                          lineWidth: 20,
+                          progressColor: Colors.green,
+                          percent: 0.7,
+                          radius: 50,
+                          center: Text(
+                            '7,500',
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Column(
+                      children: [
+                        Text('Steps Walked',
+                            style: Theme.of(context).textTheme.displaySmall),
+                        const SizedBox(height: 4),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Icon(
+                              Icons.directions_walk,
+                              color: Colors.blue,
+                            ),
+                            SizedBox(width: 4),
+                            Text('350 Calories'),
+                          ],
+                        ),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Icon(
+                              Icons.timer,
+                              color: Colors.blue,
+                            ),
+                            SizedBox(width: 4),
+                            Text('12,000'),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
@@ -105,7 +168,7 @@ class _HomeState extends State<Home> {
           progressColor: color,
           backgroundColor: color.withOpacity(0.2),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         Text(
           label,
           style: TextStyle(
