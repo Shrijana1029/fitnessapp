@@ -72,7 +72,8 @@ class _FrontPageState extends State<FrontPage> {
           // showUnselectedLabels: false, //hides labels for unselected items
           type: BottomNavigationBarType.fixed,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Dashboard'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), label: 'sDashboard'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.menu_book_sharp), label: 'Diary'),
             BottomNavigationBarItem(
