@@ -1,5 +1,6 @@
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/front_page.dart';
+import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_page.dart';
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,11 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
+<<<<<<< HEAD
+        home: Home(),
+=======
         home: FrontPage(),
+>>>>>>> 5095e1a9445557c62de2c8f1e2401ce606a40bfe
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
