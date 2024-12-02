@@ -1,5 +1,6 @@
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/front_page.dart';
+import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_page.dart';
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
               color: Colors.white,
             ),
             titleLarge: TextStyle(
-                color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold),
+                color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),
             titleSmall: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
