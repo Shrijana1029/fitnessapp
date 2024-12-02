@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+// import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -12,24 +12,61 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const Text('Macro'),
-          Row(
-            children: [
-              Column(
-                children: [
-                  CircularPercentIndicator(
-                    radius: 40,
-                    percent: 2 / 3,
-                    // color: Colors.blue,
-                    backgroundColor: Colors.grey,
-                  ),
-                ],
-              )
-            ],
-          )
-        ],
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Calories',
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            const SizedBox(height: 8),
+            Text('2350 kcal', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 24),
+            const Text(
+              'Statistic',
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(7, (index) {
+                  bool isCurrentDay =
+                      index == 2; // Example for highlighting Monday
+                  return Column(
+                    children: [
+                      Text(
+                        '${190 + (index * 30)} kcal', // Sample values
+                        style: TextStyle(
+                          color:
+                              isCurrentDay ? Colors.cyan : Colors.transparent,
+                          fontSize: 12,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 100,
+                        child: Container(
+                          width: 10,
+                          height:
+                              (50 + index * 10).toDouble(), // Example heights
+                          color: isCurrentDay ? Colors.cyan : Colors.yellow,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Mon',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  );
+                }),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

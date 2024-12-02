@@ -36,6 +36,8 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2.0,
               color: Colors.white,
             ),
+            titleLarge: TextStyle(
+                color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold),
             titleSmall: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

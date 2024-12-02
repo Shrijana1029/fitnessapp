@@ -27,7 +27,7 @@ class FoodList extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Container(
-                    padding: EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                     width: double.infinity,
                     height: 200,
                     child: AnotherCarousel(images: const [

@@ -1,3 +1,4 @@
+import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -139,7 +140,7 @@ class _HomeState extends State<Home> {
                     )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
