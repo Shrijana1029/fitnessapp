@@ -4,111 +4,79 @@
 //light yellow: Color.fromARGB(255, 252, 227, 138)
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(FitnessApp());
 
-class MyApp extends StatelessWidget {
+class FitnessApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor:
-            const Color(0xFF1C5CFC), // Gradient background starting color
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Text('Add Breakfast'),
-          centerTitle: true,
-          actions: [Icon(Icons.more_vert)],
-        ),
-        body: Column(
+      home: FitnessScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class FitnessScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
+            const Text(
+              'Calories',
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              '2350 kcal',
+              style: TextStyle(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.search, color: Colors.grey),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(10),
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Statistic',
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(7, (index) {
+                  bool isCurrentDay =
+                      index == 2; // Example for highlighting Monday
+                  return Column(
+                    children: [
+                      Text(
+                        '${190 + (index * 30)} kcal', // Sample values
+                        style: TextStyle(
+                          color:
+                              isCurrentDay ? Colors.cyan : Colors.transparent,
+                          fontSize: 12,
                         ),
                       ),
-                    ),
-                    Icon(Icons.filter_list, color: Colors.grey),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: 50,
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: Center(
-                      child: Text(
-                        'Recent',
+                      SizedBox(
+                        height: 100,
+                        child: Container(
+                          width: 10,
+                          height:
+                              (50 + index * 10).toDouble(), // Example heights
+                          color: isCurrentDay ? Colors.cyan : Colors.yellow,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Mon',
                         style: TextStyle(color: Colors.white),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        'Favorites',
-                        style: TextStyle(color: Colors.white.withOpacity(0.6)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 6,
-                padding: EdgeInsets.all(16),
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 12),
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Food Item ${index + 1}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            SizedBox(height: 4),
-                            Text('${index * 50 + 75} cals'),
-                          ],
-                        ),
-                        Icon(Icons.add_circle_outline, color: Colors.blue),
-                      ],
-                    ),
+                    ],
                   );
-                },
+                }),
               ),
             ),
           ],
