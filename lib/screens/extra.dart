@@ -1,9 +1,8 @@
 // soft green ---> argb(255,184, 216, 201)
 // soft grey opacity is 255 --> argb(255,237, 234, 215)
 // yello  (255, 233, 218, 115)
-
+//light yellow: Color.fromARGB(255, 252, 227, 138)
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart'; // Add this dependency in pubspec.yaml
 
 void main() {
   runApp(MyApp());
@@ -14,82 +13,107 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor:
+            const Color(0xFF1C5CFC), // Gradient background starting color
         appBar: AppBar(
-          title: Text('Macros Tracker'),
-          backgroundColor: Colors.teal,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text('Add Breakfast'),
+          centerTitle: true,
+          actions: [Icon(Icons.more_vert)],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Macros',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.search, color: Colors.grey),
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Search...',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(10),
+                        ),
+                      ),
+                    ),
+                    Icon(Icons.filter_list, color: Colors.grey),
+                  ],
+                ),
               ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+            ),
+            Container(
+              height: 50,
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Row(
                 children: [
-                  _buildMacroIndicator(
-                    label: "Carbohydrates",
-                    value: 244,
-                    maxValue: 276,
-                    color: Colors.teal,
+                  const Expanded(
+                    child: Center(
+                      child: Text(
+                        'Recent',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
-                  _buildMacroIndicator(
-                    label: "Fat",
-                    value: 25,
-                    maxValue: 73,
-                    color: Colors.purple,
-                  ),
-                  _buildMacroIndicator(
-                    label: "Protein",
-                    value: 61,
-                    maxValue: 111,
-                    color: Colors.orange,
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        'Favorites',
+                        style: TextStyle(color: Colors.white.withOpacity(0.6)),
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 6,
+                padding: EdgeInsets.all(16),
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 12),
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Food Item ${index + 1}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            SizedBox(height: 4),
+                            Text('${index * 50 + 75} cals'),
+                          ],
+                        ),
+                        Icon(Icons.add_circle_outline, color: Colors.blue),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget _buildMacroIndicator({
-    required String label,
-    required int value,
-    required int maxValue,
-    required Color color,
-  }) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CircularPercentIndicator(
-          radius: 60.0,
-          lineWidth: 10.0,
-          percent: value / maxValue,
-          center: Text(
-            '$value/$maxValue',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-          ),
-          progressColor: color,
-          backgroundColor: color.withOpacity(0.2),
-        ),
-        SizedBox(height: 44),
-        Text(
-          label,
-          style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: color),
-        ),
-        Text(
-          '${maxValue - value} left',
-          style: TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-      ],
     );
   }
 }

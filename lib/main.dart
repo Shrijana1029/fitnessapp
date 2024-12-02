@@ -1,3 +1,4 @@
+import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:fitnessapp/screens/login_page.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: MyHomePage(),
+        home: FrontPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           ),
           colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.deepPurple,
-              primary: const Color.fromARGB(255, 233, 218, 115)),
+              primary: const Color.fromARGB(255, 252, 227, 138)),
           primaryColorDark:
               const Color.fromARGB(255, 184, 216, 201), //soft green color,
           primaryColorLight: const Color.fromARGB(255, 237, 234, 215),
