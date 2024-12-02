@@ -1,3 +1,4 @@
+// import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -139,7 +140,77 @@ class _HomeState extends State<Home> {
                     )
                   ],
                 ),
-              )
+              ),
+
+              const SizedBox(height: 28),
+              /////////////////STATISTICS PART////////////////
+
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  children: [
+                    Text('Statistics',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(fontSize: 18)),
+                    const SizedBox(height: 24),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(6, (index) {
+                          bool isCurrentDay = index == 2;
+                          return Column(
+                            children: [
+                              Text(
+                                '190 kcal', // Sample values
+                                style: TextStyle(
+                                  color: isCurrentDay
+                                      ? Colors.black
+                                      : Colors.transparent,
+                                  fontSize: 17,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                height: 100, // Total height of the indicator
+                                width: 20, // Width of the indicator
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: FractionallySizedBox(
+                                    heightFactor: 0.7,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: isCurrentDay
+                                            ? Colors.blue
+                                            : Colors.transparent,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Text(
+                                'Mon',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -248,22 +319,37 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ],
-              )
+              ),
+              //
             ],
           ),
         ));
   }
 
+///////////SHOW MODAL BOTTOM SHEET////////
   Future scrollbottom(BuildContext context) {
     return showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              
-            );
-          });
-        });
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('This is a Modal Bottom Sheet'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Close'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
