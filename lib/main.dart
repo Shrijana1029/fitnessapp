@@ -28,11 +28,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-<<<<<<< HEAD
-        home: Home(),
-=======
         home: FrontPage(),
->>>>>>> 5095e1a9445557c62de2c8f1e2401ce606a40bfe
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
@@ -42,7 +38,7 @@ class MyApp extends StatelessWidget {
               color: Colors.white,
             ),
             titleLarge: TextStyle(
-                color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold),
+                color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),
             titleSmall: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

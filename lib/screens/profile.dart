@@ -29,17 +29,17 @@ class _ProfileState extends State<Profile> {
               'Statistic',
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(7, (index) {
+                children: List.generate(4, (index) {
                   bool isCurrentDay =
-                      index == 2; // Example for highlighting Monday
+                      index == 1; // Example for highlighting Monday
                   return Column(
                     children: [
                       Text(
-                        '${190 + (index * 30)} kcal', // Sample values
+                        'helo', // Sample values
                         style: TextStyle(
                           color:
                               isCurrentDay ? Colors.cyan : Colors.transparent,

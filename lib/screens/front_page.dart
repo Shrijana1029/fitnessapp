@@ -1,9 +1,9 @@
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/food_list.dart';
 import 'package:fitnessapp/screens/home.dart';
-import 'package:fitnessapp/screens/login_page.dart';
+// import 'package:fitnessapp/screens/login_page.dart';
 import 'package:fitnessapp/screens/profile.dart';
-import 'package:fitnessapp/screens/signup_page.dart';
+// import 'package:fitnessapp/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class FrontPage extends StatefulWidget {
@@ -27,6 +27,7 @@ class _FrontPageState extends State<FrontPage> {
     const Home(),
     const BreakFast(),
     const FoodList(),
+    // scrollbottom(context)
     const Profile()
     // const Home()
   ];
@@ -35,6 +36,7 @@ class _FrontPageState extends State<FrontPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 184, 216, 201),
+      ///////////APP BAR CONTEXT//////////
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -53,6 +55,8 @@ class _FrontPageState extends State<FrontPage> {
         backgroundColor: const Color.fromARGB(255, 184, 216, 201),
       ),
       body: _pages[_selectedindex],
+
+      //////////BOTTOM NAVIGATION BAR////////
       bottomNavigationBar: Container(
         height: 90,
         decoration: const BoxDecoration(
@@ -85,4 +89,39 @@ class _FrontPageState extends State<FrontPage> {
       ),
     );
   }
+}
+
+Future scrollbottom(BuildContext context) {
+  // return showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) {
+  //       return StatefulBuilder(
+  //           builder: (BuildContext context, StateSetter setState) {
+  //         return Container();
+  //       });
+  //     }
+  //     );
+  return showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+    builder: (context) {
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('This is a Modal Bottom Sheet'),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Close'),
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
