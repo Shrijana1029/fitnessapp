@@ -27,11 +27,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-<<<<<<< shrijana
         home: FrontPage(),
-=======
-        home: MyHomePage(),
->>>>>>> local
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
