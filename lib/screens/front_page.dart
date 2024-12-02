@@ -1,17 +1,19 @@
+import 'package:fitnessapp/screens/breakfast_page.dart';
+import 'package:fitnessapp/screens/food_list.dart';
 import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_page.dart';
 import 'package:fitnessapp/screens/profile.dart';
 import 'package:fitnessapp/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key});
+class FrontPage extends StatefulWidget {
+  FrontPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<FrontPage> createState() => _FrontPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _FrontPageState extends State<FrontPage> {
   int _selectedindex = 0;
 
   void _tappedItem(int index) {
@@ -23,8 +25,8 @@ class _MyHomePageState extends State<MyHomePage> {
   // make list for display text
   final List<Widget> _pages = [
     const Home(),
-    const LoginPage(),
-    const SignupPage(),
+    const BreakFast(),
+    const FoodList(),
     const Profile()
     // const Home()
   ];
