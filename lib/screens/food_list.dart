@@ -12,6 +12,8 @@ class FoodList extends StatelessWidget {
       appBar: AppBar(
         // backgroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: const Color.fromARGB(255, 62, 206, 67),
+        title: const Text('Food List'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -71,12 +73,62 @@ class FoodList extends StatelessWidget {
                         'Garbanzo beans, another name for chickpeas, have been cultivated and consumed for thousands of years in Middle Eastern nations.Rich in vitamins, minerals, and fiber, chickpeas may help you control your weight, improve your digestion, and lower your risk of illness, among other health advantages.'),
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Nutritional Information',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Table(
+                    border: TableBorder.all(),
+                    columnWidths: const {
+                      0: FractionColumnWidth(0.5),
+                      1: FractionColumnWidth(0.5),
+                    },
+                    children: [
+                      buildRow(['Nutrients', 'Contain per 100g'],
+                          isHeader: true),
+                      buildRow(['Calories', '164 kcal']),
+                      buildRow(['Protein', '8.9 g']),
+                      buildRow(['Total fat :', '2.6 g']),
+                      buildRow(['- Saturated', '0.27 g']),
+                      buildRow(['- Unsaturated', '0.58 g']),
+                      buildRow(['- Monosaturated', '1.16 g']),
+                    ],
+                  ),
+                )
               ],
             )),
       ),
     );
   }
 
+  TableRow buildRow(List<String> cells, {bool isHeader = false}) => TableRow(
+          children: cells.map((cell) {
+        final style = TextStyle(
+            fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+            fontSize: 16);
+        return Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: isHeader
+                ? const Color.fromARGB(255, 123, 127, 172)
+                : Colors.white,
+          ),
+          child: Center(
+              child: Text(
+            cell,
+            style: style,
+          )),
+        );
+      }).toList());
   Widget _buildMacroIndicator({
     required String label,
     required double value,

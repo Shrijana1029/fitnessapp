@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 void main() => runApp(FitnessApp());
 
 class FitnessApp extends StatelessWidget {
+  const FitnessApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: FitnessScreen(),
       debugShowCheckedModeBanner: false,
     );
@@ -17,6 +19,8 @@ class FitnessApp extends StatelessWidget {
 }
 
 class FitnessScreen extends StatelessWidget {
+  const FitnessScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -310,7 +310,7 @@ class _HomeState extends State<Home> {
                     icon3,
                     color: Colors.orange,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     goal,
                     style: TextStyle(

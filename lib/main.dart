@@ -1,7 +1,5 @@
-import 'package:fitnessapp/screens/breakfast_page.dart';
+import 'package:fitnessapp/screens/food_list.dart';
 import 'package:fitnessapp/screens/front_page.dart';
-import 'package:fitnessapp/screens/home.dart';
-import 'package:fitnessapp/screens/login_page.dart';
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +26,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: FrontPage(),
+        home: FoodList(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(

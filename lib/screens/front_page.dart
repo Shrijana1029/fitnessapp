@@ -7,7 +7,7 @@ import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
 
 class FrontPage extends StatefulWidget {
-  FrontPage({super.key});
+  const FrontPage({super.key});
 
   @override
   State<FrontPage> createState() => _FrontPageState();
@@ -104,7 +104,7 @@ Future scrollbottom(BuildContext context) {
   return showModalBottomSheet(
     context: context,
     backgroundColor: Colors.white,
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     builder: (context) {
