@@ -1,5 +1,5 @@
 import 'package:fitnessapp/screens/breakfast_page.dart';
-import 'package:fitnessapp/screens/food_list.dart';
+import 'package:fitnessapp/screens/food_details.dart';
 import 'package:fitnessapp/screens/home.dart';
 // import 'package:fitnessapp/screens/login_page.dart';
 import 'package:fitnessapp/screens/profile.dart';

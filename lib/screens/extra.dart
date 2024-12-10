@@ -4,7 +4,7 @@
 //light yellow: Color.fromARGB(255, 252, 227, 138)
 import 'package:flutter/material.dart';
 
-void main() => runApp(FitnessApp());
+void main() => runApp(const FitnessApp());
 
 class FitnessApp extends StatelessWidget {
   const FitnessApp({super.key});

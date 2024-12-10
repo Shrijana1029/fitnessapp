@@ -1,4 +1,6 @@
 // import 'package:flutter/foundation.dart';
+import 'package:fitnessapp/screens/food_details.dart';
+import 'package:fitnessapp/screens/food_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/widgets.dart';
 
@@ -11,6 +13,7 @@ class BreakFast extends StatefulWidget {
 
 class _BreakFastState extends State<BreakFast> {
   int _selectedindex = 0;
+  List<Food> foods = foodList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,16 +37,17 @@ class _BreakFastState extends State<BreakFast> {
                 color: Theme.of(context).primaryColorLight,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(Icons.search, color: Colors.grey),
+                  const Icon(Icons.search, color: Colors.grey),
                   Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Search...',
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(10),
                       ),
+                      onChanged: searchedItem,
                     ),
                   ),
                   Icon(Icons.filter_list, color: Colors.grey),
@@ -102,33 +106,20 @@ class _BreakFastState extends State<BreakFast> {
           /////////////RECENT FOOD ITEMS////////////
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
-              padding: const EdgeInsets.all(16),
+              itemCount: foods.length,
+              // padding: const EdgeInsets.all(20),
               itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Food Item ${index + 1}',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                          const SizedBox(height: 4),
-                          Text('${index * 50 + 75} cals'),
-                        ],
-                      ),
-                      const Icon(Icons.add_circle_outline, color: Colors.blue),
-                    ],
+                final food = foods[index];
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    leading: Image.asset(
+                      food.image,
+                      fit: BoxFit.cover,
+                      width: 50,
+                      height: 50,
+                    ),
+                    title: Text(food.name),
                   ),
                 );
               },
@@ -136,6 +127,17 @@ class _BreakFastState extends State<BreakFast> {
           ),
         ],
       ),
+    );
+  }
+
+  void searchedItem(String query) {
+    final suggestions = foodList.where((food) {
+      final foodName = food.name.toLowerCase();
+      final input = query.toLowerCase();
+      return foodName.contains(input);
+    }).toList();
+    setState(
+      () => foods = suggestions,
     );
   }
 }
