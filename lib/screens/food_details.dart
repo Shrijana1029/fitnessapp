@@ -1,10 +1,15 @@
 import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:fitnessapp/screens/food_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:fitnessapp/screens/home.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class FoodList extends StatelessWidget {
-  const FoodList({super.key});
+  final Food food;
+  const FoodList({
+    super.key,
+    required this.food,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +29,18 @@ class FoodList extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                const Text(
-                  'Chickpeas',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                Text(
+                  food.name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Container(
                     padding: const EdgeInsets.all(12),
                     width: double.infinity,
                     height: 200,
-                    child: AnotherCarousel(images: const [
-                      AssetImage('assets/img/chickpeas.jpg'),
-                      AssetImage('assets/img/chckps.jpg')
+                    child: AnotherCarousel(images: [
+                      AssetImage(food.image1),
+                      AssetImage(food.image2),
                     ])),
                 const SizedBox(
                   height: 28,
@@ -44,18 +50,18 @@ class FoodList extends StatelessWidget {
                   children: [
                     _buildMacroIndicator(
                         label: 'Protein',
-                        value: 8.9,
+                        value: food.proteinvalue,
                         maxValue: 100,
                         color: Colors.green),
                     _buildMacroIndicator(
                       label: 'Carbs',
-                      value: 27,
+                      value: food.carbsvalue,
                       maxValue: 100,
                       color: const Color.fromARGB(255, 165, 144, 137),
                     ),
                     _buildMacroIndicator(
                         label: 'Fats',
-                        value: 2.6,
+                        value: food.fatsvalue,
                         maxValue: 100,
                         color: const Color.fromARGB(255, 218, 200, 43))
                   ],
@@ -63,14 +69,15 @@ class FoodList extends StatelessWidget {
                 const SizedBox(
                   height: 28,
                 ),
-                const Card(
-                  color: Color.fromARGB(255, 146, 184, 216),
-                  shadowColor: Color.fromARGB(255, 90, 42, 42),
+                Card(
+                  color: const Color.fromARGB(255, 146, 184, 216),
+                  shadowColor: const Color.fromARGB(255, 90, 42, 42),
                   elevation: 8,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                        'Garbanzo beans, another name for chickpeas, have been cultivated and consumed for thousands of years in Middle Eastern nations.Rich in vitamins, minerals, and fiber, chickpeas may help you control your weight, improve your digestion, and lower your risk of illness, among other health advantages.'),
+                      food.description,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -95,12 +102,12 @@ class FoodList extends StatelessWidget {
                     children: [
                       buildRow(['Nutrients', 'Contain per 100g'],
                           isHeader: true),
-                      buildRow(['Calories', '164 kcal']),
-                      buildRow(['Protein', '8.9 g']),
-                      buildRow(['Total fat :', '2.6 g']),
-                      buildRow(['- Saturated', '0.27 g']),
-                      buildRow(['- Unsaturated', '0.58 g']),
-                      buildRow(['- Monosaturated', '1.16 g']),
+                      buildRow(['Calories', food.calorie]),
+                      buildRow(['Protein', food.protein]),
+                      buildRow(['Total fat :', food.tfat]),
+                      buildRow(['- Saturated', food.sfat]),
+                      buildRow(['- Unsaturated', food.ufat]),
+                      buildRow(['Carbohydrates', food.carbs]),
                     ],
                   ),
                 )

@@ -26,7 +26,6 @@ class _FrontPageState extends State<FrontPage> {
   final List<Widget> _pages = [
     const Home(),
     const BreakFast(),
-    const FoodList(),
     // scrollbottom(context)
     const Profile()
     // const Home()

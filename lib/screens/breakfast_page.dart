@@ -114,12 +114,16 @@ class _BreakFastState extends State<BreakFast> {
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                     leading: Image.asset(
-                      food.image,
+                      food.image1,
                       fit: BoxFit.cover,
                       width: 50,
                       height: 50,
                     ),
                     title: Text(food.name),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FoodList(food: food))),
                   ),
                 );
               },
