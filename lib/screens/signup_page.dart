@@ -25,7 +25,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 237, 234, 215),
+      backgroundColor: const Color.fromARGB(255, 237, 234, 215),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -93,8 +93,8 @@ class _SignupPageState extends State<SignupPage> {
                         displayMessage = message;
                       }
                     }
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('$displayMessage')));
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(displayMessage)));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,

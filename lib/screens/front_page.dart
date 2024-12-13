@@ -1,5 +1,5 @@
 import 'package:fitnessapp/screens/breakfast_page.dart';
-import 'package:fitnessapp/screens/food_list.dart';
+import 'package:fitnessapp/screens/food_details.dart';
 import 'package:fitnessapp/screens/home.dart';
 // import 'package:fitnessapp/screens/login_page.dart';
 import 'package:fitnessapp/screens/profile.dart';
@@ -7,7 +7,7 @@ import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
 
 class FrontPage extends StatefulWidget {
-  FrontPage({super.key});
+  const FrontPage({super.key});
 
   @override
   State<FrontPage> createState() => _FrontPageState();
@@ -26,7 +26,6 @@ class _FrontPageState extends State<FrontPage> {
   final List<Widget> _pages = [
     const Home(),
     const BreakFast(),
-    const FoodList(),
     // scrollbottom(context)
     const Profile()
     // const Home()
@@ -104,7 +103,7 @@ Future scrollbottom(BuildContext context) {
   return showModalBottomSheet(
     context: context,
     backgroundColor: Colors.white,
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     builder: (context) {

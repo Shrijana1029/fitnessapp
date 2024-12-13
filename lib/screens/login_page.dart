@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     .login(email: _email.text, password: _password.text);
                 if (message!.contains('Success')) {
                   navigatorKey.currentState?.pushReplacement(
-                      MaterialPageRoute(builder: (_) => FrontPage()));
+                      MaterialPageRoute(builder: (_) => const FrontPage()));
                 } else if (message ==
                     'Wrong password provided for that user.') {
                   print('wrong password');
