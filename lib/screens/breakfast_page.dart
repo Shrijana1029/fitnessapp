@@ -134,6 +134,7 @@ class _BreakFastState extends State<BreakFast> {
     );
   }
 
+  ///food search///////////
   void searchedItem(String query) {
     final suggestions = foodList.where((food) {
       final foodName = food.name.toLowerCase();

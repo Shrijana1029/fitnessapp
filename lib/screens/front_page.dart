@@ -27,8 +27,8 @@ class _FrontPageState extends State<FrontPage> {
     const Home(),
     const BreakFast(),
     // scrollbottom(context)
-    const Profile()
-    // const Home()
+    // const Profile()
+    const Home()
   ];
 
   @override

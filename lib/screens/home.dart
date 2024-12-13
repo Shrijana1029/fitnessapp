@@ -1,6 +1,7 @@
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:pedometer/pedometer.dart';
 
 // import 'package:fitnessapp/main.dart';
 class Home extends StatefulWidget {
@@ -11,6 +12,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  ///for pedometer concept
+  /////stream handles asynchronous data its not a data type ok
+  late Stream<StepCount> _stepCountStream;
+  String steps = "0";
+
+  @override
+  void initState() {
+    super.initState();
+    _stepCountStream = Pedometer.stepCountStream;
+    _stepCountStream.listen(_onStepCount).onError(_onError);
+  }
+
+  void _onStepCount(StepCount event) {
+    setState(() => steps = event.steps.toString());
+  }
+
+  void _onError(error) {
+    print("Step Count Error: $error");
+  }
+
+  ///to here
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +90,7 @@ class _HomeState extends State<Home> {
                   _cards(
                       name: 'Steps',
                       data: '18',
-                      goal: '12.0000 steps',
+                      goal: '$steps \steps',
                       icon2: Icons.numbers,
                       icon3: Icons.cloud_circle),
                   _cards(
@@ -102,7 +125,7 @@ class _HomeState extends State<Home> {
                           percent: 0.7,
                           radius: 50,
                           center: Text(
-                            '7,500',
+                            '$steps',
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                         ),
