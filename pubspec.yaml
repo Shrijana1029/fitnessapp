@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^5.3.3
   percent_indicator: ^4.2.4
   another_carousel_pro: ^1.0.2
+  carousel_slider: ^5.0.0
+  pedometer: ^4.0.2
 
 dev_dependencies:
   flutter_test:

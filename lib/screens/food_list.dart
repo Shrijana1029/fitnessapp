@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+///declaration section/
+
 class Food {
   final String name;
   final String image1;
@@ -15,6 +17,7 @@ class Food {
   final String sfat;
   final String ufat;
 
+  /// constructor declaration
   const Food({
     required this.name,
     required this.image1,
@@ -31,6 +34,7 @@ class Food {
     required this.ufat,
   });
 }
+////////secton 3//////
 
 const foodList = [
   Food(

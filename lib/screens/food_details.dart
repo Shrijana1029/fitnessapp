@@ -17,7 +17,7 @@ class FoodList extends StatelessWidget {
       appBar: AppBar(
         // backgroundColor: Theme.of(context).colorScheme.primary,
         backgroundColor: const Color.fromARGB(255, 62, 206, 67),
-        title: const Text('Food List'),
+        title: const Text('Food Details'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -34,6 +34,7 @@ class FoodList extends StatelessWidget {
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16),
                 ),
+                /////////CAROUSEL SECTON//////////
                 Container(
                     padding: const EdgeInsets.all(12),
                     width: double.infinity,
@@ -45,6 +46,8 @@ class FoodList extends StatelessWidget {
                 const SizedBox(
                   height: 28,
                 ),
+
+                ///circular percentage indicator
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -83,6 +86,7 @@ class FoodList extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+                ////////NUTRITONAL TABLE///////
                 const Text(
                   'Nutritional Information',
                   textAlign: TextAlign.left,
