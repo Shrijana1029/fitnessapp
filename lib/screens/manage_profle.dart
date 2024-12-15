@@ -1,37 +1,42 @@
+import 'package:fitnessapp/firebase_services/firebase_auth.dart';
+import 'package:fitnessapp/screens/signup_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ManageProfle extends StatefulWidget {
+  const ManageProfle({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ProfilePage(),
-    );
-  }
+  State<ManageProfle> createState() => _ManageProfleState();
 }
 
-class ProfilePage extends StatelessWidget {
+class _ManageProfleState extends State<ManageProfle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).primaryColorLight,
       appBar: AppBar(
-        title: const Text('Profile'),
-        backgroundColor: Colors.black,
-        elevation: 0,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipOval(
+            child: Image.asset(
+              'assets/img/user.jpg',
+              height: 40,
+              width: 40,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.messenger)),
+        ],
+        backgroundColor: const Color.fromARGB(255, 184, 216, 201),
       ),
       body: Column(
         children: [
-          Container(
-            color: Colors.grey[200],
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
+          const Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Column(
               children: [
                 Stack(
                   alignment: Alignment.bottomRight,
@@ -48,15 +53,17 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.edit,
-                        size: 16,
-                        color: Colors.black,
+                    Positioned(
+                      child: CircleAvatar(
+                        radius: 12,
+                        backgroundColor: Colors.black,
+                        child: Icon(
+                          Icons.edit,
+                          size: 16,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -88,27 +95,26 @@ class ProfilePage extends StatelessWidget {
                   subtitle: 'View and edit your account information',
                 ),
                 buildListTile(
-                  icon: Icons.currency_exchange,
-                  title: 'Currency',
-                  subtitle: 'Set display currency',
-                ),
-                buildListTile(
                   icon: Icons.lock_outline,
                   title: 'Change Password',
                   subtitle: 'Change or reset your account password',
                 ),
-                buildListTile(
-                  icon: Icons.code,
-                  title: 'About Us',
-                  subtitle: 'Know more about the developer',
-                ),
-                buildListTile(
-                  icon: Icons.delete_forever,
-                  title: 'Delete Account',
-                  subtitle:
-                      'Permanently remove your account and all of its content',
-                  titleColor: Colors.red,
-                  subtitleColor: Colors.red,
+                /////////delete user account
+                InkWell(
+                  onTap: () async {
+                    await AuthService().deleteUserAccount();
+                    //to navgate after the deletion
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => SignupPage()));
+                  },
+                  child: buildListTile(
+                    icon: Icons.delete_forever,
+                    title: 'Delete Account',
+                    subtitle:
+                        'Permanently remove your account and all of its content',
+                    titleColor: Colors.red,
+                    subtitleColor: Colors.red,
+                  ),
                 ),
                 buildListTile(
                   icon: Icons.logout,
@@ -131,7 +137,7 @@ class ProfilePage extends StatelessWidget {
     Color? subtitleColor,
   }) {
     return ListTile(
-      leading: Icon(icon, color: Colors.black),
+      leading: Icon(icon),
       title: Text(
         title,
         style: TextStyle(
