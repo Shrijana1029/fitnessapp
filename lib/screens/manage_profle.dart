@@ -1,4 +1,7 @@
+import 'package:fitnessapp/firebase_services/firebase_auth.dart';
+import 'package:fitnessapp/screens/signup_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ManageProfle extends StatefulWidget {
   const ManageProfle({super.key});
@@ -96,13 +99,22 @@ class _ManageProfleState extends State<ManageProfle> {
                   title: 'Change Password',
                   subtitle: 'Change or reset your account password',
                 ),
-                buildListTile(
-                  icon: Icons.delete_forever,
-                  title: 'Delete Account',
-                  subtitle:
-                      'Permanently remove your account and all of its content',
-                  titleColor: Colors.red,
-                  subtitleColor: Colors.red,
+                /////////delete user account
+                InkWell(
+                  onTap: () async {
+                    await AuthService().deleteUserAccount();
+                    //to navgate after the deletion
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => SignupPage()));
+                  },
+                  child: buildListTile(
+                    icon: Icons.delete_forever,
+                    title: 'Delete Account',
+                    subtitle:
+                        'Permanently remove your account and all of its content',
+                    titleColor: Colors.red,
+                    subtitleColor: Colors.red,
+                  ),
                 ),
                 buildListTile(
                   icon: Icons.logout,
