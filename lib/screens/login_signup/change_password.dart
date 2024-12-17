@@ -1,7 +1,59 @@
 import 'package:fitnessapp/screens/login_signup/forgot_password.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitnessapp/main.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
+class ChangePasswordScreen extends StatefulWidget {
+  @override
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+}
+
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  final _currentPasswordController = TextEditingController();
+
+  final _newPasswordController = TextEditingController();
+
+  final _auth = FirebaseAuth.instance;
+
+  Future<void> _changePassword() async {
+    try {
+      final user = _auth.currentUser;
+
+      // Step 1: Reauthenticate user
+      final credential = EmailAuthProvider.credential(
+        email: user!.email!,
+        password: _currentPasswordController.text.trim(),
+      );
+
+      ///reauth garda kei problem ayo ki catch garxa and display
+      try {
+        await user.reauthenticateWithCredential(credential);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'wrong-password') {
+          scaffoldKey.currentState
+              ?.showSnackBar(SnackBar(content: Text('wrong password')));
+        } else {
+          scaffoldKey.currentState
+              ?.showSnackBar(SnackBar(content: Text('seeeeeeeee')));
+        }
+        return;
+      }
+
+      // Step 2: Update password garxa
+      await user.updatePassword(_newPasswordController.text);
+      print('sucessfulluy sssssssssssssss');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+      scaffoldKey.currentState?.showSnackBar(
+          SnackBar(content: Text('SUCESFULLY PASWWORD CHNEGD BROO')));
+    } catch (e) {
+      print('error is : ${e.toString()}');
+      scaffoldKey.currentState
+          ?.showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +74,7 @@ class ChangePasswordScreen extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 30, top: 80),
+          padding: const EdgeInsets.only(left: 20, right: 30, top: 20),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.5,
             child: Column(
@@ -34,6 +86,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 TextField(
+                  controller: _currentPasswordController,
                   decoration: InputDecoration(
                     hintText: 'Enter Current password',
                     border: OutlineInputBorder(
@@ -64,6 +117,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 TextField(
+                  controller: _newPasswordController,
                   decoration: InputDecoration(
                     hintText: 'Re-type new password',
                     border: OutlineInputBorder(
@@ -93,7 +147,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle change password logic
+                      _changePassword();
                     },
                     child: Text(
                       'Change password',

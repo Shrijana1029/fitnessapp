@@ -1,153 +1,78 @@
-import 'package:flutter/material.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+// class ChangePasswordPage extends StatefulWidget {
+//   @override
+//   _ChangePasswordPageState createState() => _ChangePasswordPageState();
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class _ChangePasswordPageState extends State<ChangePasswordPage> {
+//   final _currentPasswordController = TextEditingController();
+//   final _newPasswordController = TextEditingController();
+//   final _auth = FirebaseAuth.instance;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ProfilePage(),
-    );
-  }
-}
+//   Future<void> _changePassword() async {
+//     try {
+//       final user = _auth.currentUser;
 
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text('Profile'),
-        backgroundColor: Colors.black,
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Container(
-            color: Colors.grey[200],
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              children: [
-                Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.blue,
-                      child: Text(
-                        'S',
-                        style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.edit,
-                        size: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Shree',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  'shrijana.201330@ncit.edu.np',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                const SizedBox(height: 10),
-                buildListTile(
-                  icon: Icons.info_outline,
-                  title: 'Account Information',
-                  subtitle: 'View and edit your account information',
-                ),
-                buildListTile(
-                  icon: Icons.currency_exchange,
-                  title: 'Currency',
-                  subtitle: 'Set display currency',
-                ),
-                buildListTile(
-                  icon: Icons.lock_outline,
-                  title: 'Change Password',
-                  subtitle: 'Change or reset your account password',
-                ),
-                buildListTile(
-                  icon: Icons.code,
-                  title: 'About Us',
-                  subtitle: 'Know more about the developer',
-                ),
-                buildListTile(
-                  icon: Icons.delete_forever,
-                  title: 'Delete Account',
-                  subtitle:
-                      'Permanently remove your account and all of its content',
-                  titleColor: Colors.red,
-                  subtitleColor: Colors.red,
-                ),
-                buildListTile(
-                  icon: Icons.logout,
-                  title: 'Logout',
-                  subtitle: 'Sign out from this device',
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+//       // Step 1: Reauthenticate user
+//       final credential = EmailAuthProvider.credential(
+//         email: user!.email!,
+//         password: _currentPasswordController.text,
+//       );
+//       try {
+//         await user.reauthenticateWithCredential(credential);
+//       } on FirebaseAuthException catch (e) {
+//         if (e.code == 'wrong-password') {
+//           ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBar(content: Text('Incorrect current password.')),
+//           );
+//         } else {
+//           ScaffoldMessenger.of(context).showSnackBar(
+//             SnackBar(content: Text('Error: ${e.message}')),
+//           );
+//         }
+//         return;
+//       }
 
-  Widget buildListTile({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    Color? titleColor,
-    Color? subtitleColor,
-  }) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.black),
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: 16,
-          color: titleColor ?? Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      subtitle: Text(
-        subtitle,
-        style: TextStyle(
-          fontSize: 14,
-          color: subtitleColor ?? Colors.grey,
-        ),
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-    );
-  }
-}
+//       // Step 2: Update password
+//       await user.updatePassword(_newPasswordController.text);
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Password changed successfully!')),
+//       );
+//     } catch (e) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Error: ${e.toString()}')),
+//       );
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Change Password')),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           children: [
+//             TextField(
+//               controller: _currentPasswordController,
+//               decoration: InputDecoration(labelText: 'Current Password'),
+//               obscureText: true,
+//             ),
+//             TextField(
+//               controller: _newPasswordController,
+//               decoration: InputDecoration(labelText: 'New Password'),
+//               obscureText: true,
+//             ),
+//             SizedBox(height: 20),
+//             ElevatedButton(
+//               onPressed: _changePassword,
+//               child: Text('Change Password'),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
