@@ -2,7 +2,10 @@ import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/food_details.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:fitnessapp/screens/home.dart';
-import 'package:fitnessapp/screens/login_page.dart';
+import 'package:fitnessapp/screens/login_signup/change_password.dart';
+import 'package:fitnessapp/screens/login_signup/forgot_password.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
+import 'package:fitnessapp/screens/manage_profle.dart';
 import 'package:fitnessapp/screens/profile.dart';
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: const LoginPage(),
+        home: LoginPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
@@ -55,8 +58,8 @@ class MyApp extends StatelessWidget {
             ),
           ),
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.deepPurple,
-              primary: const Color.fromARGB(255, 252, 227, 138)),
+              seedColor: Colors.deepPurple, primary: Colors.black),
+          // primary: const Color.fromARGB(255, 252, 227, 138)),
           primaryColorDark:
               const Color.fromARGB(255, 184, 216, 201), //soft green color,
           primaryColorLight: const Color.fromARGB(255, 237, 234, 215),

@@ -1,7 +1,8 @@
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
-import 'package:fitnessapp/screens/signup_page.dart';
+import 'package:fitnessapp/screens/login_signup/change_password.dart';
+import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 class ManageProfle extends StatefulWidget {
   const ManageProfle({super.key});
@@ -94,10 +95,19 @@ class _ManageProfleState extends State<ManageProfle> {
                   title: 'Account Information',
                   subtitle: 'View and edit your account information',
                 ),
-                buildListTile(
-                  icon: Icons.lock_outline,
-                  title: 'Change Password',
-                  subtitle: 'Change or reset your account password',
+                InkWell(
+                  onTap: () {
+                    //to navgate to the change password screen
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangePasswordScreen()));
+                  },
+                  child: buildListTile(
+                    icon: Icons.lock_outline,
+                    title: 'Change Password',
+                    subtitle: 'Change or reset your account password',
+                  ),
                 ),
                 /////////delete user account
                 InkWell(
