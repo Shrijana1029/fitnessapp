@@ -10,6 +10,7 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  bool _obscureText = true;
   final _currentPasswordController = TextEditingController();
 
   final _newPasswordController = TextEditingController();
@@ -27,18 +28,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       );
 
       ///reauth garda kei problem ayo ki catch garxa and display
-      try {
-        await user.reauthenticateWithCredential(credential);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'wrong-password') {
-          scaffoldKey.currentState
-              ?.showSnackBar(SnackBar(content: Text('wrong password')));
-        } else {
-          scaffoldKey.currentState
-              ?.showSnackBar(SnackBar(content: Text('seeeeeeeee')));
-        }
-        return;
-      }
+      await user.reauthenticateWithCredential(credential);
 
       // Step 2: Update password garxa
       await user.updatePassword(_newPasswordController.text);
@@ -86,14 +76,26 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
                 SizedBox(height: 8),
                 TextField(
+                  obscureText: _obscureText,
                   controller: _currentPasswordController,
                   decoration: InputDecoration(
+                    filled: true,
                     hintText: 'Enter Current password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        )),
                   ),
-                  obscureText: true,
                 ),
                 SizedBox(height: 16),
                 Text(
@@ -103,12 +105,24 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 SizedBox(height: 8),
                 TextField(
                   decoration: InputDecoration(
+                    filled: true,
                     hintText: 'Enter New password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        )),
                   ),
-                  obscureText: true,
+                  obscureText: _obscureText,
                 ),
                 SizedBox(height: 16),
                 Text(
@@ -117,14 +131,26 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
                 SizedBox(height: 8),
                 TextField(
+                  obscureText: _obscureText,
                   controller: _newPasswordController,
                   decoration: InputDecoration(
+                    filled: true,
                     hintText: 'Re-type new password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        )),
                   ),
-                  obscureText: true,
                 ),
                 SizedBox(height: 16),
                 GestureDetector(
