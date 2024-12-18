@@ -27,7 +27,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         password: _currentPasswordController.text.trim(),
       );
 
-      ///reauth garda kei problem ayo ki catch garxa and display
       await user.reauthenticateWithCredential(credential);
 
       // Step 2: Update password garxa
@@ -36,7 +35,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
       scaffoldKey.currentState?.showSnackBar(
-          SnackBar(content: Text('SUCESFULLY PASWWORD CHNEGD BROO')));
+          SnackBar(content: Text('SUCESFULLY PASWWORD CHANEGD BROO')));
     } catch (e) {
       print('error is : ${e.toString()}');
       scaffoldKey.currentState
