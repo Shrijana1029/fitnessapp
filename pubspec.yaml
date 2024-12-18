@@ -42,6 +42,7 @@ dependencies:
   carousel_slider: ^5.0.0
   pedometer: ^4.0.2
   persistent_bottom_nav_bar: ^6.2.1
+  cloud_firestore: ^5.5.1
 
 dev_dependencies:
   flutter_test:

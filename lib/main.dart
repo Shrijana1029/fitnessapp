@@ -1,10 +1,12 @@
 import 'package:fitnessapp/screens/breakfast_page.dart';
+import 'package:fitnessapp/screens/extra.dart';
 import 'package:fitnessapp/screens/food_details.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
 import 'package:fitnessapp/screens/login_signup/forgot_password.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
+import 'package:fitnessapp/screens/login_signup/personal_info.dart';
 import 'package:fitnessapp/screens/manage_profle.dart';
 import 'package:fitnessapp/screens/profile.dart';
 // import 'package:fitnessapp/screens/profile.dart';
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: LoginPage(),
+        home: Profile(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(

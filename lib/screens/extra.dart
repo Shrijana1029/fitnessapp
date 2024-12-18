@@ -1,78 +1,50 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-// class ChangePasswordPage extends StatefulWidget {
-//   @override
-//   _ChangePasswordPageState createState() => _ChangePasswordPageState();
-// }
+class EXtra extends StatefulWidget {
+  const EXtra({super.key});
 
-// class _ChangePasswordPageState extends State<ChangePasswordPage> {
-//   final _currentPasswordController = TextEditingController();
-//   final _newPasswordController = TextEditingController();
-//   final _auth = FirebaseAuth.instance;
+  @override
+  State<EXtra> createState() => _EXtraState();
+}
 
-//   Future<void> _changePassword() async {
-//     try {
-//       final user = _auth.currentUser;
+class _EXtraState extends State<EXtra> {
+  CollectionReference collRef =
+      FirebaseFirestore.instance.collection('user_info');
 
-//       // Step 1: Reauthenticate user
-//       final credential = EmailAuthProvider.credential(
-//         email: user!.email!,
-//         password: _currentPasswordController.text,
-//       );
-//       try {
-//         await user.reauthenticateWithCredential(credential);
-//       } on FirebaseAuthException catch (e) {
-//         if (e.code == 'wrong-password') {
-//           ScaffoldMessenger.of(context).showSnackBar(
-//             SnackBar(content: Text('Incorrect current password.')),
-//           );
-//         } else {
-//           ScaffoldMessenger.of(context).showSnackBar(
-//             SnackBar(content: Text('Error: ${e.message}')),
-//           );
-//         }
-//         return;
-//       }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: StreamBuilder<QuerySnapshot>(
+      stream: collRef.snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+        if (streamSnapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (streamSnapshot.hasError) {
+          return Center(child: Text('Error: ${streamSnapshot.error}'));
+        }
+        if (!streamSnapshot.hasData || streamSnapshot.data!.docs.isEmpty) {
+          return Center(child: Text('No data available'));
+        }
 
-//       // Step 2: Update password
-//       await user.updatePassword(_newPasswordController.text);
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Password changed successfully!')),
-//       );
-//     } catch (e) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Error: ${e.toString()}')),
-//       );
-//     }
-//   }
+        // Accessing the QuerySnapshot
+        //age: docs[index].data()['age']
+        final docs = streamSnapshot.data!.docs;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Change Password')),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           children: [
-//             TextField(
-//               controller: _currentPasswordController,
-//               decoration: InputDecoration(labelText: 'Current Password'),
-//               obscureText: true,
-//             ),
-//             TextField(
-//               controller: _newPasswordController,
-//               decoration: InputDecoration(labelText: 'New Password'),
-//               obscureText: true,
-//             ),
-//             SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: _changePassword,
-//               child: Text('Change Password'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+        return ListView.builder(
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            final data = docs[index].data() as Map<String, dynamic>;
+            return ListTile(
+              title: Text(data['name'] ?? 'No Name'),
+              subtitle: Text('Age: ${data['age'] ?? 'Unknown'}'),
+            );
+          },
+        );
+      },
+    ));
+  }
+}
