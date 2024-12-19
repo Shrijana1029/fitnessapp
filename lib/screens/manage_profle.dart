@@ -1,17 +1,51 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 
-class ManageProfle extends StatefulWidget {
-  const ManageProfle({super.key});
+class ManageProfile extends StatefulWidget {
+  const ManageProfile({super.key});
 
   @override
-  State<ManageProfle> createState() => _ManageProfleState();
+  State<ManageProfile> createState() => _ManageProfileState();
 }
 
-class _ManageProfleState extends State<ManageProfle> {
+class _ManageProfileState extends State<ManageProfile> {
+  User? user;
+  DocumentReference<Map<String, dynamic>>? userDoc;
+
+  @override
+  //stores the uid of logged-in user
+  void initState() {
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      //points to user document who is logged in
+      userDoc =
+          FirebaseFirestore.instance.collection('user_info').doc(user!.uid);
+    }
+  }
+
+  Future<Map<String, dynamic>?> fetchUserData() async {
+    if (userDoc != null) {
+      try {
+        //take snapshot of data
+        DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+            await userDoc!.get();
+        if (docSnapshot.exists) {
+          return docSnapshot.data();
+        } else {
+          print('Document does not exist');
+        }
+      } catch (e) {
+        print('Error fetching document: $e');
+      }
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +69,9 @@ class _ManageProfleState extends State<ManageProfle> {
       ),
       body: Column(
         children: [
-          const Padding(
+          Padding(
             padding: const EdgeInsets.all(8.0),
-            child: const Column(
+            child: Column(
               children: [
                 Stack(
                   alignment: Alignment.bottomRight,
@@ -68,12 +102,40 @@ class _ManageProfleState extends State<ManageProfle> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Shree',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                FutureBuilder<Map<String, dynamic>?>(
+                  future: fetchUserData(),
+                  builder: (context, snapshot) {
+                    //wait for future data to avoid null
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    //if data  has error,
+                    else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (snapshot.hasData) {
+                      var userData = snapshot.data!;
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Name: ${userData['name'] ?? 'N/A'}',
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'Email: ${userData['email'] ?? 'N/A'}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            // Add more fields as necessary
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const Center(child: Text('No user data found.'));
+                    }
+                  },
                 ),
                 const SizedBox(height: 5),
                 const Text(
@@ -97,7 +159,7 @@ class _ManageProfleState extends State<ManageProfle> {
                 ),
                 InkWell(
                   onTap: () {
-                    //to navgate to the change password screen
+                    // Navigate to the change password screen
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -113,7 +175,7 @@ class _ManageProfleState extends State<ManageProfle> {
                 InkWell(
                   onTap: () async {
                     await AuthService().deleteUserAccount();
-                    //to navgate after the deletion
+                    // Navigate after the deletion
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => SignupPage()));
                   },

@@ -28,7 +28,7 @@ class _FrontPageState extends State<FrontPage> {
       Home(),
       BreakFast(),
       Profile(),
-      ManageProfle()
+      ManageProfile()
       // Profile(),
     ];
   }

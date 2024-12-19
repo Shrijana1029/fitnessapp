@@ -1,16 +1,41 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService {
   /////////////////REGISTRATION////////////////
   Future<String?> registration({
     required String email,
     required String password,
+    required String firstName,
+    required String lastName,
+    required String phone,
+    required String age,
+    required String height,
+    required String weight,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      // Create user with email and password
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      // Get the user ID from Firebase Authentication and use same for frestore uid
+      String uid = userCredential.user!.uid;
+
+      // Create a user document in Firestore with the same uid
+      await FirebaseFirestore.instance.collection('user_info').doc(uid).set({
+        'name': firstName,
+        'last_name': lastName,
+        'phone': phone,
+        'age': age,
+        'height': height,
+        'weight': weight,
+        'email': email,
+        'created_at': FieldValue.serverTimestamp(),
+      });
+
       return 'Success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -18,10 +43,10 @@ class AuthService {
       } else if (e.code == 'email-already-in-use') {
         return 'The account already exists for that email.';
       } else {
-        return 'shrijana';
+        return 'An error occurred: ${e.message}';
       }
     } catch (e) {
-      return e.toString();
+      return 'An unexpected error occurred: $e';
     }
   }
 
