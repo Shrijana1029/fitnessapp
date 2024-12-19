@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: Profile(),
+        home: LoginPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
