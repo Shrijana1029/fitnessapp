@@ -104,4 +104,45 @@ class AuthService {
       print("No user is currently logged in.");
     }
   }
+
+  ///fetching data
+  Future<Map<String, dynamic>?> fetchUserData(userDoc) async {
+    if (userDoc != null) {
+      try {
+        //take snapshot of data
+        DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+            await userDoc!.get();
+        if (docSnapshot.exists) {
+          return docSnapshot.data();
+        } else {
+          print('Document does not exist');
+        }
+      } catch (e) {
+        print('manage Error fetching document: $e');
+      }
+    }
+    return null;
+  }
+
+  ///updating data to firestore
+  Future<void> updateUserData({
+    required String phone,
+    required String age,
+    required String height,
+    required String weight,
+    userDoc,
+  }) async {
+    try {
+      await userDoc.update({
+        'phone': phone,
+        'age': age,
+        'height': height,
+        'weight': weight,
+        'updated_at': FieldValue.serverTimestamp(),
+      });
+      print('document edited sucessfully');
+    } catch (e) {
+      print('Shrijana Error updating document: $e');
+    }
+  }
 }

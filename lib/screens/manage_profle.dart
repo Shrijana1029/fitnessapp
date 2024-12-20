@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
-import 'package:fitnessapp/screens/login_signup/login_page.dart';
+import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ class ManageProfile extends StatefulWidget {
 }
 
 class _ManageProfileState extends State<ManageProfile> {
+  final AuthService _auth = AuthService();
   User? user;
   DocumentReference<Map<String, dynamic>>? userDoc;
 
@@ -23,28 +24,10 @@ class _ManageProfileState extends State<ManageProfile> {
     super.initState();
     user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      //points to user document who is logged in
+      //  / Points to the 'user_info' document with the user's UID as the document ID.
       userDoc =
           FirebaseFirestore.instance.collection('user_info').doc(user!.uid);
     }
-  }
-
-  Future<Map<String, dynamic>?> fetchUserData() async {
-    if (userDoc != null) {
-      try {
-        //take snapshot of data
-        DocumentSnapshot<Map<String, dynamic>> docSnapshot =
-            await userDoc!.get();
-        if (docSnapshot.exists) {
-          return docSnapshot.data();
-        } else {
-          print('Document does not exist');
-        }
-      } catch (e) {
-        print('Error fetching document: $e');
-      }
-    }
-    return null;
   }
 
   @override
@@ -74,37 +57,9 @@ class _ManageProfileState extends State<ManageProfile> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.blue,
-                      child: Text(
-                        'S',
-                        style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      child: CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Colors.black,
-                        child: Icon(
-                          Icons.edit,
-                          size: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
                 const SizedBox(height: 10),
                 FutureBuilder<Map<String, dynamic>?>(
-                  future: fetchUserData(),
+                  future: _auth.fetchUserData(userDoc),
                   builder: (context, snapshot) {
                     //wait for future data to avoid null
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -120,15 +75,60 @@ class _ManageProfileState extends State<ManageProfile> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Name: ${userData['name'] ?? 'N/A'}',
-                              style: const TextStyle(fontSize: 20),
+                            Center(
+                              child: Stack(
+                                alignment: Alignment.bottomRight,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 40,
+                                    backgroundColor: Colors.blue,
+                                    child: Text(
+                                      '${userData['name'][0].toUpperCase()}',
+                                      style: TextStyle(
+                                        fontSize: 40,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditPersonalinfo()));
+                                    },
+                                    child: Positioned(
+                                      child: CircleAvatar(
+                                        radius: 12,
+                                        backgroundColor: Colors.black,
+                                        child: Icon(
+                                          Icons.edit,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
+
+                            Center(
+                              child: Text(
+                                '${userData['name'] ?? 'N/A'}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+
                             const SizedBox(height: 10),
-                            Text(
-                              'Email: ${userData['email'] ?? 'N/A'}',
-                              style: const TextStyle(fontSize: 16),
-                            ),
+                            Center(
+                              child: Text('${userData['email'] ?? 'N/A'}'),
+                            )
                             // Add more fields as necessary
                           ],
                         ),
@@ -139,13 +139,6 @@ class _ManageProfileState extends State<ManageProfile> {
                   },
                 ),
                 const SizedBox(height: 5),
-                const Text(
-                  'shrijana.201330@ncit.edu.np',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                ),
               ],
             ),
           ),
@@ -191,8 +184,8 @@ class _ManageProfileState extends State<ManageProfile> {
                 ),
                 InkWell(
                   onTap: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()))
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => LoginPage()))
                   },
                   child: buildListTile(
                     icon: Icons.logout,
