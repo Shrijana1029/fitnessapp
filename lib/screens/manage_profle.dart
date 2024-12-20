@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
+import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,34 +57,6 @@ class _ManageProfileState extends State<ManageProfile> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.blue,
-                      child: Text(
-                        'S',
-                        style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      child: CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Colors.black,
-                        child: Icon(
-                          Icons.edit,
-                          size: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
                 const SizedBox(height: 10),
                 FutureBuilder<Map<String, dynamic>?>(
                   future: _auth.fetchUserData(userDoc),
@@ -120,11 +93,11 @@ class _ManageProfileState extends State<ManageProfile> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             EditPersonalinfo()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditPersonalinfo()));
                                     },
                                     child: Positioned(
                                       child: CircleAvatar(

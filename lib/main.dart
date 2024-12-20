@@ -7,7 +7,7 @@ import 'package:fitnessapp/screens/login_signup/change_password.dart';
 import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
 import 'package:fitnessapp/screens/login_signup/forgot_password.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
-import 'package:fitnessapp/screens/login_signup/personal_info.dart';
+
 import 'package:fitnessapp/screens/login_signup/user_info.dart';
 import 'package:fitnessapp/screens/manage_profle.dart';
 import 'package:fitnessapp/screens/profile.dart';

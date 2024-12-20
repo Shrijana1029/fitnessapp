@@ -1,6 +1,6 @@
 import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
-import 'package:fitnessapp/screens/login_signup/personal_info.dart';
+
 import 'package:fitnessapp/screens/login_signup/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
