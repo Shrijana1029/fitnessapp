@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,7 @@ class _ManageProfileState extends State<ManageProfile> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Stack(
+                const Stack(
                   alignment: Alignment.bottomRight,
                   children: [
                     CircleAvatar(
@@ -188,10 +189,16 @@ class _ManageProfileState extends State<ManageProfile> {
                     subtitleColor: Colors.red,
                   ),
                 ),
-                buildListTile(
-                  icon: Icons.logout,
-                  title: 'Logout',
-                  subtitle: 'Sign out from this device',
+                InkWell(
+                  onTap: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()))
+                  },
+                  child: buildListTile(
+                    icon: Icons.logout,
+                    title: 'Logout',
+                    subtitle: 'Sign out from this device',
+                  ),
                 ),
               ],
             ),

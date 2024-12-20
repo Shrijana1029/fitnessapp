@@ -1,6 +1,7 @@
 import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:fitnessapp/screens/login_signup/personal_info.dart';
+import 'package:fitnessapp/screens/login_signup/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
@@ -76,42 +77,6 @@ class _SignupPageState extends State<SignupPage> {
             const SizedBox(
               height: 10,
             ),
-            ////shrijana
-            /// const Text("Legal first name"),
-            _buildfield(
-                _firstname, Icons.lock_outline, 'Enter First Name', false),
-            const SizedBox(height: 15),
-            // Last Name
-            const Text("Legal last name"),
-            const SizedBox(height: 5),
-            _buildfield(
-                _lastname, Icons.lock_outline, 'Enter Last Name', false),
-            const SizedBox(height: 15),
-            // Date of Birth
-            const Text("Date of Birth"),
-            const SizedBox(height: 5),
-            _buildfield(_dob, Icons.lock_outline, 'Enter ', false),
-            const SizedBox(height: 15),
-            const Text("Phone Number"),
-            const SizedBox(height: 5),
-            _buildfield(_phone, Icons.lock_outline, 'Enter ', false),
-            const SizedBox(height: 15),
-            // age
-            const Text("Your Age"),
-            const SizedBox(height: 5),
-            _buildfield(_age, Icons.lock_outline, 'Enter age', false),
-            const SizedBox(height: 15),
-            //height
-            const Text("Your Height"),
-            const SizedBox(height: 5),
-            _buildfield(_height, Icons.lock_outline, 'Enter height', false),
-            const SizedBox(height: 15),
-            //weight
-            const Text("Your weight"),
-            const SizedBox(height: 5),
-            _buildfield(_weight, Icons.lock_outline, 'Enter weight', false),
-            const SizedBox(height: 15),
-
             //######################SIGN UP BUTTON
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -120,18 +85,12 @@ class _SignupPageState extends State<SignupPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     final message = await AuthService().registration(
-                      firstName: _firstname.text,
-                      lastName: _lastname.text,
-                      phone: _phone.text.trim(),
-                      age: _age.text.trim(),
-                      height: _height.text,
-                      weight: _weight.text,
                       email: _email.text,
                       password: _password.text,
                     );
                     if (message!.contains('Success')) {
                       navigatorKey.currentState?.push(MaterialPageRoute(
-                          builder: (context) => const Home()));
+                          builder: (context) => const UserInfo()));
                     } else {
                       if (message.contains('Password is too weak')) {
                         displayMessage = 'Password is too weak';
