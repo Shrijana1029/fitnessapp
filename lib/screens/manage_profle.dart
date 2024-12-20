@@ -17,6 +17,7 @@ class _ManageProfileState extends State<ManageProfile> {
   final AuthService _auth = AuthService();
   User? user;
   DocumentReference<Map<String, dynamic>>? userDoc;
+  // late String userId;
 
   @override
   //stores the uid of logged-in user
@@ -168,7 +169,10 @@ class _ManageProfileState extends State<ManageProfile> {
                 /////////delete user account
                 InkWell(
                   onTap: () async {
+                    ///first delete the firestore then only authentication
+                    await AuthService().deleteUserData(userDoc);
                     await AuthService().deleteUserAccount();
+
                     // Navigate after the deletion
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => SignupPage()));

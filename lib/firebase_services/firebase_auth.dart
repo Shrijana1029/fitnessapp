@@ -89,7 +89,7 @@ class AuthService {
     }
   }
 
-  ///////////ACCOUNT DELETE//////////
+  ///////////ACCOUNT DELETE from authentication//////////
   Future<void> deleteUserAccount() async {
     final user = FirebaseAuth.instance.currentUser;
 
@@ -112,6 +112,7 @@ class AuthService {
         //take snapshot of data
         DocumentSnapshot<Map<String, dynamic>> docSnapshot =
             await userDoc!.get();
+        //snaShot checks whether it has data
         if (docSnapshot.exists) {
           return docSnapshot.data();
         } else {
@@ -143,6 +144,21 @@ class AuthService {
       print('document edited sucessfully');
     } catch (e) {
       print('Shrijana Error updating document: $e');
+    }
+  }
+
+  ///delete document from firestore
+  ///
+  Future<void> deleteUserData(userDoc) async {
+    if (userDoc != null) {
+      try {
+        await userDoc.delete();
+        print('Document deleted successfully of userdata: ${userDoc.uid}');
+      } catch (e) {
+        print('Shrijana Error deleting document: $e');
+      }
+    } else {
+      print('user not found in firestore');
     }
   }
 }
