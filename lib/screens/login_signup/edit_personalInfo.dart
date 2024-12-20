@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
+import 'package:fitnessapp/screens/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -75,6 +76,8 @@ class _EditPersonalinfoState extends State<EditPersonalinfo> {
                     height: _editheight.text,
                     weight: _editweight.text,
                     userDoc: userDoc);
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Home()));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
