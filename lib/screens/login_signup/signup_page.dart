@@ -15,6 +15,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  final AuthService _auth = AuthService();
   final _email = TextEditingController();
   final _usernamecontroller = TextEditingController();
   final _biocontroller = TextEditingController();
@@ -119,7 +120,7 @@ class _SignupPageState extends State<SignupPage> {
                 width: double.infinity, // Full-width button
                 child: ElevatedButton(
                   onPressed: () async {
-                    final message = await AuthService().registration(
+                    final message = await _auth.registration(
                       firstName: _firstname.text,
                       lastName: _lastname.text,
                       phone: _phone.text.trim(),
