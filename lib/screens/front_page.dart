@@ -1,5 +1,6 @@
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/home.dart';
+import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
 import 'package:fitnessapp/screens/manage_profle.dart';
 import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,8 @@ class _FrontPageState extends State<FrontPage> {
       Home(),
       BreakFast(),
       Profile(),
-      ManageProfile()
+      ManageProfile(),
+      // EditPersonalinfo(),
       // Profile(),
     ];
   }
@@ -46,7 +48,7 @@ class _FrontPageState extends State<FrontPage> {
           inactiveColorPrimary: Colors.grey.shade600,
           activeColorPrimary: Colors.purple),
       PersistentBottomNavBarItem(
-          icon: Icon(Icons.calendar_month_rounded),
+          icon: Icon(Icons.home),
           inactiveColorPrimary: Colors.grey,
           title: "Home",
           activeColorPrimary: Colors.purple),

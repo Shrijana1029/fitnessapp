@@ -34,6 +34,7 @@ class AuthService {
         'height': height,
         'weight': weight,
         'email': email,
+        'freeemail': email,
         'created_at': FieldValue.serverTimestamp(),
       });
 
