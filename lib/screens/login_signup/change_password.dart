@@ -65,15 +65,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 30, top: 20),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Current Password',
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 TextField(
                   obscureText: _obscureText,
                   controller: _currentPasswordController,
@@ -96,12 +96,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         )),
                   ),
                 ),
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   'New Password',
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 TextField(
                   decoration: InputDecoration(
                     filled: true,
@@ -123,12 +123,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                   obscureText: _obscureText,
                 ),
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   'Confirm new password',
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 TextField(
                   obscureText: _obscureText,
                   controller: _newPasswordController,
@@ -151,15 +151,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         )),
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ForgotPassword()));
+                            builder: (context) => const ForgotPassword()));
                   },
-                  child: Text(
+                  child: const Text(
                     'Forgot your password?',
                     style: TextStyle(
                       color: Colors.blue,
@@ -167,23 +167,25 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const SizedBox(
+                  height: 25,
+                ),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
                       _changePassword();
                     },
-                    child: Text(
-                      'Change password',
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.amber,
                       padding: EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
+                    ),
+                    child: Text(
+                      'Change password',
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                 ),

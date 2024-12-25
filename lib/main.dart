@@ -3,6 +3,7 @@ import 'package:fitnessapp/screens/extra.dart';
 import 'package:fitnessapp/screens/food_details.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:fitnessapp/screens/home.dart';
+import 'package:fitnessapp/screens/login_signup/calender.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
 import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
 import 'package:fitnessapp/screens/login_signup/forgot_password.dart';

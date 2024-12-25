@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                     color: Colors.teal,
                   ),
                   const SizedBox(
-                    width: 40,
+                    width: 25,
                   ),
                   _buildMacroIndicator(
                     label: "Fat",
@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                     color: Colors.purple,
                   ),
                   const SizedBox(
-                    width: 40,
+                    width: 25,
                   ),
                   _buildMacroIndicator(
                     label: "Protein",
