@@ -1,4 +1,5 @@
 // import 'package:fitnessapp/screens/profile.dart';
+import 'package:fitnessapp/screens/login_signup/calender.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pedometer/pedometer.dart';
@@ -271,6 +272,15 @@ class _HomeState extends State<Home> {
         Text(
           '${maxValue - value} left',
           style: const TextStyle(fontSize: 12, color: Colors.grey),
+        ),
+        IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Calender()),
+            );
+          },
+          icon: const Icon(Icons.calendar_month),
         ),
       ],
     );

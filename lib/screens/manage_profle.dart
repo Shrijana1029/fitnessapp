@@ -167,11 +167,44 @@ class _ManageProfileState extends State<ManageProfile> {
                 ),
                 /////////delete user account
                 InkWell(
-                  onTap: () async {
-                    await AuthService().deleteUserAccount();
-                    // Navigate after the deletion
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => SignupPage()));
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Confirm Action"),
+                          content: const Text(
+                              "Are you sure you want to delete your account?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: const Text("Cancel"),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await AuthService().deleteUserAccount();
+                                // Navigate after the deletion
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignupPage()));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Event removed!")),
+                                );
+                              },
+                              // Add your confirm action logic here
+
+                              // Navigator.of(context).pop(); // Close the dialog
+
+                              child: const Text("Confirm"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: buildListTile(
                     icon: Icons.delete_forever,
