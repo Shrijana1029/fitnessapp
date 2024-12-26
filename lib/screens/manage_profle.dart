@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
@@ -5,6 +6,7 @@ import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 class ManageProfile extends StatefulWidget {
   const ManageProfile({super.key});
@@ -18,6 +20,16 @@ class _ManageProfileState extends State<ManageProfile> {
   User? user;
   DocumentReference<Map<String, dynamic>>? userDoc;
   // late String userId;
+
+  sendNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: 1,
+          channelKey: 'basic',
+          title: 'Shrjana',
+          body: 'Flutter developer '),
+    );
+  }
 
   @override
   //stores the uid of logged-in user
@@ -147,10 +159,15 @@ class _ManageProfileState extends State<ManageProfile> {
             child: ListView(
               children: [
                 const SizedBox(height: 10),
-                buildListTile(
-                  icon: Icons.info_outline,
-                  title: 'Account Information',
-                  subtitle: 'View and edit your account information',
+                InkWell(
+                  onTap: () {
+                    sendNotification();
+                  },
+                  child: buildListTile(
+                    icon: Icons.info_outline,
+                    title: 'Account Information',
+                    subtitle: 'View and edit your account information',
+                  ),
                 ),
                 InkWell(
                   onTap: () {
@@ -187,9 +204,8 @@ class _ManageProfileState extends State<ManageProfile> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => LoginPage()))
+                  onTap: () {
+                    AuthService.logout();
                   },
                   child: buildListTile(
                     icon: Icons.logout,

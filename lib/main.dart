@@ -1,3 +1,5 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:fitnessapp/get-api/data_get.dart';
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/extra.dart';
 import 'package:fitnessapp/screens/food_details.dart';
@@ -23,13 +25,35 @@ void main() async {
   //connecting project with firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        channelKey: 'basic',
+        channelName: 'fitness notification',
+        channelDescription: 'Notification Channel for fitness app')
+  ]);
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      //to request for notification allow from user, if already allowed , it doesnt send request for notification allowing
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,7 +61,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: LoginPage(),
+        home: DataGet(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
