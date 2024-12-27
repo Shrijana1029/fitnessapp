@@ -161,7 +161,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                         ),
                         Expanded(
                           child: TodayTargetCell(
-                            icon: "assets/img/walking.png",
+                            icon: "assets/img/walki.png",
                             value: steps,
                             title: "Foot Steps",
                           ),
