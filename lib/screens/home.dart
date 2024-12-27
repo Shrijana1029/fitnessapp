@@ -107,64 +107,6 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 40,
               ),
-              ////////////// STEPS WALKED////////////////
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).primaryColorDark,
-                ),
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        child: CircularPercentIndicator(
-                          lineWidth: 20,
-                          progressColor: Colors.green,
-                          percent: 0.7,
-                          radius: 50,
-                          center: Text(
-                            '$steps',
-                            style: Theme.of(context).textTheme.displaySmall,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Column(
-                      children: [
-                        Text('Steps Walked',
-                            style: Theme.of(context).textTheme.displaySmall),
-                        const SizedBox(height: 4),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Icon(
-                              Icons.directions_walk,
-                              color: Colors.blue,
-                            ),
-                            SizedBox(width: 4),
-                            Text('350 Calories'),
-                          ],
-                        ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Icon(
-                              Icons.timer,
-                              color: Colors.blue,
-                            ),
-                            SizedBox(width: 4),
-                            Text('12,000'),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
 
               const SizedBox(height: 28),
               /////////////////STATISTICS PART////////////////

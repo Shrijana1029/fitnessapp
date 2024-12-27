@@ -1,3 +1,6 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:fitnessapp/firebase_services/notification_services.dart';
+import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
@@ -15,7 +18,6 @@ class FrontPage extends StatefulWidget {
 
 class _FrontPageState extends State<FrontPage> {
   int selectedIndex = 0;
-
   void _handleSelectedIndex(int index) {
     setState(() {
       selectedIndex = index;
@@ -26,9 +28,9 @@ class _FrontPageState extends State<FrontPage> {
       PersistentTabController(initialIndex: 0);
   List<Widget> _buildScreens() {
     return [
-      Home(),
+      ActivityTracker(),
       BreakFast(),
-      Profile(),
+      Home(),
       ManageProfile(),
       // EditPersonalinfo(),
       // Profile(),
@@ -59,6 +61,18 @@ class _FrontPageState extends State<FrontPage> {
           activeColorPrimary: Colors.purple),
     ];
   }
+
+  // NotificationServices _notificationServices = NotificationServices();
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   _notificationServices.requestNotificationPermissons();
+  //   _notificationServices.firebaseInit();
+  //   _notificationServices.getDeviceToken().then((value) {
+  //     print("Token number is : $value");
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

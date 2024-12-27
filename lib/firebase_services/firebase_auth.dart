@@ -5,6 +5,16 @@ String? uid;
 String? emaill;
 
 class AuthService {
+/////////////////LOGOUT USER//////////
+  static Future<void> logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      print('Sucessfully logged out');
+    } catch (e) {
+      print('An error occurred while logging out: $e');
+    }
+  }
+
   /////////////////REGISTRATION////////////////
   Future<String?> registration({
     required String email,
@@ -89,7 +99,7 @@ class AuthService {
     }
   }
 
-  ///////////ACCOUNT DELETE//////////
+  ///////////ACCOUNT DELETE from authentication//////////
   Future<void> deleteUserAccount() async {
     final user = FirebaseAuth.instance.currentUser;
 
@@ -105,6 +115,21 @@ class AuthService {
     }
   }
 
+  ///delete document from firestore
+
+  Future<void> deleteUserData(userDoc) async {
+    if (userDoc != null) {
+      try {
+        await userDoc.delete();
+        print('Document deleted successfully of userdata: ${userDoc.uid}');
+      } catch (e) {
+        print('Shrijana Error deleting document: $e');
+      }
+    } else {
+      print('user not found in firestore');
+    }
+  }
+
   ///fetching data
   Future<Map<String, dynamic>?> fetchUserData(userDoc) async {
     if (userDoc != null) {
@@ -112,6 +137,7 @@ class AuthService {
         //take snapshot of data
         DocumentSnapshot<Map<String, dynamic>> docSnapshot =
             await userDoc!.get();
+        //snaShot checks whether it has data
         if (docSnapshot.exists) {
           return docSnapshot.data();
         } else {
