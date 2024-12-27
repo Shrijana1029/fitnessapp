@@ -6,7 +6,7 @@ import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 
 class ManageProfile extends StatefulWidget {
   const ManageProfile({super.key});
@@ -20,16 +20,6 @@ class _ManageProfileState extends State<ManageProfile> {
   User? user;
   DocumentReference<Map<String, dynamic>>? userDoc;
   // late String userId;
-
-  sendNotification() {
-    AwesomeNotifications().createNotification(
-      content: NotificationContent(
-          id: 1,
-          channelKey: 'basic',
-          title: 'Shrjana',
-          body: 'Flutter developer '),
-    );
-  }
 
   @override
   //stores the uid of logged-in user
@@ -160,9 +150,7 @@ class _ManageProfileState extends State<ManageProfile> {
               children: [
                 const SizedBox(height: 10),
                 InkWell(
-                  onTap: () {
-                    sendNotification();
-                  },
+                  onTap: () {},
                   child: buildListTile(
                     icon: Icons.info_outline,
                     title: 'Account Information',

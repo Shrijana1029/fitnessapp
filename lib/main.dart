@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fitnessapp/get-api/data_get.dart';
+import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/extra.dart';
 import 'package:fitnessapp/screens/food_details.dart';
@@ -28,10 +29,24 @@ void main() async {
   await Firebase.initializeApp();
   AwesomeNotifications().initialize(null, [
     NotificationChannel(
-        channelKey: 'basic',
-        channelName: 'fitness notification',
-        channelDescription: 'Notification Channel for fitness app')
+      channelKey: 'basic',
+      channelName: 'fitness notification',
+      channelDescription: 'Notification Channel for fitness app',
+      playSound: true,
+    )
   ]);
+  // Check if user has granted notification permission globally
+  bool isAllowedToSendNotification =
+      await AwesomeNotifications().isNotificationAllowed();
+  if (!isAllowedToSendNotification) {
+    AwesomeNotifications().requestPermissionToSendNotifications();
+  }
+  // Listen to notification taps/actions globally
+  // AwesomeNotifications().actionStream.listen((receivedNotification) {
+  //   print('Notification tapped: ${receivedNotification.payload}');
+  //   // Navigate or perform actions based on notification
+  // });
+
   runApp(const MyApp());
 }
 
@@ -44,16 +59,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  @override
-  void initState() {
-    super.initState();
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      //to request for notification allow from user, if already allowed , it doesnt send request for notification allowing
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: Calender(),
+        home: FrontPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
