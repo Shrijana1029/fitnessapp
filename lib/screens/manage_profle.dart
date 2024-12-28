@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
+import 'package:fitnessapp/main.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
 import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
@@ -9,7 +10,14 @@ import 'package:flutter/material.dart';
 // import 'package:awesome_notifications/awesome_notifications.dart';
 
 class ManageProfile extends StatefulWidget {
-  const ManageProfile({super.key});
+  String name;
+  String frontLetter;
+  String email;
+  ManageProfile(
+      {super.key,
+      required this.name,
+      required this.email,
+      required this.frontLetter});
 
   @override
   State<ManageProfile> createState() => _ManageProfileState();
@@ -36,19 +44,15 @@ class _ManageProfileState extends State<ManageProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColorLight,
+      backgroundColor: Theme.of(context).primaryColorDark,
       appBar: AppBar(
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ClipOval(
-            child: Image.asset(
-              'assets/img/user.jpg',
-              height: 40,
-              width: 40,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+                onPressed: () {
+                  navigatorKey.currentState?.pop();
+                },
+                icon: Icon(Icons.arrow_back))),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.messenger)),
         ],
@@ -61,85 +65,68 @@ class _ManageProfileState extends State<ManageProfile> {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                FutureBuilder<Map<String, dynamic>?>(
-                  future: _auth.fetchUserData(userDoc),
-                  builder: (context, snapshot) {
-                    //wait for future data to avoid null
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    //if data  has error,
-                    else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else if (snapshot.hasData) {
-                      var userData = snapshot.data!;
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Stack(
+                          alignment: Alignment.bottomRight,
                           children: [
-                            Center(
-                              child: Stack(
-                                alignment: Alignment.bottomRight,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 40,
-                                    backgroundColor: Colors.blue,
-                                    child: Text(
-                                      '${userData['name'][0].toUpperCase()}',
-                                      style: TextStyle(
-                                        fontSize: 40,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditPersonalinfo()));
-                                    },
-                                    child: Positioned(
-                                      child: CircleAvatar(
-                                        radius: 12,
-                                        backgroundColor: Colors.black,
-                                        child: Icon(
-                                          Icons.edit,
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-
-                            Center(
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundColor: Colors.blue,
                               child: Text(
-                                '${userData['name'] ?? 'N/A'}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
+                                '${widget.frontLetter ?? 'N/A'}',
+                                style: const TextStyle(
+                                  fontSize: 40,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-
-                            const SizedBox(height: 10),
-                            Center(
-                              child: Text('${userData['email'] ?? 'N/A'}'),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditPersonalinfo()));
+                              },
+                              child: Positioned(
+                                child: CircleAvatar(
+                                  radius: 12,
+                                  backgroundColor: Colors.black,
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             )
-                            // Add more fields as necessary
                           ],
                         ),
-                      );
-                    } else {
-                      return const Center(child: Text('No user data found.'));
-                    }
-                  },
+                      ),
+
+                      Center(
+                        child: Text(
+                          '${widget.name ?? 'N/A'}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+                      Center(
+                        child: Text('${widget.email}'),
+                      )
+                      // Add more fields as necessary
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 5),
               ],

@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: FrontPage(),
+        home: LoginPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(

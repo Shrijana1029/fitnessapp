@@ -56,7 +56,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
     var media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColorLight,
+        backgroundColor: Theme.of(context).primaryColorDark,
         centerTitle: true,
         elevation: 0,
         leading: InkWell(
@@ -83,7 +83,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColorLight,
+            color: Theme.of(context).primaryColorDark,
           ),
           padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
           child: Column(
@@ -93,7 +93,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColorDark,
+                  color: Theme.of(context).primaryColorLight,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(
@@ -178,7 +178,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).primaryColorDark,
+                  color: Theme.of(context).primaryColorLight,
                 ),
                 padding: const EdgeInsets.all(12),
                 child: Row(

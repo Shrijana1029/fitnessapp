@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fitnessapp/firebase_services/notification_services.dart';
+import 'package:fitnessapp/profile/profile_view.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/home.dart';
@@ -31,7 +32,7 @@ class _FrontPageState extends State<FrontPage> {
       ActivityTracker(),
       BreakFast(),
       Home(),
-      ManageProfile(),
+      ProfileView()
       // EditPersonalinfo(),
       // Profile(),
     ];
