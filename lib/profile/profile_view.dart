@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
-import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:fitnessapp/screens/manage_profle.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +9,7 @@ import 'package:fitnessapp/profile/round_button.dart';
 import 'package:fitnessapp/profile/setting_row.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/profile/title_subtitle_cell.dart';
-
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -58,7 +54,7 @@ class _ProfileViewState extends State<ProfileView> {
     },
     {"image": "assets/img1/img/p_setting.png", "name": "Setting", "tagi": "7"},
   ];
-  AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
   User? user;
   DocumentReference<Map<String, dynamic>>? userDoc;
   @override
@@ -86,7 +82,7 @@ class _ProfileViewState extends State<ProfileView> {
           style: TextStyle(
               color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more))],
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.more))],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -102,7 +98,7 @@ class _ProfileViewState extends State<ProfileView> {
                     return Text("Error: ${snapshot.error}");
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasData && snapshot.data != null) {
                     var userData = snapshot.data!;
                     return Column(
@@ -135,7 +131,7 @@ class _ProfileViewState extends State<ProfileView> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Text(
@@ -193,7 +189,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 subtitle: "Height",
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
@@ -202,7 +198,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 subtitle: "Weight",
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
                             Expanded(
@@ -219,7 +215,7 @@ class _ProfileViewState extends State<ProfileView> {
                       ],
                     );
                   } else {
-                    return Text("No user data found.");
+                    return const Text("No user data found.");
                   }
                 },
               ),
@@ -314,21 +310,22 @@ class _ProfileViewState extends State<ProfileView> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ActivityTracker()),
+                                      builder: (context) =>
+                                          const ActivityTracker()),
                                 );
                                 break;
                               case "6": // Navigate to Privacy Policy
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
+                                      builder: (context) => const LoginPage()),
                                 );
                                 break;
                               case "7": // Navigate to Settings
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
+                                      builder: (context) => const LoginPage()),
                                 );
                                 break;
                               default:

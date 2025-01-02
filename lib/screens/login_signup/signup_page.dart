@@ -1,4 +1,3 @@
-import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
 
 import 'package:fitnessapp/screens/login_signup/user_info.dart';

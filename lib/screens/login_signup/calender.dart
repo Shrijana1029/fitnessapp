@@ -1,6 +1,8 @@
+import 'dart:convert'; // For JSON encoding and decoding
 import 'package:fitnessapp/screens/login_signup/event.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Calender extends StatefulWidget {
   const Calender({super.key});
@@ -12,15 +14,48 @@ class Calender extends StatefulWidget {
 class _CalenderState extends State<Calender> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  TextEditingController _eventcontroller = TextEditingController();
+  final TextEditingController _eventcontroller = TextEditingController();
   Map<DateTime, List<Event>> events = {};
   late final ValueNotifier<List<Event>> _selectedEvents;
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = _focusedDay;
+    _selectedDay = _normalizeDate(_focusedDay);
     _selectedEvents = ValueNotifier(_getsEventsForDay(_selectedDay!));
+    _loadEventsFromPreferences(); // Load events from SharedPreferences
+  }
+
+  /// Normalize DateTime (remove time portion)
+  DateTime _normalizeDate(DateTime date) {
+    return DateTime(date.year, date.month, date.day);
+  }
+
+  Future<void> _saveEventsToPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final encodedEvents = events.map((key, value) {
+      final formattedKey = key.toIso8601String(); // Convert DateTime to String
+      final eventList = value.map((event) => event.toJson()).toList();
+      return MapEntry(formattedKey, eventList);
+    });
+    await prefs.setString('events', jsonEncode(encodedEvents));
+  }
+
+  Future<void> _loadEventsFromPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedEvents = prefs.getString('events');
+    if (savedEvents != null) {
+      final decodedEvents = jsonDecode(savedEvents) as Map<String, dynamic>;
+      events = decodedEvents.map((key, value) {
+        final parsedKey = _normalizeDate(DateTime.parse(key)); // Normalize key
+        final eventList =
+            (value as List).map((e) => Event.fromJson(e)).toList();
+        return MapEntry(parsedKey, eventList);
+      });
+      setState(() {
+        _selectedEvents.value = _getsEventsForDay(_selectedDay!);
+      });
+    }
   }
 
   void _onselected(DateTime selectedDay, DateTime focusedDay) {
@@ -34,8 +69,7 @@ class _CalenderState extends State<Calender> {
   }
 
   List<Event> _getsEventsForDay(DateTime day) {
-    // Retrieve all events from the selected day
-    return events[day] ?? [];
+    return events[_normalizeDate(day)] ?? [];
   }
 
   @override
@@ -62,31 +96,27 @@ class _CalenderState extends State<Calender> {
                     ElevatedButton(
                       onPressed: () {
                         if (_eventcontroller.text.isNotEmpty) {
-                          // If the selected day already has events, append to the list
-                          if (events[_selectedDay] != null) {
-                            events[_selectedDay]!
-                                .add(Event(_eventcontroller.text));
-                          } else {
-                            // Otherwise, create a new list for the selected day
-                            events[_selectedDay!] = [
-                              Event(_eventcontroller.text)
-                            ];
-                          }
                           setState(() {
+                            if (events[_normalizeDate(_selectedDay!)] != null) {
+                              events[_normalizeDate(_selectedDay!)]!
+                                  .add(Event(_eventcontroller.text));
+                            } else {
+                              events[_normalizeDate(_selectedDay!)] = [
+                                Event(_eventcontroller.text)
+                              ];
+                            }
+
                             _selectedEvents.value =
                                 _getsEventsForDay(_selectedDay!);
                             _eventcontroller.clear();
                           });
 
-                          // Clear the text field and update the events for the selected day
+                          _saveEventsToPreferences(); // Save to SharedPreferences
                           Navigator.of(context).pop();
-                          _eventcontroller.clear();
-                          _selectedEvents.value =
-                              _getsEventsForDay(_selectedDay!);
                         }
                       },
                       child: const Text('Submit'),
-                    ),
+                    )
                   ],
                 );
               },
@@ -154,12 +184,22 @@ class _CalenderState extends State<Calender> {
                               TextButton(
                                 onPressed: () {
                                   setState(() {
-                                    // ignore: collection_methods_unrelated_type
-                                    events[_selectedDay]!.removeAt(index);
+                                    events[_normalizeDate(_selectedDay!)]!
+                                        .removeAt(index);
+                                    if (events[_normalizeDate(_selectedDay!)]!
+                                        .isEmpty) {
+                                      events.remove(
+                                          _normalizeDate(_selectedDay!));
+                                    }
+                                    _selectedEvents.value =
+                                        _getsEventsForDay(_selectedDay!);
+                                    _saveEventsToPreferences(); // Save updated events
                                   });
-                                  // Add your confirm action logic here
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
+
+                                  // Close the dialog
+                                  Navigator.of(context).pop();
+
+                                  // Show a success message
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content: Text("Event removed!")),
@@ -181,15 +221,13 @@ class _CalenderState extends State<Calender> {
                             BorderRadius.circular(10), // Rounded edges
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black
-                                .withOpacity(0.7), // Dark shadow for depth
-                            offset: const Offset(4, 4), // Bottom-right shadow
-                            blurRadius: 6, // Smoothness of the shadow
+                            color: Colors.black.withOpacity(0.7),
+                            offset: const Offset(4, 4),
+                            blurRadius: 6,
                           ),
                           BoxShadow(
-                            color: Colors.white
-                                .withOpacity(0.5), // Light shadow for highlight
-                            offset: const Offset(-4, -4), // Top-left shadow
+                            color: Colors.white.withOpacity(0.5),
+                            offset: const Offset(-4, -4),
                             blurRadius: 6,
                           ),
                         ],

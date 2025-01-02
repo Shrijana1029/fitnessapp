@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
+
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
 }
@@ -33,9 +35,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       await user.updatePassword(_newPasswordController.text);
       print('sucessfulluy sssssssssssssss');
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
       scaffoldKey.currentState?.showSnackBar(
-          SnackBar(content: Text('SUCESFULLY PASWWORD CHANEGD BROO')));
+          const SnackBar(content: Text('SUCESFULLY PASWWORD CHANEGD BROO')));
     } catch (e) {
       print('error is : ${e.toString()}');
       scaffoldKey.currentState
@@ -47,12 +49,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Change Password',
           style: TextStyle(fontSize: 25),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -64,7 +66,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 30, top: 20),
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +180,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.amber,
-                      padding: EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -194,7 +196,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           ),
         ),
       ),
-      backgroundColor: Color(0xFFF5EED5), // Background color
+      backgroundColor: const Color(0xFFF5EED5), // Background color
     );
   }
 }
