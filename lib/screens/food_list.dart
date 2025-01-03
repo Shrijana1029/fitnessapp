@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 ///declaration section/
+library;
 
 class Food {
   final String name;

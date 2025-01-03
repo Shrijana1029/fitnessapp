@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
                   _cards(
                       name: 'Steps',
                       data: '18',
-                      goal: '$steps \steps',
+                      goal: '$steps steps',
                       icon2: Icons.numbers,
                       icon3: Icons.cloud_circle),
                   _cards(
@@ -177,6 +177,15 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Calender()),
+                  );
+                },
+                icon: const Icon(Icons.calendar_month),
+              ),
             ],
           ),
         ),
@@ -214,15 +223,6 @@ class _HomeState extends State<Home> {
         Text(
           '${maxValue - value} left',
           style: const TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-        IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Calender()),
-            );
-          },
-          icon: const Icon(Icons.calendar_month),
         ),
       ],
     );

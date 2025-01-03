@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
@@ -52,7 +51,7 @@ class _ManageProfileState extends State<ManageProfile> {
                 onPressed: () {
                   navigatorKey.currentState?.pop();
                 },
-                icon: Icon(Icons.arrow_back))),
+                icon: const Icon(Icons.arrow_back))),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.messenger)),
         ],
@@ -78,7 +77,7 @@ class _ManageProfileState extends State<ManageProfile> {
                               radius: 40,
                               backgroundColor: Colors.blue,
                               child: Text(
-                                '${widget.frontLetter ?? 'N/A'}',
+                                widget.frontLetter ?? 'N/A',
                                 style: const TextStyle(
                                   fontSize: 40,
                                   color: Colors.white,
@@ -92,9 +91,9 @@ class _ManageProfileState extends State<ManageProfile> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            EditPersonalinfo()));
+                                            const EditPersonalinfo()));
                               },
-                              child: Positioned(
+                              child: const Positioned(
                                 child: CircleAvatar(
                                   radius: 12,
                                   backgroundColor: Colors.black,
@@ -112,8 +111,8 @@ class _ManageProfileState extends State<ManageProfile> {
 
                       Center(
                         child: Text(
-                          '${widget.name ?? 'N/A'}',
-                          style: TextStyle(
+                          widget.name ?? 'N/A',
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
                           ),
@@ -122,7 +121,7 @@ class _ManageProfileState extends State<ManageProfile> {
 
                       const SizedBox(height: 10),
                       Center(
-                        child: Text('${widget.email}'),
+                        child: Text(widget.email),
                       )
                       // Add more fields as necessary
                     ],
@@ -150,7 +149,8 @@ class _ManageProfileState extends State<ManageProfile> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ChangePasswordScreen()));
+                            builder: (context) =>
+                                const ChangePasswordScreen()));
                   },
                   child: buildListTile(
                     icon: Icons.lock_outline,
@@ -185,7 +185,8 @@ class _ManageProfileState extends State<ManageProfile> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SignupPage()));
+                                        builder: (context) =>
+                                            const SignupPage()));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text("Event removed!")),
@@ -203,8 +204,10 @@ class _ManageProfileState extends State<ManageProfile> {
                     );
 
                     // Navigate after the deletion
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => SignupPage()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignupPage()));
                   },
                   child: buildListTile(
                     icon: Icons.delete_forever,

@@ -38,7 +38,7 @@ class TodayTargetCell extends StatelessWidget {
             children: [
               Text(
                 value,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 14),

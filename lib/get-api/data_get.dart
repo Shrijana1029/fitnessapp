@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class DataGet extends StatefulWidget {
-  const DataGet({Key? key}) : super(key: key);
+  const DataGet({super.key});
 
   @override
   _DataGetState createState() => _DataGetState();
@@ -34,7 +34,7 @@ class _DataGetState extends State<DataGet> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Api Course'),
+        title: const Text('Api Course'),
       ),
       body: Column(
         children: [
@@ -43,7 +43,7 @@ class _DataGetState extends State<DataGet> {
               future: getUserApi(),
               builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
                 if (!snapshot.hasData) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else {
                   return ListView.builder(
                       itemCount: userList.length,
@@ -88,8 +88,7 @@ class _DataGetState extends State<DataGet> {
 
 class ReusbaleRow extends StatelessWidget {
   String title, value;
-  ReusbaleRow({Key? key, required this.title, required this.value})
-      : super(key: key);
+  ReusbaleRow({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
