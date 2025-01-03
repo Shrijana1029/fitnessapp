@@ -6,12 +6,12 @@ import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:fitnessapp/screens/manage_profle.dart';
 import 'package:flutter/material.dart';
-import 'package:fitnessapp/profile/round_button.dart';
-import 'package:fitnessapp/profile/setting_row.dart';
+import 'package:fitnessapp/screens/profile/round_button.dart';
+import 'package:fitnessapp/screens/profile/setting_row.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
-import 'package:fitnessapp/profile/title_subtitle_cell.dart';
+import 'package:fitnessapp/screens/profile/title_subtitle_cell.dart';
 
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
@@ -302,7 +302,7 @@ class _ProfileViewState extends State<ProfileView> {
                       shrinkWrap: true,
                       itemCount: otherArr.length,
                       itemBuilder: (context, index) {
-                        var iObj = otherArr[index];
+                        Map<String, dynamic> iObj = otherArr[index];
 
                         return SettingRow(
                           icon: iObj["image"].toString(),
