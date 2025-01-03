@@ -52,6 +52,8 @@ dependencies:
   animated_toggle_switch: ^0.6.2
   dotted_line: ^3.2.3
   readmore: ^3.0.0
+  shared_preferences: ^2.3.4
+
 
 dev_dependencies:
   flutter_test:
