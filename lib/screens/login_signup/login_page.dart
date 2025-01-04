@@ -3,6 +3,7 @@ import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -79,6 +80,9 @@ class _LoginPageState extends State<LoginPage> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
+                final SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
+                sharedPreferences.setString('email', _email.text);
                 final message = await AuthService()
                     .login(email: _email.text, password: _password.text);
                 if (message!.contains('Success')) {
