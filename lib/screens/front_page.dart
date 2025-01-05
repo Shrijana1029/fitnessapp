@@ -5,8 +5,10 @@ import 'package:fitnessapp/screens/profile/profile_view.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/home.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FrontPage extends StatefulWidget {
   const FrontPage({super.key});
@@ -72,6 +74,28 @@ class _FrontPageState extends State<FrontPage> {
   //     print("Token number is : $value");
   //   });
   // }
+  String finalEmail = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.microtask(() async {
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      var receivedEmail = sharedPreferences.getString('email');
+
+      if (receivedEmail == null || receivedEmail.isEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      } else {
+        setState(() {
+          finalEmail = receivedEmail;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
