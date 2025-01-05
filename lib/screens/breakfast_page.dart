@@ -32,32 +32,35 @@ class _BreakFastState extends State<BreakFast> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColorLight,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.search, color: Colors.grey),
-                  Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Search...',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(10),
+              height: 60,
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColorLight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search, color: Colors.grey),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Search...',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(10),
+                        ),
+                        onChanged: searchedItem,
                       ),
-                      onChanged: searchedItem,
                     ),
-                  ),
-                  const Icon(Icons.filter_list, color: Colors.grey),
-                ],
+                    const Icon(Icons.filter_list, color: Colors.grey),
+                  ],
+                ),
               ),
             ),
           ),
           //////////////////RECENT AND FAVORITES///////////
           Container(
-            height: 50,
+            height: 60,
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColorLight,
@@ -110,7 +113,7 @@ class _BreakFastState extends State<BreakFast> {
               itemBuilder: (context, index) {
                 final food = foods[index];
                 return Padding(
-                  padding: const EdgeInsets.all(6.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 119, 170, 144),
@@ -121,7 +124,7 @@ class _BreakFastState extends State<BreakFast> {
                       borderRadius: BorderRadius.circular(10), // Add this line
                     ),
                     child: Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(15),
                       child: ListTile(
                         leading: Container(
                           decoration: BoxDecoration(
