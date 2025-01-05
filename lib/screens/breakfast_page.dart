@@ -32,36 +32,39 @@ class _BreakFastState extends State<BreakFast> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColorLight,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.search, color: Colors.grey),
-                  Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Search...',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(10),
+              height: 60,
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColorLight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search, color: Colors.grey),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Search...',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(10),
+                        ),
+                        onChanged: searchedItem,
                       ),
-                      onChanged: searchedItem,
                     ),
-                  ),
-                  const Icon(Icons.filter_list, color: Colors.grey),
-                ],
+                    const Icon(Icons.filter_list, color: Colors.grey),
+                  ],
+                ),
               ),
             ),
           ),
           //////////////////RECENT AND FAVORITES///////////
           Container(
-            height: 50,
+            height: 60,
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColorLight,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               children: [
@@ -107,23 +110,44 @@ class _BreakFastState extends State<BreakFast> {
           Expanded(
             child: ListView.builder(
               itemCount: foods.length,
-              // padding: const EdgeInsets.all(20),
               itemBuilder: (context, index) {
                 final food = foods[index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    leading: Image.asset(
-                      food.image1,
-                      fit: BoxFit.cover,
-                      width: 50,
-                      height: 50,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 119, 170, 144),
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 66, 31, 31),
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(10), // Add this line
                     ),
-                    title: Text(food.name),
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FoodList(food: food))),
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      child: ListTile(
+                        leading: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(30), // Add this line
+                          ),
+                          child: Image.asset(
+                            food.image1,
+                            fit: BoxFit.cover,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        title: Text(food.name),
+                        trailing: const Icon(Icons.favorite_border),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FoodList(food: food),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 );
               },
