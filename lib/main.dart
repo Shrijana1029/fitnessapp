@@ -1,8 +1,13 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:fitnessapp/screens/activity/activity_tracking.dart';
+import 'package:fitnessapp/screens/front_page.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
+
 import 'package:fitnessapp/get-api/data_get.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/extra.dart';
+
 import 'package:fitnessapp/screens/food_details.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:fitnessapp/screens/home.dart';
@@ -14,6 +19,7 @@ import 'package:fitnessapp/screens/login_signup/login_page.dart';
 
 import 'package:fitnessapp/screens/login_signup/user_info.dart';
 import 'package:fitnessapp/screens/manage_profle.dart';
+
 import 'package:fitnessapp/screens/profile.dart';
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +73,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: LoginPage(),
+        home: const FrontPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(

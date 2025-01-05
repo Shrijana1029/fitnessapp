@@ -1,14 +1,14 @@
+// import 'package:fitnessapp/profile/profile_view.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fitnessapp/firebase_services/notification_services.dart';
-import 'package:fitnessapp/profile/profile_view.dart';
+import 'package:fitnessapp/screens/profile/profile_view.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/home.dart';
-import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
-import 'package:fitnessapp/screens/manage_profle.dart';
-import 'package:fitnessapp/screens/profile.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FrontPage extends StatefulWidget {
   const FrontPage({super.key});
@@ -29,10 +29,10 @@ class _FrontPageState extends State<FrontPage> {
       PersistentTabController(initialIndex: 0);
   List<Widget> _buildScreens() {
     return [
-      ActivityTracker(),
-      BreakFast(),
-      Home(),
-      ProfileView()
+      const ActivityTracker(),
+      const BreakFast(),
+      const Home(),
+      const ProfileView(),
       // EditPersonalinfo(),
       // Profile(),
     ];
@@ -41,22 +41,22 @@ class _FrontPageState extends State<FrontPage> {
   List<PersistentBottomNavBarItem> _navBarItems() {
     return [
       PersistentBottomNavBarItem(
-          icon: Icon(Icons.home),
+          icon: const Icon(Icons.home),
           title: "Home",
           inactiveColorPrimary: Colors.grey.shade600,
           activeColorPrimary: Colors.purple),
       PersistentBottomNavBarItem(
-          icon: Icon(Icons.menu_book_sharp),
+          icon: const Icon(Icons.menu_book_sharp),
           title: "Dashboard",
           inactiveColorPrimary: Colors.grey.shade600,
           activeColorPrimary: Colors.purple),
       PersistentBottomNavBarItem(
-          icon: Icon(Icons.home),
+          icon: const Icon(Icons.home),
           inactiveColorPrimary: Colors.grey,
           title: "Home",
           activeColorPrimary: Colors.purple),
       PersistentBottomNavBarItem(
-          icon: Icon(Icons.more_horiz),
+          icon: const Icon(Icons.more_horiz),
           title: "Home",
           inactiveColorPrimary: Colors.grey.shade600,
           activeColorPrimary: Colors.purple),
@@ -74,6 +74,28 @@ class _FrontPageState extends State<FrontPage> {
   //     print("Token number is : $value");
   //   });
   // }
+  String finalEmail = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.microtask(() async {
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      var receivedEmail = sharedPreferences.getString('email');
+
+      if (receivedEmail == null || receivedEmail.isEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      } else {
+        setState(() {
+          finalEmail = receivedEmail;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

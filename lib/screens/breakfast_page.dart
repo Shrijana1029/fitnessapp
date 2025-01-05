@@ -50,7 +50,7 @@ class _BreakFastState extends State<BreakFast> {
                       onChanged: searchedItem,
                     ),
                   ),
-                  Icon(Icons.filter_list, color: Colors.grey),
+                  const Icon(Icons.filter_list, color: Colors.grey),
                 ],
               ),
             ),

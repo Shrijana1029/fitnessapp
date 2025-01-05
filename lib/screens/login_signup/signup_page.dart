@@ -1,4 +1,3 @@
-import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
 
 import 'package:fitnessapp/screens/login_signup/user_info.dart';
@@ -19,14 +18,14 @@ class _SignupPageState extends State<SignupPage> {
   final AuthService _auth = AuthService();
   final _email = TextEditingController();
   final _usernamecontroller = TextEditingController();
-  final _biocontroller = TextEditingController();
-  final TextEditingController _firstname = TextEditingController();
-  final TextEditingController _lastname = TextEditingController();
-  final TextEditingController _phone = TextEditingController();
-  final TextEditingController _age = TextEditingController();
-  final TextEditingController _height = TextEditingController();
-  final TextEditingController _weight = TextEditingController();
-  final TextEditingController _dob = TextEditingController();
+  // final _biocontroller = TextEditingController();
+  // final TextEditingController _firstname = TextEditingController();
+  // final TextEditingController _lastname = TextEditingController();
+  // final TextEditingController _phone = TextEditingController();
+  // final TextEditingController _age = TextEditingController();
+  // final TextEditingController _height = TextEditingController();
+  // final TextEditingController _weight = TextEditingController();
+  // final TextEditingController _dob = TextEditingController();
   final _password = TextEditingController();
   final _confirmpasswordcontroller = TextEditingController();
   late final String inner;

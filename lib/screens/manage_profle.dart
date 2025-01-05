@@ -1,12 +1,13 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
 import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:awesome_notifications/awesome_notifications.dart';
 
 class ManageProfile extends StatefulWidget {
@@ -52,7 +53,7 @@ class _ManageProfileState extends State<ManageProfile> {
                 onPressed: () {
                   navigatorKey.currentState?.pop();
                 },
-                icon: Icon(Icons.arrow_back))),
+                icon: const Icon(Icons.arrow_back))),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.messenger)),
         ],
@@ -78,7 +79,7 @@ class _ManageProfileState extends State<ManageProfile> {
                               radius: 40,
                               backgroundColor: Colors.blue,
                               child: Text(
-                                '${widget.frontLetter ?? 'N/A'}',
+                                widget.frontLetter ?? 'N/A',
                                 style: const TextStyle(
                                   fontSize: 40,
                                   color: Colors.white,
@@ -92,9 +93,9 @@ class _ManageProfileState extends State<ManageProfile> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            EditPersonalinfo()));
+                                            const EditPersonalinfo()));
                               },
-                              child: Positioned(
+                              child: const Positioned(
                                 child: CircleAvatar(
                                   radius: 12,
                                   backgroundColor: Colors.black,
@@ -112,8 +113,8 @@ class _ManageProfileState extends State<ManageProfile> {
 
                       Center(
                         child: Text(
-                          '${widget.name ?? 'N/A'}',
-                          style: TextStyle(
+                          widget.name ?? 'N/A',
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
                           ),
@@ -122,7 +123,7 @@ class _ManageProfileState extends State<ManageProfile> {
 
                       const SizedBox(height: 10),
                       Center(
-                        child: Text('${widget.email}'),
+                        child: Text(widget.email),
                       )
                       // Add more fields as necessary
                     ],
@@ -150,7 +151,8 @@ class _ManageProfileState extends State<ManageProfile> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ChangePasswordScreen()));
+                            builder: (context) =>
+                                const ChangePasswordScreen()));
                   },
                   child: buildListTile(
                     icon: Icons.lock_outline,
@@ -162,8 +164,6 @@ class _ManageProfileState extends State<ManageProfile> {
                 InkWell(
                   onTap: () async {
                     ///first delete the firestore then only authentication
-                    await AuthService().deleteUserData(userDoc);
-                    await AuthService().deleteUserAccount();
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -180,15 +180,73 @@ class _ManageProfileState extends State<ManageProfile> {
                             ),
                             TextButton(
                               onPressed: () async {
+                                await AuthService().deleteUserData(userDoc);
                                 await AuthService().deleteUserAccount();
+                                final SharedPreferences sharedPreferences =
+                                    await SharedPreferences.getInstance();
+                                await sharedPreferences.remove('email');
                                 // Navigate after the deletion
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SignupPage()));
+                                        builder: (context) =>
+                                            const SignupPage()));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content: Text("Event removed!")),
+                                      content: Text("Account removed!")),
+                                );
+                              },
+                              child: const Text("Confirm"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    // Navigate after the deletion
+                  },
+                  child: buildListTile(
+                    icon: Icons.delete_forever,
+                    title: 'Delete Account',
+                    subtitle:
+                        'Permanently remove your account and all of its content',
+                    titleColor: Colors.red,
+                    subtitleColor: Colors.red,
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Theme.of(context).primaryColorDark,
+                          title: const Text("Confirm Action"),
+                          content: const Text(
+                              "Are you sure you want to logout your account?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: const Text("Cancel"),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                final SharedPreferences sharedPreferences =
+                                    await SharedPreferences.getInstance();
+                                await sharedPreferences.remove('email');
+                                AuthService.logout();
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                  (Route<dynamic> route) =>
+                                      false, // Remove all previous routes
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("User logged out!!")),
                                 );
                               },
                               // Add your confirm action logic here
@@ -201,23 +259,6 @@ class _ManageProfileState extends State<ManageProfile> {
                         );
                       },
                     );
-
-                    // Navigate after the deletion
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => SignupPage()));
-                  },
-                  child: buildListTile(
-                    icon: Icons.delete_forever,
-                    title: 'Delete Account',
-                    subtitle:
-                        'Permanently remove your account and all of its content',
-                    titleColor: Colors.red,
-                    subtitleColor: Colors.red,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    AuthService.logout();
                   },
                   child: buildListTile(
                     icon: Icons.logout,

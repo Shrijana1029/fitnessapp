@@ -1,10 +1,12 @@
 import 'package:fitnessapp/screens/activity/TodayTarget.dart';
 import 'package:fitnessapp/screens/activity/latest_acitivity.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ActivityTracker extends StatefulWidget {
   const ActivityTracker({super.key});
@@ -38,6 +40,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
   @override
   void initState() {
     super.initState();
+
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountStream.listen(_onStepCount).onError(_onError);
   }
@@ -149,19 +152,19 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                               //send notification
                               TColor.sendNotification();
                             },
-                            child: TodayTargetCell(
+                            child: const TodayTargetCell(
                               icon: "assets/img/water.png",
                               value: "8L",
                               title: "Water Intake",
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Expanded(
                           child: TodayTargetCell(
-                            icon: "assets/img/walki.png",
+                            icon: "assets/img/walking.png",
                             value: steps,
                             title: "Foot Steps",
                           ),
@@ -193,7 +196,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                           percent: 0.7,
                           radius: 50,
                           center: Text(
-                            '$steps',
+                            steps,
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                         ),
@@ -356,10 +359,10 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                   ),
                   titlesData: FlTitlesData(
                     show: true,
-                    rightTitles: AxisTitles(
+                    rightTitles: const AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
-                    topTitles: AxisTitles(
+                    topTitles: const AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
                     bottomTitles: AxisTitles(
@@ -369,7 +372,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                         reservedSize: 38,
                       ),
                     ),
-                    leftTitles: AxisTitles(
+                    leftTitles: const AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: false,
                       ),
@@ -379,7 +382,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                     show: false,
                   ),
                   barGroups: showingGroups(),
-                  gridData: FlGridData(show: false),
+                  gridData: const FlGridData(show: false),
                 )),
               ),
               SizedBox(
