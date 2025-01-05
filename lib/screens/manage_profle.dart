@@ -3,9 +3,11 @@ import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
 import 'package:fitnessapp/screens/login_signup/change_password.dart';
 import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
+import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:awesome_notifications/awesome_notifications.dart';
 
 class ManageProfile extends StatefulWidget {
@@ -162,8 +164,6 @@ class _ManageProfileState extends State<ManageProfile> {
                 InkWell(
                   onTap: () async {
                     ///first delete the firestore then only authentication
-                    await AuthService().deleteUserData(userDoc);
-                    await AuthService().deleteUserAccount();
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -180,7 +180,11 @@ class _ManageProfileState extends State<ManageProfile> {
                             ),
                             TextButton(
                               onPressed: () async {
+                                await AuthService().deleteUserData(userDoc);
                                 await AuthService().deleteUserAccount();
+                                final SharedPreferences sharedPreferences =
+                                    await SharedPreferences.getInstance();
+                                await sharedPreferences.remove('email');
                                 // Navigate after the deletion
                                 Navigator.pushReplacement(
                                     context,
@@ -189,7 +193,59 @@ class _ManageProfileState extends State<ManageProfile> {
                                             const SignupPage()));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content: Text("Event removed!")),
+                                      content: Text("Account removed!")),
+                                );
+                              },
+                              child: const Text("Confirm"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    // Navigate after the deletion
+                  },
+                  child: buildListTile(
+                    icon: Icons.delete_forever,
+                    title: 'Delete Account',
+                    subtitle:
+                        'Permanently remove your account and all of its content',
+                    titleColor: Colors.red,
+                    subtitleColor: Colors.red,
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Confirm Action"),
+                          content: const Text(
+                              "Are you sure you want to logout your account?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: const Text("Cancel"),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                final SharedPreferences sharedPreferences =
+                                    await SharedPreferences.getInstance();
+                                await sharedPreferences.remove('email');
+                                AuthService.logout();
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                  (Route<dynamic> route) =>
+                                      false, // Remove all previous routes
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("User logged out!!")),
                                 );
                               },
                               // Add your confirm action logic here
@@ -202,25 +258,6 @@ class _ManageProfileState extends State<ManageProfile> {
                         );
                       },
                     );
-
-                    // Navigate after the deletion
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignupPage()));
-                  },
-                  child: buildListTile(
-                    icon: Icons.delete_forever,
-                    title: 'Delete Account',
-                    subtitle:
-                        'Permanently remove your account and all of its content',
-                    titleColor: Colors.red,
-                    subtitleColor: Colors.red,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    AuthService.logout();
                   },
                   child: buildListTile(
                     icon: Icons.logout,
