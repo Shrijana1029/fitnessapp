@@ -61,7 +61,7 @@ class _BreakFastState extends State<BreakFast> {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColorLight,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               children: [
@@ -107,23 +107,44 @@ class _BreakFastState extends State<BreakFast> {
           Expanded(
             child: ListView.builder(
               itemCount: foods.length,
-              // padding: const EdgeInsets.all(20),
               itemBuilder: (context, index) {
                 final food = foods[index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    leading: Image.asset(
-                      food.image1,
-                      fit: BoxFit.cover,
-                      width: 50,
-                      height: 50,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 119, 170, 144),
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 66, 31, 31),
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(10), // Add this line
                     ),
-                    title: Text(food.name),
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FoodList(food: food))),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: ListTile(
+                        leading: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(30), // Add this line
+                          ),
+                          child: Image.asset(
+                            food.image1,
+                            fit: BoxFit.cover,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        title: Text(food.name),
+                        trailing: const Icon(Icons.favorite_border),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FoodList(food: food),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 );
               },
