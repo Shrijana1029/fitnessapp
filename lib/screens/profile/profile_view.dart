@@ -10,7 +10,7 @@ import 'package:fitnessapp/screens/profile/setting_row.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:fitnessapp/profile/title_subtitle_cell.dart';
-import 'package:fitnessapp/firebase_services/firebase_auth.dart';
+// import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/screens/profile/title_subtitle_cell.dart';
 
 class ProfileView extends StatefulWidget {

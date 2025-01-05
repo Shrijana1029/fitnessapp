@@ -220,6 +220,7 @@ class _ManageProfileState extends State<ManageProfile> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          backgroundColor: Theme.of(context).primaryColorDark,
                           title: const Text("Confirm Action"),
                           content: const Text(
                               "Are you sure you want to logout your account?"),
