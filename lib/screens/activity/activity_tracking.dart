@@ -1,12 +1,10 @@
 import 'package:fitnessapp/screens/activity/TodayTarget.dart';
 import 'package:fitnessapp/screens/activity/latest_acitivity.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
-import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ActivityTracker extends StatefulWidget {
   const ActivityTracker({super.key});

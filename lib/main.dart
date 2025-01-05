@@ -1,7 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:fitnessapp/screens/activity/activity_tracking.dart';
+import 'package:fitnessapp/screens/breakfast_page.dart';
 import 'package:fitnessapp/screens/front_page.dart';
-import 'package:fitnessapp/screens/login_signup/login_page.dart';
 
 import 'package:fitnessapp/get-api/data_get.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
