@@ -15,6 +15,7 @@ class BreakFast extends StatefulWidget {
 
 class _BreakFastState extends State<BreakFast> {
   int _selectedindex = 0;
+  List<Food> searchResults = foodList;
 
   // List<Food> foods = foodList;
   final FavoritesController favoritesController =
@@ -109,9 +110,9 @@ class _BreakFastState extends State<BreakFast> {
           /////////////RECENT FOOD ITEMS////////////
           Expanded(
             child: ListView.builder(
-              itemCount: foodList.length,
+              itemCount: searchResults.length,
               itemBuilder: (context, index) {
-                final food = foodList[index];
+                final food = searchResults[index];
                 return Obx(() {
                   // Check if the food item is a favorite
                   final isFavorite =
@@ -156,8 +157,21 @@ class _BreakFastState extends State<BreakFast> {
                                 // Toggle the favorite status
                                 if (isFavorite) {
                                   favoritesController.removeFromFavorites(food);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text("Removed from favorites !!"),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
                                 } else {
                                   favoritesController.addToFavorites(food);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("Added to favorites !!"),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
                                 }
                               },
                             ),
@@ -182,12 +196,17 @@ class _BreakFastState extends State<BreakFast> {
   //food search///////////
   void searchedItem(String query) {
     final suggestions = foodList.where((food) {
+      // Ensure the query is not empty
+      if (query.isEmpty) return true;
+
       final foodName = food.name.toLowerCase();
       final input = query.toLowerCase();
-      return foodName.contains(input);
+
+      return foodName.isNotEmpty && foodName[0] == input[0];
     }).toList();
-    setState(
-      () => foodList = suggestions,
-    );
+
+    setState(() {
+      searchResults = suggestions; // Update the search results list
+    });
   }
 }

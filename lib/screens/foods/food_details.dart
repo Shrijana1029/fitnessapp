@@ -33,8 +33,20 @@ class FoodDetail extends StatelessWidget {
               onPressed: () {
                 if (isFavorite) {
                   favoritesController.removeFromFavorites(food);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Removed from favorites !!"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
                 } else {
                   favoritesController.addToFavorites(food);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Added to favorites !!"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
                 }
               },
             );
@@ -94,7 +106,7 @@ class FoodDetail extends StatelessWidget {
                   height: 28,
                 ),
                 Card(
-                  color: const Color.fromARGB(255, 146, 184, 216),
+                  color: const Color.fromARGB(255, 231, 236, 240),
                   shadowColor: const Color.fromARGB(255, 90, 42, 42),
                   elevation: 8,
                   child: Padding(
