@@ -1,12 +1,15 @@
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:fitnessapp/screens/food_list.dart';
+import 'package:fitnessapp/screens/foods/controller.dart';
+import 'package:fitnessapp/screens/foods/food_list.dart';
 import 'package:flutter/material.dart';
 // import 'package:fitnessapp/screens/home.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:get/get.dart';
 
-class FoodList extends StatelessWidget {
+class FoodDetail extends StatelessWidget {
   final Food food;
-  const FoodList({
+  final FavoritesController favoritesController = Get.find();
+  FoodDetail({
     super.key,
     required this.food,
   });
@@ -19,6 +22,24 @@ class FoodList extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 62, 206, 67),
         title: const Text('Food Details'),
         centerTitle: true,
+        actions: [
+          Obx(() {
+            final isFavorite = favoritesController.favoriteFoods.contains(food);
+            return IconButton(
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : null,
+              ),
+              onPressed: () {
+                if (isFavorite) {
+                  favoritesController.removeFromFavorites(food);
+                } else {
+                  favoritesController.addToFavorites(food);
+                }
+              },
+            );
+          }),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
