@@ -1,11 +1,13 @@
-// import 'package:flutter/foundation.dart';
-import 'package:fitnessapp/screens/food_details.dart';
-import 'package:fitnessapp/screens/food_list.dart';
+import 'package:fitnessapp/screens/foods/favorite_page.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'food_details.dart';
+import '../foods/controller.dart';
+
+import 'food_list.dart';
 
 class BreakFast extends StatefulWidget {
-  const BreakFast({super.key});
+  BreakFast({super.key});
 
   @override
   State<BreakFast> createState() => _BreakFastState();
@@ -13,18 +15,16 @@ class BreakFast extends StatefulWidget {
 
 class _BreakFastState extends State<BreakFast> {
   int _selectedindex = 0;
-  List<Food> foods = foodList;
+
+  // List<Food> foods = foodList;
+  final FavoritesController favoritesController =
+      Get.put(FavoritesController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context)
-          .primaryColorDark, // Gradient background starting color
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         title: const Text('Calculate Calories'),
         centerTitle: true,
-        actions: const [Icon(Icons.more_vert)],
       ),
       body: Column(
         children: [
@@ -32,36 +32,39 @@ class _BreakFastState extends State<BreakFast> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColorLight,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.search, color: Colors.grey),
-                  Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Search...',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(10),
+              height: 60,
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColorLight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search, color: Colors.grey),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Search...',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(10),
+                        ),
+                        onChanged: searchedItem,
                       ),
-                      onChanged: searchedItem,
                     ),
-                  ),
-                  const Icon(Icons.filter_list, color: Colors.grey),
-                ],
+                    const Icon(Icons.filter_list, color: Colors.grey),
+                  ],
+                ),
               ),
             ),
           ),
           //////////////////RECENT AND FAVORITES///////////
           Container(
-            height: 50,
+            height: 60,
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColorLight,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               children: [
@@ -106,35 +109,47 @@ class _BreakFastState extends State<BreakFast> {
           /////////////RECENT FOOD ITEMS////////////
           Expanded(
             child: ListView.builder(
-              itemCount: foods.length,
-              // padding: const EdgeInsets.all(20),
+              itemCount: foodList.length,
               itemBuilder: (context, index) {
-                final food = foods[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    leading: Image.asset(
-                      food.image1,
-                      fit: BoxFit.cover,
-                      width: 50,
-                      height: 50,
-                    ),
-                    title: Text(food.name),
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FoodList(food: food))),
-                  ),
+                final food = foodList[index];
+                return ListTile(
+                  leading: Image.asset(food.image1, width: 50, height: 50),
+                  title: Text(food.name),
+                  trailing: Obx(() {
+                    //remember it returns bool value //
+                    final isFavorite =
+                        favoritesController.favoriteFoods.contains(food);
+                    //
+                    return IconButton(
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorite ? Colors.red : null,
+                      ),
+                      onPressed: () {
+                        if (isFavorite) {
+                          favoritesController.removeFromFavorites(food);
+                        } else {
+                          favoritesController.addToFavorites(food);
+                        }
+                      },
+                    );
+                  }),
+                  onTap: () => Get.to(() => FoodDetail(food: food)),
                 );
               },
             ),
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.favorite),
+          onPressed: () {
+            Get.to(FavoritesPage());
+          }),
     );
   }
 
-  ///food search///////////
+  //food search///////////
   void searchedItem(String query) {
     final suggestions = foodList.where((food) {
       final foodName = food.name.toLowerCase();
@@ -142,7 +157,7 @@ class _BreakFastState extends State<BreakFast> {
       return foodName.contains(input);
     }).toList();
     setState(
-      () => foods = suggestions,
+      () => foodList = suggestions,
     );
   }
 }

@@ -1,14 +1,13 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:fitnessapp/screens/activity/activity_tracking.dart';
+import 'package:fitnessapp/screens/foods/breakfast_page.dart';
 import 'package:fitnessapp/screens/front_page.dart';
-import 'package:fitnessapp/screens/login_signup/login_page.dart';
 
 import 'package:fitnessapp/get-api/data_get.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
-import 'package:fitnessapp/screens/breakfast_page.dart';
+import 'package:fitnessapp/screens/foods/breakfast_page.dart';
 import 'package:fitnessapp/screens/extra.dart';
 
-import 'package:fitnessapp/screens/food_details.dart';
+import 'package:fitnessapp/screens/foods/food_details.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:fitnessapp/screens/home.dart';
 import 'package:fitnessapp/screens/login_signup/calender.dart';
@@ -24,6 +23,7 @@ import 'package:fitnessapp/screens/profile.dart';
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<ScaffoldMessengerState> scaffoldKey =
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,

@@ -18,6 +18,7 @@ class Food {
 
   /// constructor declaration
   const Food({
+    //parameters
     required this.name,
     required this.image1,
     required this.image2,
@@ -33,9 +34,11 @@ class Food {
     required this.ufat,
   });
 }
-////////secton 3//////
 
-const foodList = [
+////////secton 3//////
+//yo list ma cha Food class ko object banauna milxa
+List<Food> foodList = [
+  //objects of food class
   Food(
     name: 'Chickpeas',
     image1: 'assets/img/chickpeas.jpg',
