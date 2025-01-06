@@ -1,25 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:fitnessapp/screens/foods/breakfast_page.dart';
+import 'package:fitnessapp/screens/foods/controller.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 
-import 'package:fitnessapp/get-api/data_get.dart';
-import 'package:fitnessapp/screens/activity/activity_tracking.dart';
-import 'package:fitnessapp/screens/foods/breakfast_page.dart';
-import 'package:fitnessapp/screens/extra.dart';
-
-import 'package:fitnessapp/screens/foods/food_details.dart';
-import 'package:fitnessapp/screens/front_page.dart';
-import 'package:fitnessapp/screens/home.dart';
-import 'package:fitnessapp/screens/login_signup/calender.dart';
-import 'package:fitnessapp/screens/login_signup/change_password.dart';
-import 'package:fitnessapp/screens/login_signup/edit_personalInfo.dart';
-import 'package:fitnessapp/screens/login_signup/forgot_password.dart';
-import 'package:fitnessapp/screens/login_signup/login_page.dart';
-
-import 'package:fitnessapp/screens/login_signup/user_info.dart';
-import 'package:fitnessapp/screens/manage_profle.dart';
-
-import 'package:fitnessapp/screens/profile.dart';
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,6 +13,7 @@ final GlobalKey<ScaffoldMessengerState> scaffoldKey =
 
 void main() async {
   //connecting project with firebase
+  Get.lazyPut(() => FavoritesController());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   AwesomeNotifications().initialize(null, [

@@ -1,6 +1,4 @@
 // import 'package:fitnessapp/profile/profile_view.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:fitnessapp/firebase_services/notification_services.dart';
 import 'package:fitnessapp/screens/profile/profile_view.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/foods/breakfast_page.dart';
@@ -30,7 +28,7 @@ class _FrontPageState extends State<FrontPage> {
   List<Widget> _buildScreens() {
     return [
       const ActivityTracker(),
-      BreakFast(),
+      const BreakFast(),
       const Home(),
       const ProfileView(),
       // EditPersonalinfo(),

@@ -39,7 +39,7 @@ class Food {
 //yo list ma cha Food class ko object banauna milxa
 List<Food> foodList = [
   //objects of food class
-  Food(
+  const Food(
     name: 'Chickpeas',
     image1: 'assets/img/chickpeas.jpg',
     image2: 'assets/img/chckps.jpg',
@@ -55,7 +55,7 @@ List<Food> foodList = [
     sfat: '0.27g',
     ufat: '1.58g',
   ),
-  Food(
+  const Food(
     name: 'Milk',
     image1: 'assets/img/milk1.jpg',
     image2: 'assets/img/milk2.jpg',
@@ -71,7 +71,7 @@ List<Food> foodList = [
     sfat: '1.87g',
     ufat: '1.1g',
   ),
-  Food(
+  const Food(
     name: 'Almond',
     image1: 'assets/img/almond1.jpg',
     image2: 'assets/img/almond2.jpg',
