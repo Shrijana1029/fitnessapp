@@ -30,6 +30,12 @@ class FavoritesPage extends StatelessWidget {
                 icon: const Icon(Icons.remove_circle, color: Colors.red),
                 onPressed: () {
                   favoritesController.removeFromFavorites(food);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Removed from favorites !!"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
                 },
               ),
               onTap: () => Get.to(() => FoodDetail(food: food)),
