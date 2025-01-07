@@ -3,7 +3,7 @@ import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
-import 'package:fitnessapp/screens/manage_profle.dart';
+import 'package:fitnessapp/screens/login_signup/manage_profle.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/screens/profile/round_button.dart';
 import 'package:fitnessapp/screens/profile/setting_row.dart';

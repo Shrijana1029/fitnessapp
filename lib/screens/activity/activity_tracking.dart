@@ -1,4 +1,5 @@
 import 'package:fitnessapp/screens/activity/TodayTarget.dart';
+import 'package:fitnessapp/screens/activity/discover_workout.dart';
 import 'package:fitnessapp/screens/activity/latest_acitivity.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
 import 'package:pedometer/pedometer.dart';
@@ -16,17 +17,44 @@ class ActivityTracker extends StatefulWidget {
 class _ActivityTrackerState extends State<ActivityTracker> {
   int touchedIndex = -1;
   late Map<String, dynamic> wObj;
+  late Map<String, dynamic> vObj;
 
   List<Map<String, dynamic>> latestArr = [
     {
       "image": "assets/img/drink.webp",
       "title": "Drinking 300ml Water",
-      "time": "About 1 minutes ago"
+      "time": "About 1 minutes ago",
     },
     {
       "image": "assets/img/pic_5.png",
       "title": "Eat Snack (Fitbar)",
       "time": "3 hours ago"
+    },
+  ];
+  List<Map<String, dynamic>> workouts = [
+    {
+      'title': 'Cardio',
+      'exercises': '10 Exercises',
+      'time': '50 Minutes',
+      'image': 'assets/img/drink.webp'
+    },
+    {
+      'title': 'Arms',
+      'exercises': '6 Exercises',
+      'time': '35 Minutes',
+      'image': 'assets/img/yoga.webp'
+    },
+    {
+      'title': 'Yoga',
+      'exercises': '8 Exercises',
+      'time': '45 Minutes',
+      'image': 'assets/img/yoga.webp'
+    },
+    {
+      'title': 'Legs',
+      'exercises': '12 Exercises',
+      'time': '60 Minutes',
+      'image': 'assets/img/yoga.webp'
     },
   ];
 
@@ -88,6 +116,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
           ),
           padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /////TODAY TARGET//
               Container(
@@ -386,6 +415,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
               SizedBox(
                 height: media.width * 0.05,
               ),
+              ////////////LATEST WORKOUT///////////
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -408,6 +438,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                   )
                 ],
               ),
+              ///////lists/
               ListView.builder(
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
@@ -420,6 +451,27 @@ class _ActivityTrackerState extends State<ActivityTracker> {
               SizedBox(
                 height: media.width * 0.1,
               ),
+              Text(
+                'Discover New Workouts',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 250,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: workouts.length,
+                    itemBuilder: (context, index) {
+                      vObj = workouts[index];
+                      return DiscoverWorkout(vObj: vObj);
+                    }),
+              )
             ],
           ),
         ),
