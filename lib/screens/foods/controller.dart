@@ -3,8 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'food_list.dart'; // Import your Food class and foodList
 
 class FavoritesController extends GetxController {
+  // Observable list of favorite items
   var favoriteFoods = <Food>[].obs;
-// Observable list of favorite items
+
   @override
   void onInit() {
     super.onInit();

@@ -119,13 +119,14 @@ class _BreakFastState extends State<BreakFast> {
                       favoritesController.favoriteFoods.contains(food);
 
                   return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Container(
+                        height: 80,
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 119, 170, 144),
+                          color: Theme.of(context).primaryColorDark,
                           border: Border.all(
                             color: const Color.fromARGB(255, 66, 31, 31),
-                            width: 2,
+                            width: 1,
                           ),
                           borderRadius:
                               BorderRadius.circular(10), // Add this line
@@ -161,7 +162,7 @@ class _BreakFastState extends State<BreakFast> {
                                     const SnackBar(
                                       content:
                                           Text("Removed from favorites !!"),
-                                      duration: Duration(seconds: 2),
+                                      duration: Duration(seconds: 1),
                                     ),
                                   );
                                 } else {
@@ -169,7 +170,7 @@ class _BreakFastState extends State<BreakFast> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text("Added to favorites !!"),
-                                      duration: Duration(seconds: 2),
+                                      duration: Duration(seconds: 1),
                                     ),
                                   );
                                 }
