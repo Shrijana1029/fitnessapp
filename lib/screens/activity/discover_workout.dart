@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class DiscoverWorkout extends StatefulWidget {
   final Map<String, dynamic> vObj;
-  const DiscoverWorkout({super.key, required this.vObj});
+  final VoidCallback onPressed;
+  const DiscoverWorkout(
+      {super.key, required this.vObj, required this.onPressed});
 
   @override
   State<DiscoverWorkout> createState() => _DiscoverWorkoutState();
@@ -54,23 +56,19 @@ class _DiscoverWorkoutState extends State<DiscoverWorkout> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 8),
-            Container(
-              width: 200,
-              height: 90,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+            Expanded(
+              child: Container(
+                width: 200,
+                height: 90,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(widget.vObj['image']),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(8), // Optional: add rounded corners
+                ),
               ),
-              child: widget.vObj['image'] != null
-                  ? Image.network(
-                      widget.vObj['image'],
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.broken_image,
-                            size: 50, color: Colors.grey);
-                      },
-                    )
-                  : const Icon(Icons.image, size: 50, color: Colors.grey),
             ),
           ],
         ),

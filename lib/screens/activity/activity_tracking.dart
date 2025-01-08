@@ -2,6 +2,8 @@ import 'package:fitnessapp/screens/activity/TodayTarget.dart';
 import 'package:fitnessapp/screens/activity/discover_workout.dart';
 import 'package:fitnessapp/screens/activity/latest_acitivity.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
+import 'package:fitnessapp/screens/youtube_integrations/cardio.dart';
+import 'package:fitnessapp/screens/youtube_integrations/yoga.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -36,25 +38,29 @@ class _ActivityTrackerState extends State<ActivityTracker> {
       'title': 'Cardio',
       'exercises': '10 Exercises',
       'time': '50 Minutes',
-      'image': 'assets/img/drink.webp'
+      'image': 'assets/img/cardio.jpg',
+      'tagi': '0'
     },
     {
       'title': 'Arms',
       'exercises': '6 Exercises',
       'time': '35 Minutes',
-      'image': 'assets/img/yoga.webp'
+      'image': 'assets/img/yoga.webp',
+      'tagi': '1'
     },
     {
       'title': 'Yoga',
       'exercises': '8 Exercises',
       'time': '45 Minutes',
-      'image': 'assets/img/yoga.webp'
+      'image': 'assets/img/yoga.webp',
+      'tagi': '2'
     },
     {
       'title': 'Legs',
       'exercises': '12 Exercises',
       'time': '60 Minutes',
-      'image': 'assets/img/yoga.webp'
+      'image': 'assets/img/yoga.webp',
+      'tagi': '3'
     },
   ];
 
@@ -451,6 +457,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
               SizedBox(
                 height: media.width * 0.1,
               ),
+              /////////////DISCOVER SECTION///////
               Text(
                 'Discover New Workouts',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -469,7 +476,44 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                     itemCount: workouts.length,
                     itemBuilder: (context, index) {
                       vObj = workouts[index];
-                      return DiscoverWorkout(vObj: vObj);
+                      return DiscoverWorkout(
+                        vObj: vObj,
+                        onPressed: () {
+                          // Handle navigation based on the tag
+                          switch (vObj["tagi"]) {
+                            case "3": // Navigate to Contact Us
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Yoga()),
+                              );
+                              break;
+                            case "2": // Navigate to Privacy Policy
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Cardio()),
+                              );
+                              break;
+                            case "1": // Navigate to Settings
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Yoga()),
+                              );
+                              break;
+                            case "0": // Navigate to Settings
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Cardio()),
+                              );
+                              break;
+                            default:
+                              break;
+                          }
+                        },
+                      );
                     }),
               )
             ],

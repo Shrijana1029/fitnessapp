@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(FitnessApp());
+void main() => runApp(const FitnessApp());
 
 class FitnessApp extends StatelessWidget {
   const FitnessApp({super.key});

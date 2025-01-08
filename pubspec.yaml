@@ -54,6 +54,7 @@ dependencies:
   readmore: ^3.0.0
   shared_preferences: ^2.3.4
   get: ^4.6.6
+  youtube_player_flutter: ^9.1.1
 
 
 dev_dependencies:
