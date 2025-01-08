@@ -59,7 +59,7 @@ class _DiscoverWorkoutState extends State<DiscoverWorkout> {
               ),
               Expanded(
                 child: Container(
-                  width: 200,
+                  width: 201,
                   height: 90,
                   decoration: BoxDecoration(
                     image: DecorationImage(
