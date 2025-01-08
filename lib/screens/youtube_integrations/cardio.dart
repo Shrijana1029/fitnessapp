@@ -33,7 +33,7 @@ class _CardioState extends State<Cardio> {
         title: Center(
             child: Text(
           name,
-          style: TextStyle(fontSize: 28),
+          style: const TextStyle(fontSize: 28),
         )),
       ),
       body: Expanded(
@@ -52,7 +52,7 @@ class _CardioState extends State<Cardio> {
                             description: brief,
                           )));
                 },
-                child: Container(
+                child: SizedBox(
                     height: 300,
                     child: Card(
                       elevation: 10,

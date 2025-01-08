@@ -50,7 +50,7 @@ class _YogaState extends State<Yoga> {
                             description: brief,
                           )));
                 },
-                child: Container(
+                child: SizedBox(
                     height: 300,
                     child: Card(
                       elevation: 10,
