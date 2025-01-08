@@ -13,7 +13,7 @@ class _DiscoverWorkoutState extends State<DiscoverWorkout> {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      margin: EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColorLight,
         borderRadius: BorderRadius.circular(12),
@@ -26,47 +26,51 @@ class _DiscoverWorkoutState extends State<DiscoverWorkout> {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               '${widget.vObj['title']}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               '${widget.vObj['exercises']}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,
               ),
             ),
             Text(
               '${widget.vObj['time']}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,
               ),
             ),
-            Expanded(
-              child: Container(
-                width: 200,
-                height: 90,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(widget.vObj['image']),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius:
-                      BorderRadius.circular(8), // Optional: add rounded corners
-                ),
+            const SizedBox(height: 8),
+            Container(
+              width: 200,
+              height: 90,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: widget.vObj['image'] != null
+                  ? Image.network(
+                      widget.vObj['image'],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.broken_image,
+                            size: 50, color: Colors.grey);
+                      },
+                    )
+                  : const Icon(Icons.image, size: 50, color: Colors.grey),
             ),
           ],
         ),
