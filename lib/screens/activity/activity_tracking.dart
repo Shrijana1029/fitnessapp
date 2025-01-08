@@ -465,7 +465,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                     fontSize: 16,
                     fontWeight: FontWeight.w700),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
               SizedBox(

@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fitnessapp/screens/foods/controller.dart';
+import 'package:fitnessapp/screens/front_page.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
 
 // import 'package:fitnessapp/screens/profile.dart';
@@ -56,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: const LoginPage(),
+        home: const FrontPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(
