@@ -54,6 +54,7 @@ class AuthService {
     required String age,
     required String height,
     required String weight,
+    required String gender,
   }) async {
     try {
       await FirebaseFirestore.instance.collection('user_info').doc(uid).set({
@@ -63,6 +64,7 @@ class AuthService {
         'height': height,
         'weight': weight,
         'email': emaill,
+        'gender': gender,
         'created_at': FieldValue.serverTimestamp(),
       });
     } catch (e) {

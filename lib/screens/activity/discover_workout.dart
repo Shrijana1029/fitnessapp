@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class DiscoverWorkout extends StatefulWidget {
   final Map<String, dynamic> vObj;
   final VoidCallback onPressed;
-  DiscoverWorkout({super.key, required this.vObj, required this.onPressed});
+  const DiscoverWorkout(
+      {super.key, required this.vObj, required this.onPressed});
 
   @override
   State<DiscoverWorkout> createState() => _DiscoverWorkoutState();
@@ -14,7 +15,7 @@ class _DiscoverWorkoutState extends State<DiscoverWorkout> {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      margin: EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColorLight,
         borderRadius: BorderRadius.circular(12),
@@ -29,30 +30,30 @@ class _DiscoverWorkoutState extends State<DiscoverWorkout> {
       child: InkWell(
         onTap: widget.onPressed,
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 '${widget.vObj['title']}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 '${widget.vObj['exercises']}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                 ),
               ),
               Text(
                 '${widget.vObj['time']}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                 ),

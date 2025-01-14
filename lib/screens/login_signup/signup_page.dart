@@ -4,6 +4,7 @@ import 'package:fitnessapp/screens/login_signup/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // import 'package:instagram_clone/data/firebase_service/firebase_auth.dart';
 // import 'package:instagram_clone/screens/login_page.dart';
@@ -31,6 +32,16 @@ class _SignupPageState extends State<SignupPage> {
   late final String inner;
   late final bool say;
   late String displayMessage;
+  Future<void> _clearSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _clearSharedPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {

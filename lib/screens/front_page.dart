@@ -1,4 +1,5 @@
 // import 'package:fitnessapp/profile/profile_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/screens/profile/profile_view.dart';
 import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/foods/breakfast_page.dart';
@@ -75,22 +76,34 @@ class _FrontPageState extends State<FrontPage> {
   String finalEmail = '';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(() async {
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      var receivedEmail = sharedPreferences.getString('email');
+      final User? currentUser = FirebaseAuth.instance.currentUser;
 
-      if (receivedEmail == null || receivedEmail.isEmpty) {
+      if (currentUser == null) {
+        // If Firebase user is null, redirect to login page
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       } else {
-        setState(() {
-          finalEmail = receivedEmail;
-        });
+        // If Firebase user exists, check SharedPreferences for saved email
+        final SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        var receivedEmail = sharedPreferences.getString('email');
+        print("Received email: $receivedEmail");
+
+        if (receivedEmail == null || receivedEmail.isEmpty) {
+          // If no email in SharedPreferences, redirect to login page
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        } else {
+          setState(() {
+            finalEmail = receivedEmail;
+          });
+        }
       }
     });
   }
