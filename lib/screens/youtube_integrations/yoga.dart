@@ -36,46 +36,73 @@ class _YogaState extends State<Yoga> {
       ),
       body: Expanded(
         child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: yogas.length,
-            itemBuilder: (context, index) {
-              final videoId = YoutubePlayer.convertUrlToId(yogas[index]);
-              return InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PlayVideo(
-                            name: name,
-                            videoId: videoId,
-                            description: brief,
-                          )));
-                },
-                child: SizedBox(
-                    height: 300,
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Stack(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          itemCount: yogas.length,
+          itemBuilder: (context, index) {
+            final videoId = YoutubePlayer.convertUrlToId(yogas[index]);
+            final description =
+                "Click  for video ${index + 1}"; // Example descriptions
+            return InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PlayVideo(
+                    name: name,
+                    videoId: videoId,
+                    description: brief,
+                  ),
+                ));
+              },
+              child: SizedBox(
+                height: 300, // Adjusted height for text space
+                child: Card(
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start, // Align text to the left
+                    children: [
+                      Stack(
                         children: [
                           Image.network(
-                              YoutubePlayer.getThumbnail(videoId: videoId!),
-                              fit: BoxFit.cover),
+                            YoutubePlayer.getThumbnail(videoId: videoId!),
+                            fit: BoxFit.cover,
+                            height: 200,
+                            // Fixed height for the video thumbnail
+                            width: double.infinity,
+                          ),
                           const Positioned(
-                            top: 110,
-                            left: 110,
+                            top: 100,
+                            left: 100,
                             child: Icon(
                               Icons.play_circle_fill_outlined,
                               color: Colors.white,
                               size: 50,
                             ),
-                          )
+                          ),
                         ],
                       ),
-                    )),
-              );
-            }),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Center(
+                          child: Text(
+                            description,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

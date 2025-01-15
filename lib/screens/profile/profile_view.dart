@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
-import 'package:fitnessapp/screens/activity/activity_tracking.dart';
+import 'package:fitnessapp/screens/activity/activity_tracker.dart';
+// import 'package:fitnessapp/screens/activity/activity_tracking.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:fitnessapp/screens/login_signup/manage_profle.dart';
 import 'package:flutter/material.dart';

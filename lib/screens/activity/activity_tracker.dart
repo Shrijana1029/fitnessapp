@@ -3,6 +3,7 @@ import 'package:fitnessapp/screens/activity/discover_workout.dart';
 import 'package:fitnessapp/screens/activity/latest_acitivity.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
 import 'package:fitnessapp/screens/youtube_integrations/cardio.dart';
+import 'package:fitnessapp/screens/youtube_integrations/meditation.dart';
 import 'package:fitnessapp/screens/youtube_integrations/yoga.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -38,30 +39,30 @@ class _ActivityTrackerState extends State<ActivityTracker> {
       'title': 'Cardio',
       'exercises': '10 Exercises',
       'time': '50 Minutes',
-      'image': 'assets/img/cardio.jpg',
+      'image': 'assets/img/run.png',
       'tagi': '0'
     },
     {
-      'title': 'Arms',
+      'title': 'Yoga',
       'exercises': '6 Exercises',
-      'time': '35 Minutes',
+      'time': '36 Minutes',
       'image': 'assets/img/yoga.webp',
       'tagi': '1'
     },
     {
-      'title': 'Yoga',
+      'title': 'Meditation',
       'exercises': '8 Exercises',
       'time': '45 Minutes',
-      'image': 'assets/img/yoga.webp',
+      'image': 'assets/img/meditation.png',
       'tagi': '2'
     },
-    {
-      'title': 'Legs',
-      'exercises': '12 Exercises',
-      'time': '60 Minutes',
-      'image': 'assets/img/yoga.webp',
-      'tagi': '3'
-    },
+    // {
+    //   'title': 'Legs',
+    //   'exercises': '12 Exercises',
+    //   'time': '60 Minutes',
+    //   'image': 'assets/img/yoga.webp',
+    //   'tagi': '3'
+    // },
   ];
 
   ///for pedometer concept
@@ -479,20 +480,14 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                       return DiscoverWorkout(
                         vObj: vObj,
                         onPressed: () {
+                          print('tag is : == ${vObj['tagi']}');
                           // Handle navigation based on the tag
                           switch (vObj["tagi"]) {
-                            case "3": // Navigate to Contact Us
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Yoga()),
-                              );
-                              break;
                             case "2": // Navigate to Privacy Policy
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Cardio()),
+                                    builder: (context) => const Meditation()),
                               );
                               break;
                             case "1": // Navigate to Settings

@@ -13,8 +13,8 @@ final GlobalKey<ScaffoldMessengerState> scaffoldKey =
     GlobalKey<ScaffoldMessengerState>();
 
 void main() async {
-  //connecting project with firebase
   Get.lazyPut(() => FavoritesController());
+  //connecting project with firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   AwesomeNotifications().initialize(null, [
