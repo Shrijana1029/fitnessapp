@@ -37,7 +37,7 @@ class _SetGoalState extends State<SetGoal> {
             height: 200,
             width: double.infinity,
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 200, 201, 157),
+              color: Color.fromARGB(255, 238, 238, 216),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(28),
                 bottomRight: Radius.circular(28),
@@ -69,14 +69,74 @@ class _SetGoalState extends State<SetGoal> {
                               userData.containsKey('gender');
 
                           if (hasAllFields) {
+                            double? parseHeight(String heightString) {
+                              // Regular expression to extract numeric values and units
+                              final regex =
+                                  RegExp(r"(\d+\.?\d*)\s*(ft|in|cm|m)?");
+                              final match = regex.firstMatch(heightString);
+
+                              if (match != null) {
+                                double value = double.parse(
+                                    match.group(1)!); // Extracted numeric part
+                                String? unit = match
+                                    .group(2)
+                                    ?.toLowerCase(); // Extracted unit, if present
+
+                                // Convert based on the unit
+                                switch (unit) {
+                                  case 'ft': // Convert feet to meters
+                                    return value * 0.3048;
+                                  case 'in': // Convert inches to meters
+                                    return value * 0.0254;
+                                  case 'cm': // Convert centimeters to meters
+                                    return value / 100;
+                                  case 'm': // Already in meters
+                                    return value;
+                                  default:
+                                    return value /
+                                        100; // Assume value in cm if no unit
+                                }
+                              }
+
+                              // If no match, return null
+                              return null;
+                            }
                             // Safely parse data to correct types
-                            double userHeight = userData['height'] is int
-                                ? (userData['height'] as int).toDouble()
-                                : userData['height'];
-                            double userWeight = userData['weight'] is int
-                                ? (userData['weight'] as int).toDouble()
-                                : userData['weight'];
-                            int userAge = userData['age'];
+
+                            double userHeight =
+                                parseHeight(userData['height']) ?? 0.0;
+
+                            double? parseWeight(String weightString) {
+                              // Regular expression to extract numeric values and units
+                              final regex =
+                                  RegExp(r"(\d+\.?\d*)\s*(kg|lbs|lb)?");
+                              final match = regex.firstMatch(weightString);
+
+                              if (match != null) {
+                                double value = double.parse(
+                                    match.group(1)!); // Extracted numeric part
+                                String? unit = match
+                                    .group(2)
+                                    ?.toLowerCase(); // Extracted unit, if present
+
+                                // Convert based on the unit
+                                switch (unit) {
+                                  case 'lbs': // Convert pounds to kilograms
+                                  case 'lb':
+                                    return value * 0.453592;
+                                  case 'kg': // Already in kilograms
+                                  default: // Assume value in kilograms if no unit
+                                    return value;
+                                }
+                              }
+
+                              // If no match, return null
+                              return null;
+                            }
+
+                            double userWeight =
+                                parseWeight(userData['weight']) ?? 0.0;
+                            int userAge = int.tryParse(userData['age']) ?? 0;
                             String userGender = userData['gender'];
 
                             // Calculate fat percentage
@@ -95,7 +155,14 @@ class _SetGoalState extends State<SetGoal> {
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      const Text('Weight'),
+                                      const Text(
+                                        'Weight',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
                                       Text('$userWeight kg'),
                                     ],
                                   ),
@@ -107,9 +174,40 @@ class _SetGoalState extends State<SetGoal> {
                                 Expanded(
                                   child: Column(
                                     children: [
-                                      const Text('Total Fat'),
+                                      const Text(
+                                        'Total Fat',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
                                       Text(
                                         '${fatPercentage.toStringAsFixed(2)}%',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const VerticalDivider(
+                                    thickness: 1,
+                                    width: 1,
+                                    color: Colors.black),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      const Text(
+                                        'Total Calories',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        '0',
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -164,23 +262,20 @@ class _SetGoalState extends State<SetGoal> {
 
 class FatCalculation {
   final double userweight; // Weight in kg
-  final double userHeight; // Height in cm
+  final double userHeight; // Height in meters
   final int userage; // Age in years
   final String usergender; // Gender ("male" or "female")
 
   FatCalculation({
     required this.userweight,
-    required this.userHeight,
+    required this.userHeight, // Ensure height is passed in meters
     required this.userage,
     required this.usergender,
   });
 
   double calculateFatPercentage() {
-    // Convert height to meters for BMI calculation
-    double heightInMeters = userHeight / 100;
-
-    // Calculate BMI
-    double bmi = userweight / (heightInMeters * heightInMeters);
+    // Use height as-is (already in meters)
+    double bmi = userweight / (userHeight * userHeight);
 
     // Calculate BFP based on gender
     double fatPercentage;
