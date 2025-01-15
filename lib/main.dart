@@ -1,7 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fitnessapp/screens/foods/controller.dart';
 import 'package:fitnessapp/screens/front_page.dart';
-import 'package:fitnessapp/screens/login_signup/login_page.dart';
+import 'package:fitnessapp/screens/profile/set_goals.dart';
 
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';

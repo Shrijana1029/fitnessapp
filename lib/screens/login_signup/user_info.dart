@@ -1,6 +1,6 @@
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/main.dart';
-import 'package:fitnessapp/screens/home.dart';
+import 'package:fitnessapp/screens/front_page.dart';
 import 'package:flutter/material.dart';
 
 class UserInfo extends StatefulWidget {
@@ -186,13 +186,14 @@ class _UserInfoState extends State<UserInfo> {
                     await AuthService().userInform(
                       firstName: _firstname.text,
                       lastName: _lastname.text,
+                      gender: _gender.text,
                       age: _age.text.trim(),
                       height: '${_height.text} ft',
                       weight: '${_weight.text} ${_unit.text}',
                     );
 
-                    navigatorKey.currentState?.push(
-                        MaterialPageRoute(builder: (context) => const Home()));
+                    navigatorKey.currentState?.push(MaterialPageRoute(
+                        builder: (context) => const FrontPage()));
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:fitnessapp/screens/login_signup/signup_page.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
@@ -80,14 +81,20 @@ class _LoginPageState extends State<LoginPage> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
-                final SharedPreferences sharedPreferences =
-                    await SharedPreferences.getInstance();
-                sharedPreferences.setString('email', _email.text);
                 final message = await AuthService()
                     .login(email: _email.text, password: _password.text);
                 if (message!.contains('Success')) {
-                  navigatorKey.currentState?.pushReplacement(
-                      MaterialPageRoute(builder: (_) => const FrontPage()));
+                  final user = FirebaseAuth.instance.currentUser;
+                  if (user != null) {
+                    final SharedPreferences sharedPreferences =
+                        await SharedPreferences.getInstance();
+                    sharedPreferences.setString('email', _email.text);
+                    navigatorKey.currentState?.pushReplacement(
+                        MaterialPageRoute(builder: (_) => const FrontPage()));
+                  } else {
+                    scaffoldKey.currentState?.showSnackBar(const SnackBar(
+                        content: Text('User not found in Firebase')));
+                  }
                 } else if (message ==
                     'Wrong password provided for that user.') {
                   print('wrong password');
