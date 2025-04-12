@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 class TColor {
@@ -18,14 +17,14 @@ class TColor {
   static Color get white => Colors.white;
   static Color get lightGray => const Color(0xffF7F8F8);
 
-  static void sendNotification() {
-    AwesomeNotifications().createNotification(
-      content: NotificationContent(
-          id: 1,
-          channelKey: 'basic',
-          title: 'Reminder',
-          body: 'Drink Water  ',
-          notificationLayout: NotificationLayout.Default),
-    );
-  }
+  // static void sendNotification() {
+  //   AwesomeNotifications().createNotification(
+  //     content: NotificationContent(
+  //         id: 1,
+  //         channelKey: 'basic',
+  //         title: 'Reminder',
+  //         body: 'Drink Water  ',
+  //         notificationLayout: NotificationLayout.Default),
+  //   );
+  // }
 }

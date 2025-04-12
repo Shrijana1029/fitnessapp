@@ -1,3 +1,4 @@
+import 'package:fitnessapp/local_notification/awesome_notification.dart';
 import 'package:fitnessapp/screens/activity/TodayTarget.dart';
 import 'package:fitnessapp/screens/activity/discover_workout.dart';
 import 'package:fitnessapp/screens/activity/latest_acitivity.dart';
@@ -179,13 +180,12 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                     //////TODAY TARGET SECTION/////
                     Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: InkWell(
-                            onTap: () {
-                              //send notification
-                              TColor.sendNotification();
-                            },
-                            child: const TodayTargetCell(
+                            onTap:
+                                //send notification
+                                AwesomeNotification.sendNotification,
+                            child: TodayTargetCell(
                               icon: "assets/img/water.png",
                               value: "8L",
                               title: "Water Intake",
@@ -529,6 +529,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
       fontWeight: FontWeight.w500,
       fontSize: 12,
     );
+
     Widget text;
     switch (value.toInt()) {
       case 0:
@@ -553,12 +554,12 @@ class _ActivityTrackerState extends State<ActivityTracker> {
         text = Text('Sat', style: style);
         break;
       default:
-        text = Text('', style: style);
+        text = const SizedBox.shrink(); // Empty widget for non-matching values
         break;
     }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 16,
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0), // Adjust spacing as needed
       child: text,
     );
   }

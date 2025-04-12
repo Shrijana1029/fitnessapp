@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
+import 'package:fitnessapp/local_notification/awesome_notification.dart';
+import 'package:fitnessapp/screens/Reminder/drink_reminder.dart';
 import 'package:flutter/material.dart';
 
 class SetGoal extends StatefulWidget {
@@ -34,7 +36,7 @@ class _SetGoalState extends State<SetGoal> {
       body: Column(
         children: [
           Container(
-            height: 200,
+            height: 180,
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 238, 238, 216),
@@ -194,21 +196,21 @@ class _SetGoalState extends State<SetGoal> {
                                     thickness: 1,
                                     width: 1,
                                     color: Colors.black),
-                                Expanded(
+                                const Expanded(
                                   child: Column(
                                     children: [
-                                      const Text(
+                                      Text(
                                         'Total Calories',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
-                                      const SizedBox(
+                                      SizedBox(
                                         height: 4,
                                       ),
                                       Text(
                                         '0',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ],
@@ -254,6 +256,145 @@ class _SetGoalState extends State<SetGoal> {
               ],
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Text('Set up your daily activity goals'),
+          const SizedBox(
+            height: 15,
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    // Add this line
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const DrinkReminder()));
+                        },
+                        child: Container(
+                          height: 80,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColorLight,
+                            borderRadius: BorderRadius.circular(6),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              const Text('Drink water Routine'),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    child: const Column(
+                                      children: [
+                                        Text('Water Intake : 1L'),
+                                        Text('Total quantity : 3L'),
+                                      ],
+                                    ),
+                                  ),
+                                  ElevatedButton.icon(
+                                    icon: const Icon(Icons.notification_add),
+                                    onPressed: () {
+                                      AwesomeNotification
+                                          .sendScheduledNotification();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Water reminder added'),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    },
+                                    label: const Text('Water intake (30s)'),
+                                  ),
+                                  // IconButton(
+                                  //   onPressed: () {
+                                  //     LocalNotification.showsimplenotification(
+                                  //         title: 'water reminder in time ',
+                                  //         body: 'Drink water in time',
+                                  //         payload: 'drink water in time');
+                                  //     ScaffoldMessenger.of(context)
+                                  //         .showSnackBar(
+                                  //       const SnackBar(
+                                  //         content: Text('Water reminder added'),
+                                  //         duration: Duration(seconds: 2),
+                                  //       ),
+                                  //     );
+                                  //   },
+                                  //   icon: const Icon(Icons.notification_add),
+                                  // )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 80,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColorLight,
+                          borderRadius: BorderRadius.circular(6),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 80,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColorLight,
+                          borderRadius: BorderRadius.circular(6),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

@@ -1,11 +1,10 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:fitnessapp/screens/foods/controller.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fitnessapp/screens/front_page.dart';
-import 'package:fitnessapp/screens/profile/set_goals.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
 // import 'package:fitnessapp/screens/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -13,24 +12,43 @@ final GlobalKey<ScaffoldMessengerState> scaffoldKey =
     GlobalKey<ScaffoldMessengerState>();
 
 void main() async {
+  tz.initializeTimeZones();
   //connecting project with firebase
-  Get.lazyPut(() => FavoritesController());
   WidgetsFlutterBinding.ensureInitialized();
+  // await LocalNotification.init();
+  // Get.lazyPut(() => FavoritesController());
   await Firebase.initializeApp();
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-      channelKey: 'basic',
-      channelName: 'fitness notification',
-      channelDescription: 'Notification Channel for fitness app',
-      playSound: true,
-    )
-  ]);
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  print('HELLO');
+  print(fcmToken);
+  await AwesomeNotifications().initialize(
+    null, // icon for your app notification
+    [
+      NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Basic notifications',
+        channelDescription: 'Notification channel for basic tests',
+        defaultColor: Colors.teal,
+        ledColor: Colors.white,
+        importance: NotificationImportance.High,
+        channelShowBadge: true,
+      ),
+      NotificationChannel(
+        channelKey: 'scheduled_channel',
+        channelName: 'Scheduled notifications',
+        channelDescription: 'Notification channel for schedule tests',
+        defaultColor: Colors.teal,
+        ledColor: Colors.white,
+        importance: NotificationImportance.High,
+      ),
+    ],
+  );
   // Check if user has granted notification permission globally
-  bool isAllowedToSendNotification =
-      await AwesomeNotifications().isNotificationAllowed();
-  if (!isAllowedToSendNotification) {
-    AwesomeNotifications().requestPermissionToSendNotifications();
-  }
+  await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  });
   // Listen to notification taps/actions globally
   // AwesomeNotifications().actionStream.listen((receivedNotification) {
   //   print('Notification tapped: ${receivedNotification.payload}');
