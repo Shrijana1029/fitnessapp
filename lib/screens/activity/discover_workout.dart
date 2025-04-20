@@ -15,7 +15,7 @@ class _DiscoverWorkoutState extends State<DiscoverWorkout> {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      margin: EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColorLight,
         borderRadius: BorderRadius.circular(12),
@@ -54,13 +54,6 @@ class _DiscoverWorkoutState extends State<DiscoverWorkout> {
               Text(
                 '${widget.vObj['time']}',
                 style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                '${widget.vObj['tagi']}',
-                style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                 ),

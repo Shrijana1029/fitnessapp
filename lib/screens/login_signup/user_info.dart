@@ -215,21 +215,21 @@ class _UserInfoState extends State<UserInfo> {
       ),
     );
   }
-
-  final defaultInputDecoration = const InputDecoration(
-    hintStyle: TextStyle(
-      color: Color(0xFF9E9E9E), // Equivalent to Colors.grey[600]
-      fontSize: 15,
-    ),
-    contentPadding: EdgeInsets.symmetric(
-      vertical: 16.0,
-      horizontal: 16.0,
-    ),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-      borderSide: BorderSide(
-        width: 2.0,
-      ),
-    ),
-  );
 }
+
+const defaultInputDecoration = InputDecoration(
+  hintStyle: TextStyle(
+    color: Color(0xFF9E9E9E), // Equivalent to Colors.grey[600]
+    fontSize: 15,
+  ),
+  contentPadding: EdgeInsets.symmetric(
+    vertical: 16.0,
+    horizontal: 16.0,
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+    borderSide: BorderSide(
+      width: 2.0,
+    ),
+  ),
+);
