@@ -18,9 +18,9 @@ void main() async {
   // await LocalNotification.init();
   // Get.lazyPut(() => FavoritesController());
   await Firebase.initializeApp();
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print('HELLO');
-  print(fcmToken);
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
+  // print('HELLO');
+  // print(fcmToken);
   await AwesomeNotifications().initialize(
     null, // icon for your app notification
     [

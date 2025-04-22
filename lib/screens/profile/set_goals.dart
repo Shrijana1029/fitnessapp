@@ -18,14 +18,14 @@ DocumentReference<Map<String, dynamic>>? userDoc;
 
 class _SetGoalState extends State<SetGoal> {
   @override
-  void initState() {
-    super.initState();
-    user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      userDoc =
-          FirebaseFirestore.instance.collection('user_info').doc(user!.uid);
-    }
-  }
+  // void initState() {
+  //   super.initState();
+  //   user = FirebaseAuth.instance.currentUser;
+  //   if (user != null) {
+  //     userDoc =
+  //         FirebaseFirestore.instance.collection('user_info').doc(user!.uid);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
