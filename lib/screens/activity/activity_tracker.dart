@@ -1,9 +1,11 @@
 import 'package:fitnessapp/local_notification/awesome_notification.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:fitnessapp/screens/activity/TodayTarget.dart';
 import 'package:fitnessapp/screens/activity/discover_workout.dart';
 import 'package:fitnessapp/screens/activity/latest_acitivity.dart';
 import 'package:fitnessapp/screens/activity/color.dart';
 import 'package:fitnessapp/screens/youtube_integrations/cardio.dart';
+import 'package:fitnessapp/screens/youtube_integrations/meditation.dart';
 import 'package:fitnessapp/screens/youtube_integrations/yoga.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -39,51 +41,68 @@ class _ActivityTrackerState extends State<ActivityTracker> {
       'title': 'Cardio',
       'exercises': '10 Exercises',
       'time': '50 Minutes',
-      'image': 'assets/img/cardio.jpg',
+      'image': 'assets/img/run.png',
       'tagi': '0'
     },
     {
-      'title': 'Arms',
+      'title': 'Yoga',
       'exercises': '6 Exercises',
-      'time': '35 Minutes',
+      'time': '36 Minutes',
       'image': 'assets/img/yoga.webp',
       'tagi': '1'
     },
     {
-      'title': 'Yoga',
+      'title': 'Meditation',
       'exercises': '8 Exercises',
       'time': '45 Minutes',
-      'image': 'assets/img/yoga.webp',
+      'image': 'assets/img/meditation.png',
       'tagi': '2'
     },
-    {
-      'title': 'Legs',
-      'exercises': '12 Exercises',
-      'time': '60 Minutes',
-      'image': 'assets/img/yoga.webp',
-      'tagi': '3'
-    },
+    // {
+    //   'title': 'Legs',
+    //   'exercises': '12 Exercises',
+    //   'time': '60 Minutes',
+    //   'image': 'assets/img/yoga.webp',
+    //   'tagi': '3'
+    // },
   ];
 
   ///for pedometer concept
   /////stream handles asynchronous data its not a data type ok
   late Stream<StepCount> _stepCountStream;
-  String steps = "0";
+  String _steps = '0';
 
   @override
   void initState() {
     super.initState();
+    _requestPermission();
+    _startListening();
+  }
 
+  void _requestPermission() async {
+    var status = await Permission.activityRecognition.status;
+    if (!status.isGranted) {
+      await Permission.activityRecognition.request();
+    }
+  }
+
+  void _startListening() {
     _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream.listen(_onStepCount).onError(_onError);
+    _stepCountStream.listen(_onStepCount).onError(_onStepCountError);
   }
 
   void _onStepCount(StepCount event) {
-    setState(() => steps = event.steps.toString());
+    print('Steps: ${event.steps}');
+    setState(() {
+      _steps = event.steps.toString();
+    });
   }
 
-  void _onError(error) {
-    print("Step Count Error: $error");
+  void _onStepCountError(error) {
+    print('Step Count Error: $error');
+    setState(() {
+      _steps = 'Not available';
+    });
   }
 
   ///to here
@@ -198,7 +217,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                         Expanded(
                           child: TodayTargetCell(
                             icon: "assets/img/walking.png",
-                            value: steps,
+                            value: _steps,
                             title: "Foot Steps",
                           ),
                         ),
@@ -229,7 +248,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                           percent: 0.7,
                           radius: 50,
                           center: Text(
-                            steps,
+                            _steps,
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                         ),
@@ -479,20 +498,14 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                       return DiscoverWorkout(
                         vObj: vObj,
                         onPressed: () {
+                          print('tag is : == ${vObj['tagi']}');
                           // Handle navigation based on the tag
                           switch (vObj["tagi"]) {
-                            case "3": // Navigate to Contact Us
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Yoga()),
-                              );
-                              break;
                             case "2": // Navigate to Privacy Policy
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Cardio()),
+                                    builder: (context) => const Meditation()),
                               );
                               break;
                             case "1": // Navigate to Settings

@@ -2,23 +2,24 @@ import 'package:fitnessapp/screens/youtube_integrations/play_video.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class Cardio extends StatefulWidget {
-  const Cardio({super.key});
+class Meditation extends StatefulWidget {
+  const Meditation({super.key});
 
   @override
-  State<Cardio> createState() => _CardioState();
+  State<Meditation> createState() => _MeditationState();
 }
 
-class _CardioState extends State<Cardio> {
-  final String name = 'cardio';
+class _MeditationState extends State<Meditation> {
+  final String name = 'meditation';
   String brief =
-      'The practice of  Cardio can help promote reproductive wellness in women and maintain optimal health during their periods, during pregnancy, and menopause. Routine practice helps alleviate symptoms associated with fertility cycles – so much so that teachers specializing in prenatal  Cardio are trained to ease the period of pregnancy that is vital to the growth and development of a healthy baby. Personally, it was  Cardio that gave me the body that I wanted – not the hundred other things I tried. I find that  Cardio suits women’s bodies; it helps tone but prevents bulking up. It also helps get rid of pesky blotting, which can give the appearance of weight. Below are five essential asanas that every woman should incorporate into her daily routine.';
-  final List cardios = [
-    'https://www.youtube.com/watch?v=zbpvhi67RjY', // 10-Minute Guided Meditation for Deep Rest
-    'https://www.youtube.com/watch?v=WBYYFbStfHM', // Waterfall Meditation - Guided Imagery
-    'https://www.youtube.com/watch?v=tiAfUrU9Pvg', // Unwind Your Mind for Mental Clarity and Renewal
-    'https://www.youtube.com/watch?v=96DIXWgDm8E', // Guided Meditation to Access Your Deep Inner Wisdom
-    'https://www.youtube.com/watch?v=8NHQV5MzZpk', // Love Meditation - Guided Metta Meditation
+      'The practice of  Meditation can help promote reproductive wellness in women and maintain optimal health during their periods, during pregnancy, and menopause. Routine practice helps alleviate symptoms associated with fertility cycles – so much so that teachers specializing in prenatal  Meditation are trained to ease the period of pregnancy that is vital to the growth and development of a healthy baby. Personally, it was  Meditation that gave me the body that I wanted – not the hundred other things I tried. I find that  Meditation suits women’s bodies; it helps tone but prevents bulking up. It also helps get rid of pesky blotting, which can give the appearance of weight. Below are five essential asanas that every woman should incorporate into her daily routine.';
+  final List meditations = [
+    // Meditation for Flexibility
+    'https://www.youtube.com/watch?v=Hzi3PDz1AWU', // Full-Body Meditation Flow
+    'https://www.youtube.com/watch?v=JslvBcIVtDg', // Beginner Meditation for Relaxation
+    'https://www.youtube.com/watch?v=GqB5kYFD7bk', // 15-Minute Morning Meditation Routine
+    'http://www.youtube.com/watch?v=0eCNnxg4YgI', // Meditation for Back Pain
+    'http://www.youtube.com/watch?v=5vKrUV0KxIM', // Meditation Workout
   ];
 
   @override
@@ -37,9 +38,9 @@ class _CardioState extends State<Cardio> {
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
-            itemCount: cardios.length,
+            itemCount: meditations.length,
             itemBuilder: (context, index) {
-              final videoId = YoutubePlayer.convertUrlToId(cardios[index]);
+              final videoId = YoutubePlayer.convertUrlToId(meditations[index]);
               final description =
                   "Click  for video ${index + 1}"; // Example descriptions
               return InkWell(

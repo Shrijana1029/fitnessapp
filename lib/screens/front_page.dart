@@ -1,7 +1,8 @@
 // import 'package:fitnessapp/profile/profile_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitnessapp/screens/activity/activity_tracker.dart';
 import 'package:fitnessapp/screens/profile/profile_view.dart';
-import 'package:fitnessapp/screens/activity/activity_tracking.dart';
+
 import 'package:fitnessapp/screens/foods/breakfast_page.dart';
 import 'package:fitnessapp/screens/login_signup/login_page.dart';
 import 'package:fitnessapp/screens/profile/set_goals.dart';
