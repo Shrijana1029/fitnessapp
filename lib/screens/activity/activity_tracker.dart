@@ -1,4 +1,5 @@
 import 'package:fitnessapp/local_notification/awesome_notification.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:fitnessapp/screens/activity/TodayTarget.dart';
 import 'package:fitnessapp/screens/activity/discover_workout.dart';
 import 'package:fitnessapp/screens/activity/latest_acitivity.dart';
@@ -69,22 +70,39 @@ class _ActivityTrackerState extends State<ActivityTracker> {
   ///for pedometer concept
   /////stream handles asynchronous data its not a data type ok
   late Stream<StepCount> _stepCountStream;
-  String steps = "0";
+  String _steps = '0';
 
   @override
   void initState() {
     super.initState();
+    _requestPermission();
+    _startListening();
+  }
 
+  void _requestPermission() async {
+    var status = await Permission.activityRecognition.status;
+    if (!status.isGranted) {
+      await Permission.activityRecognition.request();
+    }
+  }
+
+  void _startListening() {
     _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream.listen(_onStepCount).onError(_onError);
+    _stepCountStream.listen(_onStepCount).onError(_onStepCountError);
   }
 
   void _onStepCount(StepCount event) {
-    setState(() => steps = event.steps.toString());
+    print('Steps: ${event.steps}');
+    setState(() {
+      _steps = event.steps.toString();
+    });
   }
 
-  void _onError(error) {
-    print("Step Count Error: $error");
+  void _onStepCountError(error) {
+    print('Step Count Error: $error');
+    setState(() {
+      _steps = 'Not available';
+    });
   }
 
   ///to here
@@ -199,7 +217,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                         Expanded(
                           child: TodayTargetCell(
                             icon: "assets/img/walking.png",
-                            value: steps,
+                            value: _steps,
                             title: "Foot Steps",
                           ),
                         ),
@@ -230,7 +248,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                           percent: 0.7,
                           radius: 50,
                           center: Text(
-                            steps,
+                            _steps,
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
                         ),
