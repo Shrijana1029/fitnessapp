@@ -1,99 +1,72 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const FitnessApp());
-
-class FitnessApp extends StatelessWidget {
-  const FitnessApp({super.key});
-
+class SelectionPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Discover New Workouts'),
-          backgroundColor: Colors.teal,
-        ),
-        body: WorkoutScrollView(),
-      ),
-    );
-  }
+  _SelectionPageState createState() => _SelectionPageState();
 }
 
-class WorkoutScrollView extends StatelessWidget {
-  final List<Map<String, String>> workouts = [
-    {'title': 'Cardio', 'exercises': '10 Exercises', 'time': '50 Minutes'},
-    {'title': 'Arms', 'exercises': '6 Exercises', 'time': '35 Minutes'},
-    {'title': 'Yoga', 'exercises': '8 Exercises', 'time': '45 Minutes'},
-    {'title': 'Legs', 'exercises': '12 Exercises', 'time': '60 Minutes'},
-  ];
-
-  WorkoutScrollView({super.key});
+class _SelectionPageState extends State<SelectionPage> {
+  String selectedOption = 'Daily'; // Default selected
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: workouts.map((workout) => WorkoutCard(workout)).toList(),
-      ),
-    );
-  }
-}
-
-class WorkoutCard extends StatelessWidget {
-  final Map<String, String> workout;
-
-  const WorkoutCard(this.workout, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      margin: const EdgeInsets.only(right: 16),
-      decoration: BoxDecoration(
-        color: Colors.orangeAccent,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
+    return Scaffold(
+      appBar: AppBar(title: Text('Select Option')),
+      body: Column(
+        children: [
+          SizedBox(height: 20),
+          // Dropdown menu
+          DropdownButton<String>(
+            value: selectedOption,
+            items: ['Daily', 'Weekly', 'Monthly']
+                .map((option) => DropdownMenuItem(
+                      value: option,
+                      child: Text(option),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                selectedOption = value!;
+              });
+            },
+          ),
+          SizedBox(height: 20),
+          // Container based on selection
+          Expanded(
+            child: Center(
+              child: getSelectedContainer(),
+            ),
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              workout['title']!,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              workout['exercises']!,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.white70,
-              ),
-            ),
-            Text(
-              workout['time']!,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.white70,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
+  }
+
+  // Returns container based on what is selected
+  Widget getSelectedContainer() {
+    if (selectedOption == 'Daily') {
+      return Container(
+        color: Colors.blue[100],
+        width: 200,
+        height: 200,
+        child: Center(child: Text('Daily View')),
+      );
+    } else if (selectedOption == 'Weekly') {
+      return Container(
+        color: Colors.green[100],
+        width: 200,
+        height: 200,
+        child: Center(child: Text('Weekly View')),
+      );
+    } else if (selectedOption == 'Monthly') {
+      return Container(
+        color: Colors.red[100],
+        width: 200,
+        height: 200,
+        child: Center(child: Text('Monthly View')),
+      );
+    } else {
+      return Container();
+    }
   }
 }
