@@ -71,6 +71,9 @@ class _ActivityTrackerState extends State<ActivityTracker> {
   /////stream handles asynchronous data its not a data type ok
   late Stream<StepCount> _stepCountStream;
   String _steps = '0';
+  String? selectedValue;
+  bool showMonthlyContainer = false;
+  String selectedOption = 'Daily';
 
   @override
   void initState() {
@@ -122,7 +125,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
                 onPressed: () {},
                 icon: Image.asset('assets/img/black_btn.png'))),
         title: Text(
-          "Activity Tracker",
+          "Activity ",
           style: TextStyle(
               color: TColor.black, fontSize: 26, fontWeight: FontWeight.w700),
         ),
@@ -290,153 +293,48 @@ class _ActivityTrackerState extends State<ActivityTracker> {
               SizedBox(
                 height: media.width * 0.1,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  textAlign: TextAlign.center,
+                  "Activity  Progress",
+                  style: TextStyle(
+                      color: TColor.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700),
+                ),
+              ]),
+
+              ///////drop down option
+              Column(
                 children: [
-                  Text(
-                    "Activity  Progress",
-                    style: TextStyle(
-                        color: TColor.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  Container(
-                      height: 30,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: TColor.primaryG),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          items: ["Weekly", "Monthly"]
-                              .map((name) => DropdownMenuItem(
-                                    value: name,
-                                    child: Text(
-                                      name,
-                                      style: TextStyle(
-                                          color: TColor.gray, fontSize: 14),
-                                    ),
-                                  ))
-                              .toList(),
-                          onChanged: (value) {},
-                          icon: Icon(Icons.expand_more, color: TColor.white),
-                          hint: Text(
-                            "Weekly",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: TColor.white, fontSize: 12),
-                          ),
-                        ),
-                      )),
-                ],
-              ),
-              SizedBox(
-                height: media.width * 0.05,
-              ),
-              Container(
-                height: media.width * 0.5,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
-                decoration: BoxDecoration(
-                    color: TColor.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: const [
-                      BoxShadow(color: Colors.black12, blurRadius: 3)
-                    ]),
-                child: BarChart(BarChartData(
-                  barTouchData: BarTouchData(
-                    touchTooltipData: BarTouchTooltipData(
-                      // tooltipBgColor: Colors.grey,
-                      tooltipHorizontalAlignment: FLHorizontalAlignment.right,
-                      tooltipMargin: 10,
-                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                        String weekDay;
-                        switch (group.x) {
-                          case 0:
-                            weekDay = 'Monday';
-                            break;
-                          case 1:
-                            weekDay = 'Tuesday';
-                            break;
-                          case 2:
-                            weekDay = 'Wednesday';
-                            break;
-                          case 3:
-                            weekDay = 'Thursday';
-                            break;
-                          case 4:
-                            weekDay = 'Friday';
-                            break;
-                          case 5:
-                            weekDay = 'Saturday';
-                            break;
-                          case 6:
-                            weekDay = 'Sunday';
-                            break;
-                          default:
-                            throw Error();
-                        }
-                        return BarTooltipItem(
-                          '$weekDay\n',
-                          const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: (rod.toY - 1).toString(),
-                              style: TextStyle(
-                                color: TColor.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    touchCallback: (FlTouchEvent event, barTouchResponse) {
+                  // SizedBox(height: 20),
+                  // Dropdown menu
+                  DropdownButton<String>(
+                    value: selectedOption,
+                    items: ['Progress Monthly', 'Weekly', 'Yearly']
+                        .map((option) => DropdownMenuItem(
+                              value: option,
+                              child: Text(option),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
                       setState(() {
-                        if (!event.isInterestedForInteractions ||
-                            barTouchResponse == null ||
-                            barTouchResponse.spot == null) {
-                          touchedIndex = -1;
-                          return;
-                        }
-                        touchedIndex =
-                            barTouchResponse.spot!.touchedBarGroupIndex;
+                        selectedOption = value!;
                       });
                     },
                   ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: getTitles,
-                        reservedSize: 38,
-                      ),
-                    ),
-                    leftTitles: const AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: false,
-                      ),
-                    ),
+                  const SizedBox(height: 20),
+                  // Container based on selection
+                  Center(
+                    child: getSelectedContainer(),
                   ),
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  barGroups: showingGroups(),
-                  gridData: const FlGridData(show: false),
-                )),
+                ],
               ),
+
+              SizedBox(
+                height: media.width * 0.05,
+              ),
+
               SizedBox(
                 height: media.width * 0.05,
               ),
@@ -534,6 +432,130 @@ class _ActivityTrackerState extends State<ActivityTracker> {
         ),
       ),
     );
+  }
+
+  //// dropdown
+  ///// Returns container based on what is selected
+  Widget getSelectedContainer() {
+    if (selectedOption == 'Progress Monthly') {
+      return Container(
+        height: 190,
+        width: 600,
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+        decoration: BoxDecoration(
+            color: TColor.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 3)]),
+        child: BarChart(BarChartData(
+          barTouchData: BarTouchData(
+            touchTooltipData: BarTouchTooltipData(
+              // tooltipBgColor: Colors.grey,
+              tooltipHorizontalAlignment: FLHorizontalAlignment.right,
+              tooltipMargin: 10,
+              getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                String weekDay;
+                switch (group.x) {
+                  case 0:
+                    weekDay = 'Monday';
+                    break;
+                  case 1:
+                    weekDay = 'Tuesday';
+                    break;
+                  case 2:
+                    weekDay = 'Wednesday';
+                    break;
+                  case 3:
+                    weekDay = 'Thursday';
+                    break;
+                  case 4:
+                    weekDay = 'Friday';
+                    break;
+                  case 5:
+                    weekDay = 'Saturday';
+                    break;
+                  case 6:
+                    weekDay = 'Sunday';
+                    break;
+                  default:
+                    throw Error();
+                }
+                return BarTooltipItem(
+                  '$weekDay\n',
+                  const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: (rod.toY - 1).toString(),
+                      style: TextStyle(
+                        color: TColor.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+            touchCallback: (FlTouchEvent event, barTouchResponse) {
+              setState(() {
+                if (!event.isInterestedForInteractions ||
+                    barTouchResponse == null ||
+                    barTouchResponse.spot == null) {
+                  touchedIndex = -1;
+                  return;
+                }
+                touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
+              });
+            },
+          ),
+          titlesData: FlTitlesData(
+            show: true,
+            rightTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            topTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                getTitlesWidget: getTitles,
+                reservedSize: 38,
+              ),
+            ),
+            leftTitles: const AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: false,
+              ),
+            ),
+          ),
+          borderData: FlBorderData(
+            show: false,
+          ),
+          barGroups: showingGroups(),
+          gridData: const FlGridData(show: false),
+        )),
+      );
+    } else if (selectedOption == 'Weekly') {
+      return Container(
+        color: const Color.fromARGB(255, 118, 30, 30),
+        width: 100,
+        height: 100,
+        child: Center(child: Text('weekly View')),
+      );
+    } else if (selectedOption == 'Yearly') {
+      return Container(
+        color: const Color.fromARGB(255, 118, 30, 30),
+        width: 100,
+        height: 100,
+        child: Center(child: Text('yearly View')),
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget getTitles(double value, TitleMeta meta) {
