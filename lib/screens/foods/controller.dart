@@ -42,3 +42,33 @@ class FavoritesController extends GetxController {
         foodList.where((food) => favoriteNames.contains(food.name)).toList();
   }
 }
+
+class SetgoalsController extends GetxController {
+  var selectedWaterCap = ''.obs;
+  var selectedTimeValue = ''.obs;
+  var fromTime = ''.obs;
+  var toTime = ''.obs;
+  void setWaterCap(String value) {
+    selectedWaterCap.value = value;
+  }
+
+  void setTimeInterval(String value) {
+    selectedTimeValue.value = value;
+  }
+
+  void setFromTime(String time) {
+    fromTime.value = time;
+  }
+
+  void setToTime(String time) {
+    toTime.value = time;
+  }
+
+  void saveReminder() {
+    // You could save this to a database or shared preferences instead
+    print('Water Cap: ${selectedWaterCap.value}');
+    print('Interval: ${selectedTimeValue.value}');
+    print('From: ${fromTime.value}');
+    print('To: ${toTime.value}');
+  }
+}

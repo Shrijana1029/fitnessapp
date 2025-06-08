@@ -1,8 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fitnessapp/screens/activity/activity_tracker.dart';
-import 'package:fitnessapp/screens/extra.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
 // import 'package:fitnessapp/screens/profile.dart';
@@ -77,7 +74,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: FrontPage(),
+        home: const FrontPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(

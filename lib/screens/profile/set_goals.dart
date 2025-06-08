@@ -3,10 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
 import 'package:fitnessapp/local_notification/awesome_notification.dart';
 import 'package:fitnessapp/screens/Reminder/drink_reminder.dart';
+import 'package:fitnessapp/screens/foods/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class SetGoal extends StatefulWidget {
-  const SetGoal({super.key});
+  final SetgoalsController waterController = Get.put(SetgoalsController());
+  // final SetgoalsController waterController = Get.find();
+  SetGoal({super.key});
 
   @override
   State<SetGoal> createState() => _SetGoalState();
@@ -29,6 +34,8 @@ class _SetGoalState extends State<SetGoal> {
 
   @override
   Widget build(BuildContext context) {
+    final SetgoalsController waterController = Get.put(SetgoalsController());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Set Goal'),
@@ -304,12 +311,16 @@ class _SetGoalState extends State<SetGoal> {
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.all(5),
-                                    child: const Column(
-                                      children: [
-                                        Text('Water Intake : 1L'),
-                                        Text('Total quantity : 3L'),
-                                      ],
-                                    ),
+                                    child: Obx(() => Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                'Water Intake : ${waterController.selectedTimeValue.value}'),
+                                            Text(
+                                                'Total quantity : ${waterController.selectedWaterCap.value}'),
+                                          ],
+                                        )),
                                   ),
                                   ElevatedButton.icon(
                                     icon: const Icon(Icons.notification_add),
