@@ -1,8 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fitnessapp/screens/activity/activity_tracker.dart';
-import 'package:fitnessapp/screens/extra.dart';
 import 'package:fitnessapp/screens/front_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
 // import 'package:fitnessapp/screens/profile.dart';
@@ -20,9 +17,9 @@ void main() async {
   // await LocalNotification.init();
   // Get.lazyPut(() => FavoritesController());
   await Firebase.initializeApp();
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print('HELLO');
-  print(fcmToken);
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
+  // print('HELLO');
+  // print(fcmToken);
   await AwesomeNotifications().initialize(
     null, // icon for your app notification
     [
@@ -77,7 +74,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: navigatorKey,
         scaffoldMessengerKey: scaffoldKey,
         title: 'Flutter Demo',
-        home: FrontPage(),
+        home: const FrontPage(),
         theme: ThemeData(
           textTheme: const TextTheme(
             displayLarge: TextStyle(

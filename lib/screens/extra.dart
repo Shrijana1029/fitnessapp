@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SelectionPage extends StatefulWidget {
+  const SelectionPage({super.key});
+
   @override
   _SelectionPageState createState() => _SelectionPageState();
 }
@@ -11,10 +13,10 @@ class _SelectionPageState extends State<SelectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Select Option')),
+      appBar: AppBar(title: const Text('Select Option')),
       body: Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           // Dropdown menu
           DropdownButton<String>(
             value: selectedOption,
@@ -30,7 +32,7 @@ class _SelectionPageState extends State<SelectionPage> {
               });
             },
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           // Container based on selection
           Expanded(
             child: Center(
@@ -49,21 +51,21 @@ class _SelectionPageState extends State<SelectionPage> {
         color: Colors.blue[100],
         width: 200,
         height: 200,
-        child: Center(child: Text('Daily View')),
+        child: const Center(child: Text('Daily View')),
       );
     } else if (selectedOption == 'Weekly') {
       return Container(
         color: Colors.green[100],
         width: 200,
         height: 200,
-        child: Center(child: Text('Weekly View')),
+        child: const Center(child: Text('Weekly View')),
       );
     } else if (selectedOption == 'Monthly') {
       return Container(
         color: Colors.red[100],
         width: 200,
         height: 200,
-        child: Center(child: Text('Monthly View')),
+        child: const Center(child: Text('Monthly View')),
       );
     } else {
       return Container();
