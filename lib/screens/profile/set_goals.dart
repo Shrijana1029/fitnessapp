@@ -288,7 +288,7 @@ class _SetGoalState extends State<SetGoal> {
                                   builder: (context) => const DrinkReminder()));
                         },
                         child: Container(
-                          height: 80,
+                          height: 100,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColorLight,
@@ -316,9 +316,11 @@ class _SetGoalState extends State<SetGoal> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                                'Water Intake : ${waterController.selectedTimeValue.value}'),
+                                                'Time interval : ${waterController.selectedTimeValue.value}'),
                                             Text(
                                                 'Total quantity : ${waterController.selectedWaterCap.value}'),
+                                            Text(
+                                                'Quantity per interval : ${waterController.quantityInterval.value}'),
                                           ],
                                         )),
                                   ),
@@ -335,7 +337,7 @@ class _SetGoalState extends State<SetGoal> {
                                         ),
                                       );
                                     },
-                                    label: const Text('Water intake (30s)'),
+                                    label: const Text('(30s)'),
                                   ),
                                   // IconButton(
                                   //   onPressed: () {

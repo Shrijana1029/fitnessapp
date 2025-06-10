@@ -17,6 +17,7 @@ class _DrinkReminderState extends State<DrinkReminder> {
   final TextEditingController _timevalue = TextEditingController();
   final TextEditingController _fromTimeController = TextEditingController();
   final TextEditingController _toTimeController = TextEditingController();
+  final TextEditingController _quantityhour = TextEditingController();
   final SetgoalsController controller = Get.put(SetgoalsController());
 
   // Method to show time picker and update the respective controller
@@ -84,6 +85,31 @@ class _DrinkReminderState extends State<DrinkReminder> {
                 onSelected: (value) {
                   if (value != null) {
                     controller.setTimeInterval(value);
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Quantity of water per interval',
+                  )),
+              const SizedBox(
+                height: 8,
+              ),
+              DropdownMenu(
+                controller: _quantityhour,
+                width: double.infinity,
+                dropdownMenuEntries: const <DropdownMenuEntry<String>>[
+                  DropdownMenuEntry(value: '300 mL', label: '300 mL'),
+                  DropdownMenuEntry(value: '400 mL', label: '400 mL'),
+                  DropdownMenuEntry(value: '500 mL', label: '500 mL '),
+                ],
+                onSelected: (value) {
+                  if (value != null) {
+                    controller.setQuantity(value);
                   }
                 },
               ),
