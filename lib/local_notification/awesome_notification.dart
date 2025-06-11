@@ -1,4 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:fitnessapp/screens/foods/controller.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class AwesomeNotification {
   static Future<void> sendNotification() async {
@@ -54,20 +57,24 @@ class AwesomeNotification {
   static void sendRepeatingNotification() async {
     try {
       print("Attempting to schedule repeating notification...");
+      final SetgoalsController goalsController = Get.find<SetgoalsController>();
+      String waterQuantity = goalsController.quantityInterval.value;
+
+      print(
+          "Attempting to schedule repeating notification with $waterQuantity...");
 
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: createUniqueId(), // Unique ID for each schedule
           channelKey: 'scheduled_channel',
           title: 'Water Intake Reminder',
-          body: 'Remember to drink 300ml of water!',
+          body: 'Remember to drink $waterQuantity of water!',
           notificationLayout: NotificationLayout.Default,
         ),
-        schedule: NotificationInterval(
-          interval:
-              (const Duration(minutes: 60)), // Interval in seconds (2 hours)
-          timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+        schedule: NotificationCalendar(
+          second: 0,
           repeats: true,
+          preciseAlarm: true, // More precise scheduling
           allowWhileIdle: true,
         ),
       );
