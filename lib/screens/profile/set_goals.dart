@@ -288,7 +288,7 @@ class _SetGoalState extends State<SetGoal> {
                                   builder: (context) => const DrinkReminder()));
                         },
                         child: Container(
-                          height: 100,
+                          height: 150,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColorLight,
@@ -324,21 +324,7 @@ class _SetGoalState extends State<SetGoal> {
                                           ],
                                         )),
                                   ),
-                                  ElevatedButton.icon(
-                                    icon: const Icon(Icons.notification_add),
-                                    onPressed: () {
-                                      AwesomeNotification
-                                          .sendScheduledNotification();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Water reminder added'),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    },
-                                    label: const Text('(30s)'),
-                                  ),
+
                                   // IconButton(
                                   //   onPressed: () {
                                   //     LocalNotification.showsimplenotification(
@@ -355,6 +341,47 @@ class _SetGoalState extends State<SetGoal> {
                                   //   },
                                   //   icon: const Icon(Icons.notification_add),
                                   // )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  ElevatedButton.icon(
+                                    icon: const Icon(Icons.notification_add),
+                                    onPressed: () {
+                                      AwesomeNotification
+                                          .sendRepeatingNotification();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Water reminder added'),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    },
+                                    label: const Text('ON'),
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  ElevatedButton.icon(
+                                    icon: const Icon(Icons.notifications_none),
+                                    onPressed: () {
+                                      AwesomeNotification
+                                          .cancelScheduledNotifications();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content:
+                                              Text('Water reminder removed'),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    },
+                                    label: const Text('OFF'),
+                                  ),
                                 ],
                               ),
                             ],

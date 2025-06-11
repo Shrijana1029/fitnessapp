@@ -50,6 +50,63 @@ class AwesomeNotification {
       print("Error sending notification: $e");
     }
   }
+
+  static void sendRepeatingNotification() async {
+    try {
+      print("Attempting to schedule repeating notification...");
+
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: createUniqueId(), // Unique ID for each schedule
+          channelKey: 'scheduled_channel',
+          title: 'Water Intake Reminder',
+          body: 'Remember to drink 300ml of water!',
+          notificationLayout: NotificationLayout.Default,
+        ),
+        schedule: NotificationInterval(
+          interval:
+              (const Duration(minutes: 60)), // Interval in seconds (2 hours)
+          timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+          repeats: true,
+          allowWhileIdle: true,
+        ),
+      );
+
+      print("Scheduled repeating notification every 2 hours.");
+    } catch (e) {
+      print("Error scheduling repeating notification: $e");
+    }
+  }
+
+  static Future<void> cancelAllNotifications() async {
+    try {
+      print("Cancelling all notifications...");
+      await AwesomeNotifications().cancelAll();
+      print("All notifications cancelled.");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  static Future<void> cancelScheduledNotifications() async {
+    try {
+      print("Cancelling scheduled notifications...");
+      await AwesomeNotifications().cancelAllSchedules();
+      print("Scheduled notifications cancelled.");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  static Future<void> cancelNotificationById(int id) async {
+    try {
+      print("Cancelling notification ID $id...");
+      await AwesomeNotifications().cancel(id);
+      print("Notification $id cancelled.");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
 }
 
 int createUniqueId() {
