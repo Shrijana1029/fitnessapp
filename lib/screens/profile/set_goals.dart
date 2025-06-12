@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/firebase_services/firebase_auth.dart';
@@ -6,7 +7,7 @@ import 'package:fitnessapp/screens/Reminder/drink_reminder.dart';
 import 'package:fitnessapp/screens/foods/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SetGoal extends StatefulWidget {
   final SetgoalsController waterController = Get.put(SetgoalsController());
@@ -22,15 +23,52 @@ User? user;
 DocumentReference<Map<String, dynamic>>? userDoc;
 
 class _SetGoalState extends State<SetGoal> {
-  @override
-  // void initState() {
-  //   super.initState();
-  //   user = FirebaseAuth.instance.currentUser;
-  //   if (user != null) {
-  //     userDoc =
-  //         FirebaseFirestore.instance.collection('user_info').doc(user!.uid);
-  //   }
-  // }
+  void initState() {
+    super.initState();
+    _loadNotificationState();
+  }
+
+  void _loadNotificationState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool savedState = prefs.getBool('isNotificationOn') ?? false;
+    setState(() {
+      isNotificationOn = savedState;
+    });
+  }
+
+  bool isNotificationOn = false;
+  void toggleNotification() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (isNotificationOn) {
+      // Turn OFF
+      await AwesomeNotification.cancelScheduledNotifications();
+      setState(() {
+        isNotificationOn = false;
+      });
+      await prefs.setBool('isNotificationOn', false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Water reminder removed'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      // Turn ON
+      AwesomeNotification.sendRepeatingNotification();
+      setState(() {
+        isNotificationOn = true;
+      });
+      await prefs.setBool('isNotificationOn', true);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Water reminder added'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -288,7 +326,7 @@ class _SetGoalState extends State<SetGoal> {
                                   builder: (context) => const DrinkReminder()));
                         },
                         child: Container(
-                          height: 80,
+                          height: 150,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColorLight,
@@ -316,27 +354,15 @@ class _SetGoalState extends State<SetGoal> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                                'Water Intake : ${waterController.selectedTimeValue.value}'),
+                                                'Time interval : ${waterController.selectedTimeValue.value}'),
                                             Text(
                                                 'Total quantity : ${waterController.selectedWaterCap.value}'),
+                                            Text(
+                                                'Quantity per interval : ${waterController.quantityInterval.value}'),
                                           ],
                                         )),
                                   ),
-                                  ElevatedButton.icon(
-                                    icon: const Icon(Icons.notification_add),
-                                    onPressed: () {
-                                      AwesomeNotification
-                                          .sendScheduledNotification();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Water reminder added'),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    },
-                                    label: const Text('Water intake (30s)'),
-                                  ),
+
                                   // IconButton(
                                   //   onPressed: () {
                                   //     LocalNotification.showsimplenotification(
@@ -353,6 +379,23 @@ class _SetGoalState extends State<SetGoal> {
                                   //   },
                                   //   icon: const Icon(Icons.notification_add),
                                   // )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  ElevatedButton.icon(
+                                    icon: Icon(
+                                      isNotificationOn
+                                          ? Icons.notifications_active
+                                          : Icons.notification_add,
+                                    ),
+                                    onPressed: toggleNotification,
+                                    label:
+                                        Text(isNotificationOn ? 'OFF' : 'ON'),
+                                  )
                                 ],
                               ),
                             ],

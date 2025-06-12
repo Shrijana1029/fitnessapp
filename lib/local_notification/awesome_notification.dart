@@ -1,4 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:fitnessapp/screens/foods/controller.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class AwesomeNotification {
   static Future<void> sendNotification() async {
@@ -48,6 +51,67 @@ class AwesomeNotification {
       print("Scheduled notification successfully at: $scheduleTime");
     } catch (e) {
       print("Error sending notification: $e");
+    }
+  }
+
+  static void sendRepeatingNotification() async {
+    try {
+      print("Attempting to schedule repeating notification...");
+      final SetgoalsController goalsController = Get.find<SetgoalsController>();
+      String waterQuantity = goalsController.quantityInterval.value;
+
+      print(
+          "Attempting to schedule repeating notification with $waterQuantity...");
+
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: createUniqueId(), // Unique ID for each schedule
+          channelKey: 'scheduled_channel',
+          title: 'Water Intake Reminder',
+          body: 'Remember to drink $waterQuantity of water!',
+          notificationLayout: NotificationLayout.Default,
+        ),
+        schedule: NotificationCalendar(
+          second: 0,
+          repeats: true,
+          preciseAlarm: true, // More precise scheduling
+          allowWhileIdle: true,
+        ),
+      );
+
+      print("Scheduled repeating notification every 2 hours.");
+    } catch (e) {
+      print("Error scheduling repeating notification: $e");
+    }
+  }
+
+  static Future<void> cancelAllNotifications() async {
+    try {
+      print("Cancelling all notifications...");
+      await AwesomeNotifications().cancelAll();
+      print("All notifications cancelled.");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  static Future<void> cancelScheduledNotifications() async {
+    try {
+      print("Cancelling scheduled notifications...");
+      await AwesomeNotifications().cancelAllSchedules();
+      print("Scheduled notifications cancelled.");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  static Future<void> cancelNotificationById(int id) async {
+    try {
+      print("Cancelling notification ID $id...");
+      await AwesomeNotifications().cancel(id);
+      print("Notification $id cancelled.");
+    } catch (e) {
+      print("Error: $e");
     }
   }
 }
