@@ -544,14 +544,14 @@ class _ActivityTrackerState extends State<ActivityTracker> {
         color: const Color.fromARGB(255, 118, 30, 30),
         width: 100,
         height: 100,
-        child: Center(child: Text('weekly View')),
+        child: const Center(child: Text('weekly View')),
       );
     } else if (selectedOption == 'Yearly') {
       return Container(
         color: const Color.fromARGB(255, 118, 30, 30),
         width: 100,
         height: 100,
-        child: Center(child: Text('yearly View')),
+        child: const Center(child: Text('yearly View')),
       );
     } else {
       return Container();

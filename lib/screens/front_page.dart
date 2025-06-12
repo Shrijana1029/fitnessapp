@@ -33,7 +33,7 @@ class _FrontPageState extends State<FrontPage> {
       // const ActivityTracker(),
       const Calender(),
       const BreakFast(),
-      const SetGoal(),
+      SetGoal(),
       const ProfileView(),
       // EditPersonalinfo(),
       // Profile(),

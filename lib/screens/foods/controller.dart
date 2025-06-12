@@ -42,3 +42,63 @@ class FavoritesController extends GetxController {
         foodList.where((food) => favoriteNames.contains(food.name)).toList();
   }
 }
+
+class SetgoalsController extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+    loadReminder(); // Load favorites when the app starts
+  }
+
+  var selectedWaterCap = ''.obs;
+  var selectedTimeValue = ''.obs;
+  var fromTime = ''.obs;
+  var toTime = ''.obs;
+  var quantityInterval = ''.obs;
+  void setWaterCap(String value) async {
+    selectedWaterCap.value = value;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('waterCap', value);
+  }
+
+  void setTimeInterval(String value) async {
+    selectedTimeValue.value = value;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('timeInterval', value);
+  }
+
+  void setFromTime(String time) async {
+    fromTime.value = time;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('fromTime', time);
+  }
+
+  void setToTime(String time) async {
+    toTime.value = time;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('toTime', time);
+  }
+
+  void setQuantity(String value) async {
+    quantityInterval.value = value;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('quantityInterval', value);
+  }
+
+  void saveReminder() {
+    // You could save this to a database or shared preferences instead
+    print('Water Cap: ${selectedWaterCap.value}');
+    print('Interval: ${selectedTimeValue.value}');
+    print('From: ${fromTime.value}');
+    print('To: ${toTime.value}');
+  }
+
+  void loadReminder() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    selectedWaterCap.value = prefs.getString('waterCap') ?? '';
+    selectedTimeValue.value = prefs.getString('timeInterval') ?? '';
+    fromTime.value = prefs.getString('fromTime') ?? '';
+    toTime.value = prefs.getString('toTime') ?? '';
+    quantityInterval.value = prefs.getString('quantityInterval') ?? '';
+  }
+}
