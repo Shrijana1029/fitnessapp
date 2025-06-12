@@ -73,7 +73,7 @@ class _ActivityTrackerState extends State<ActivityTracker> {
   String _steps = '0';
   String? selectedValue;
   bool showMonthlyContainer = false;
-  String selectedOption = 'Daily';
+  String selectedOption = 'Weekly';
 
   @override
   void initState() {
