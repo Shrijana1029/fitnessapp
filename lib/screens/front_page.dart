@@ -1,6 +1,5 @@
 // import 'package:fitnessapp/profile/profile_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitnessapp/screens/Reminder/drink_reminder.dart';
 
 import 'package:fitnessapp/screens/activity/activity_tracker.dart';
 import 'package:fitnessapp/screens/extra.dart';
@@ -37,10 +36,14 @@ class _FrontPageState extends State<FrontPage> {
       PersistentTabController(initialIndex: 0);
   List<Widget> _buildScreens() {
     return [
+      const BreakFast(),
+
       const ActivityTracker(),
-      // const Calender(),
-      ReminderScreen(),
-      DrinkReminder(),
+
+      const Calender(),
+      // ReminderScreen(),
+      // ContactUsPage(),
+      // SetGoal(),
       const ProfileView(),
       // EditPersonalinfo(),
       // Profile(),
